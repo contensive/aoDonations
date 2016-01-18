@@ -56,6 +56,7 @@
     </Reference>
     <Reference Include="CPBase">
       <HintPath>..\..\Release\CPBase.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -70,7 +71,6 @@
     <Import Include="System.Diagnostics" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="apiClass.vb" />
     <Compile Include="CommonClass.vb" />
     <Compile Include="donationClass.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

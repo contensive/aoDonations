@@ -9,3 +9,13 @@ C:\Users\kmaAdmin\Documents\GitHub\aoDonations\aoDonations\bin\Debug\Newtonsoft.
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\aoDonations\obj\Debug\aoDonations.dll
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\aoDonations\obj\Debug\aoDonations.xml
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\aoDonations\obj\Debug\aoDonations.pdb
+C:\Users\jay\Documents\GitHub\aoDonations\aoDonations\bin\Debug\aoDonations.dll
+C:\Users\jay\Documents\GitHub\aoDonations\aoDonations\bin\Debug\aoDonations.pdb
+C:\Users\jay\Documents\GitHub\aoDonations\aoDonations\bin\Debug\aoDonations.xml
+C:\Users\jay\Documents\GitHub\aoDonations\aoDonations\bin\Debug\accountBillingApi.dll
+C:\Users\jay\Documents\GitHub\aoDonations\aoDonations\bin\Debug\Newtonsoft.Json.dll
+C:\Users\jay\Documents\GitHub\aoDonations\aoDonations\obj\Debug\Resources.resources
+C:\Users\jay\Documents\GitHub\aoDonations\aoDonations\obj\Debug\aoDonations.vbproj.GenerateResource.Cache
+C:\Users\jay\Documents\GitHub\aoDonations\aoDonations\obj\Debug\aoDonations.dll
+C:\Users\jay\Documents\GitHub\aoDonations\aoDonations\obj\Debug\aoDonations.xml
+C:\Users\jay\Documents\GitHub\aoDonations\aoDonations\obj\Debug\aoDonations.pdb
