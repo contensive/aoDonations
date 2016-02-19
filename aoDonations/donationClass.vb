@@ -2,6 +2,7 @@
 Option Strict On
 Option Explicit On
 
+
 Imports System
 Imports System.Collections.Generic
 Imports System.Text
@@ -15,12 +16,23 @@ Namespace Contensive.Addons.aoDonations
     Public Class donationClass
         Inherits BaseClasses.AddonBaseClass
         '
+        Private Const donationHandlerAddon As String = "{8D03670D-0258-4C2A-8BA4-8EC795842D88}"
+        '
+        '====================================================================================================
+        ''' <summary>
+        ''' donation form page
+        ''' </summary>
+        ''' <param name="CP"></param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
         Public Overrides Function Execute(ByVal CP As BaseClasses.CPBaseClass) As Object
-            Dim s As String = ""
+            Dim returnHtml As String = ""
             Try
-                s = CP.Utils.ExecuteAddon("{63CE6314-F25D-459E-8A7B-14E6C44DB7FD}")
+                Dim donationHandler As New donationHandlerClass()
+                returnHtml = CP.Utils.EncodeText(donationHandler.Execute(CP))
+                'returnHtml = CP.Utils.ExecuteAddon(donationHandlerAddon)
                 '
-                s = CP.Html.div(s, , , "DFContainer")
+                returnHtml = CP.Html.div(returnHtml, , , "DFContainer")
                 '
             Catch ex As Exception
                 Try
@@ -29,13 +41,19 @@ Namespace Contensive.Addons.aoDonations
                     '
                 End Try
             End Try
-            Return s
+            Return returnHtml
         End Function
         '
     End Class
     '
     Public Class donationHandlerClass
         Inherits BaseClasses.AddonBaseClass
+        '
+
+        Private Const itemGuidOnce1 As String = "{F12533E8-F736-40A7-94E3-BCBF874D11DE}"
+        Private Const itemGuidWeekly2 As String = "{D475BE89-1B7A-4AB1-B9E1-C8ED4768AE90}"
+        Private Const itemGuidMonthly3 As String = "{B5A437F1-A6EB-4B82-9ED0-089EA230D06F}"
+        Private Const itemGuidAnnual4 As String = "{184FC137-64EB-4BD0-865F-97ECDA1B970E}"
         '
         Private hiddenString As String = "" '   accumulates all hiddens from throughout process
         Private errMsg As String = ""
@@ -49,39 +67,59 @@ Namespace Contensive.Addons.aoDonations
         Dim rnStat As String
         Dim contactID As String
         Dim Address As Object
+        Private _csDonationUser As Boolean
+
+        Private Property csDonationUser(p1 As String) As Boolean
+            Get
+                Return _csDonationUser
+            End Get
+            Set(value As Boolean)
+                _csDonationUser = value
+            End Set
+        End Property
+
         '
+        '====================================================================================================
+        ''' <summary>
+        ''' donation form remote method
+        ''' </summary>
+        ''' <param name="CP"></param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
         Public Overrides Function Execute(ByVal CP As BaseClasses.CPBaseClass) As Object
+            Dim returnHtml As String = ""
             Try
-                Dim s As String = ""
                 Dim cs As BaseClasses.CPCSBaseClass = CP.CSNew()
-                Dim processNow As Boolean = CP.Utils.EncodeBoolean(CP.Doc.Var("DFSubmitted"))
+                Dim processNow As Boolean = CP.Utils.EncodeBoolean(CP.Doc.GetText("DFSubmitted"))
+                'Dim processNow As String = CP.Utils.EncodeText(CP.Doc.GetText("DFSubmitted"))
                 Dim ecomapi As aoAccountBilling.apiClass = New aoAccountBilling.apiClass()
+                'Dim layout As CPBlockBaseClass = CP.BlockNew
+                Dim blockLayoutHtml As String = ""
+                Dim message As String = ""
+                '
 
                 Dim userError As String = ""
                 '
-                If processNow Then
-                    If processForm(CP) Then
-                        s += CP.Content.GetCopy("Donation Form Thank You", "Thank you for your donation. Your request has been received and will be processed shortly.")
-                    End If
-                End If
-                '
                 If (Not processNow) Or (errMsg <> "") Then
-                    If cs.Open("Layouts", "ccGUID='{60E11B77-4DAE-4798-ABC4-1628A74F1E36}'", , , "layout") Then
-                        s = cs.GetText("layout")
+                    If cs.Open("Layouts", "ccGUID='{5F7A9A40-C01D-4B30-8720-26BF4E81C9AA}'", , , "layout") Then
+                        returnHtml = cs.GetText("layout")
                     End If
                     '
                     If errMsg <> "" Then
-                        s = CP.Html.p(errMsg, , "ccError") & s
+                        returnHtml = CP.Html.p(errMsg, , "ccError") & returnHtml
                     End If
                     '
-                    s = s.Replace("&&&&&theform*****", ecomapi.getOnlinePaymentFields(CP, userError))
-                    s = s.Replace("{{State Select}}", common.getStateSelect(CP, "DFStateID"))
-                    s = s.Replace("{{Expiration Select}}", common.getExpirationSelect(CP, "DFCardExpMonth", "DFCardExpYear", "DFSelectShort"))
+                    'returnHtml = returnHtml.Replace("&&&&&theform*****", ecomapi.getOnlinePaymentFields(CP, userError))
+                    returnHtml = returnHtml.Replace("{{State Select}}", common.getStateSelect(CP, "DFStateID"))
+                    'returnHtml = returnHtml.Replace("{{Expiration Select}}", common.getExpirationSelect(CP, "DFCardExpMonth", "DFCardExpYear", "DFSelectShort"))
+                Else
+                    returnHtml = processFormReturnResult(CP)
+
                 End If
                 '
-                s += common.getHelpWrapper(CP, "")
+                returnHtml += common.getHelpWrapper(CP, "")
+                CP.Utils.AppendLog("donationHandlerClass.log", "returnHtml:" & returnHtml)
                 '
-                Return s
             Catch ex As Exception
                 Try
                     CP.Site.ErrorReport(ex, "error in Contensive.Addons.Foundation.groupSignupHandlerClass.execute")
@@ -89,28 +127,59 @@ Namespace Contensive.Addons.aoDonations
                     '
                 End Try
             End Try
+            Return returnHtml
         End Function
         '
-        Private Function processForm(ByVal CP As BaseClasses.CPBaseClass) As Boolean
+        Public Class donationFormThankYouClass
+            Public ProcessedOk As Boolean = False
+            Public name As String
+            Public completedDate As String
+            Public address As String
+            Public city As String
+            Public state As String
+            Public zip As String
+            Public donationType As Integer
+            Public donationAmount As String
+            Public donationMethod As String
+            Public paymentHolderName As String
+            Public CreditCardLastFour As String
+            Public creditCardExpDate As String
+            Public creditCardType As String
+            Public myDFPaymentType As String
+
+        End Class
+        '
+        Private Function processFormReturnResult(ByVal CP As BaseClasses.CPBaseClass) As String ' was a boolean
+            Dim returnResult As String
             Try
                 Dim processed As Boolean = False
                 Dim cs As BaseClasses.CPCSBaseClass = CP.CSNew()
                 Dim csA As BaseClasses.CPCSBaseClass = CP.CSNew()
-                Dim firstName As String = CP.Doc.Var("DFFirstName")
-                Dim lastName As String = CP.Doc.Var("DFLastName")
-                Dim Name As String = CP.Doc.Var("DFFirstName") & " " & CP.Doc.Var("DFLastName")
-                Dim Address As String = CP.Doc.Var("DFAddress")
-                Dim Address2 As String = CP.Doc.Var("DFAddress2")
-                Dim City As String = CP.Doc.Var("DFCity")
-                Dim State As String = CP.Doc.Var("State")
-                Dim Zip As String = CP.Doc.Var("DFZip")
-                Dim Phone As String = CP.Doc.Var("DFPhone")
-                Dim Email As String = CP.Doc.Var("DFEmail")
-                Dim cardNumber As String = CP.Doc.Var("DFCardNumber")
-                Dim cardExpiration As String = CP.Doc.Var("DFCardExpMonth") & "/" & CP.Doc.Var("DFCardExpYear")
-                Dim cardCVV As String = CP.Doc.Var("DFCardCVV")
-                Dim cardAddress As String = CP.Doc.Var("DFCardAddress")
-                Dim cardZip As String = CP.Doc.Var("DFCardZip")
+
+
+
+                Dim firstName As String = CP.Doc.GetText("DFFirstName")
+                Dim lastName As String = CP.Doc.GetText("DFLastName")
+                Dim Name As String = CP.Doc.GetText("DFFirstName") & " " & CP.Doc.GetText("DFLastName")
+                Dim Address As String = CP.Doc.GetText("DFAddress")
+                Dim Address2 As String = CP.Doc.GetText("DFAddress2")
+                Dim City As String = CP.Doc.GetText("DFCity")
+                Dim State As String ' = CP.Doc.GetText("State")
+                Dim Zip As String = CP.Doc.GetText("DFZip")
+                Dim Phone As String = CP.Doc.GetText("DFPhone")
+                Dim Email As String = CP.Doc.GetText("DFEmail")
+                Dim DonationType As Integer = CP.Doc.GetInteger("DFType")
+                Dim cardName As String = CP.Doc.GetText("DFcardName")
+                Dim cardNumber As String = CP.Doc.GetText("DFCardNumber")
+                Dim cardType As String = CP.Doc.GetText("DFcardType")
+                'Dim cardExpiration As String = CP.Doc.GetText("DFCardExpMonth") & "/" & CP.Doc.GetText("DFCardExpYear")
+                Dim cardCVV As String = CP.Doc.GetText("DFCardCVV")
+                Dim cardAddress As String = CP.Doc.GetText("DFCardAddress")
+                Dim cardZip As String = CP.Doc.GetText("DFCardZip")
+                Dim DFPaymentType As Integer = CP.Doc.GetInteger("DFPaymentType")
+                Dim checkacctName As String = CP.Doc.GetText("DFChkAccount")
+                Dim checkacctNumber As String = CP.Doc.GetText("DFChkAccountNo")
+                Dim checkacctroutingNumber As String = CP.Doc.GetText("DFChkRoutNo")
                 Dim rS As String = ""   '   response stream
                 Dim resultDoc As New System.Xml.XmlDocument
                 Dim ppResponse As String = ""
@@ -122,7 +191,9 @@ Namespace Contensive.Addons.aoDonations
                 Dim copy As String = br & br
                 Dim copyPlus As String = ""
                 Dim recordLink As String = ""
-                Dim amount As Double = CP.Utils.EncodeNumber(CP.Doc.Var("DFAmount"))
+                Dim amount As Double = CP.Doc.GetNumber("DFAmount")
+                Dim tlpaDonationAmountString As String
+
                 Dim donationID As Integer = 0
                 Dim eCom As New aoAccountBilling.apiClass
                 Dim acctStatus As New aoAccountBilling.apiClass.accountStatusStructAPIVersion
@@ -133,12 +204,20 @@ Namespace Contensive.Addons.aoDonations
                 Dim appName As String = ""
                 Dim locOrderID As Integer = 0
                 Dim locOrderDetailID As Integer
-                Dim locItemGuid As String = "{F12533E8-F736-40A7-94E3-BCBF874D11DE}"
+
                 Dim locItemID As Integer = 0
                 Dim paymentInfo As Contensive.Addons.aoAccountBilling.apiClass.onDemandMethodStructApiVersion = Nothing
-                Dim stateID As Integer = CP.Doc.GetInteger(rnStat)
+                'Dim stateID As Integer  ' = CP.Doc.GetInteger(rnStat)
                 Dim rnErr As String = ""
-
+                Dim message As String = ""
+                Dim jsonSerializer As New System.Web.Script.Serialization.JavaScriptSerializer
+                Dim response As New donationFormThankYouClass
+                '
+                tlpaDonationAmountString = FormatCurrency(amount)
+                response.ProcessedOk = False
+                '
+                CP.Utils.AppendLog("createAccount.log", "Start Process Form")
+                '
                 '
                 If Not (CP.User.IsAuthenticated()) Then
                     If (CP.User.IsRecognized()) Then
@@ -147,63 +226,35 @@ Namespace Contensive.Addons.aoDonations
                 Else
                     'CP.User.Logout()
                 End If
-
-                If cs.Open("people", "id=" & CP.User.Id) Then
-
-                    Call cs.SetField("firstName", firstName)
-                    Call cs.SetField("lastName", lastName)
-                    Call cs.SetField("Name", Name)
-                    Call cs.SetField("Address", Address)
-                    Call cs.SetField("Address2", Address2)
-                    Call cs.SetField("City", City)
-                    Call cs.SetField("State", State)
-                    Call cs.SetField("Zip", Zip)
-                    Call cs.SetField("Phone", Phone)
-                    Call cs.SetField("Email", Email)
-
-                    'cs.SetField("name", "Donation made " & Date.Today & " by " & firstName & " " & lastName)
-                    'cs.SetField("firstName", firstName)
-                    'cs.SetFormInput("middleName", "DFMiddleName")
-                    'cs.SetField("lastName", lastName)
-                    'cs.SetFormInput("address", "DFAddress")
-                    'cs.SetFormInput("address2", "DFAddress2")
-                    'cs.SetFormInput("city", "DFCity")
-                    'cs.SetField("state", CP.Content.GetRecordName("States", CP.Utils.EncodeInteger(CP.Doc.Var("DFStateID"))))
-                    'cs.SetFormInput("zip", "DFZip")
-                    'cs.SetFormInput("phone", "DFPhone")
-                    'cs.SetFormInput("email", "DFEmail")
-
-                End If
-                cs.Close()
-
-
-
                 '
-                If cs.Open("items", "ccguid=" & CP.Db.EncodeSQLText(locItemGuid)) Then
+                Dim itemGuid As String = ""
+                Select Case DonationType
+                    Case 1
+                        itemGuid = itemGuidOnce1
+                    Case 2
+                        itemGuid = itemGuidWeekly2
+                    Case 3
+                        itemGuid = itemGuidMonthly3
+                    Case 4
+                        itemGuid = itemGuidAnnual4
+                    Case Else
+                        '
+                        ' something is wrong
+                        '
+                        itemGuid = itemGuidOnce1
+                End Select
+                If cs.Open("items", "ccguid=" & CP.Db.EncodeSQLText(itemGuid)) Then
                     locItemID = cs.GetInteger("id")
                 End If
                 Call cs.Close()
-
-                '
-
-
-                '
-                '   verify payment
-                '
-                'CP.Doc.Var("CreditCardNumber") = cardNumber
-                'CP.Doc.Var("CreditCardExpiration") = cardExpiration
-                'CP.Doc.Var("SecurityCode") = cardCVV
-                'CP.Doc.Var("AVSAddress") = cardAddress
-                'CP.Doc.Var("AVSZip") = cardZip
-                'CP.Doc.Var("PaymentAmount") = amount
                 '
                 '
-
-                '
-                '
+                CP.Utils.AppendLog("createAccount.log", "locAccountID: " & locAccountID)
                 If locAccountID = 0 Then
+                    CP.Utils.AppendLog("createAccount.log", "appName: " & appName)
                     locAccountID = eCom.createAccount(CP, locUserError, CP.User.Id, appName)
                     If locUserError <> "" Then
+                        CP.Utils.AppendLog("createAccount.log", "locUserError: " & locUserError)
                         errFlag = True
                         errMsg += locUserError & br
                         locUserError = ""
@@ -242,7 +293,36 @@ Namespace Contensive.Addons.aoDonations
                 '
                 '   payment for order if no errors
                 '
-                If eCom.payOrdersByOnlinePaymentFields(CP, locUserError, locOrderID.ToString, "Online Donation Form", "") Then
+                Dim cardExpiration As String = CP.Doc.GetText("DFcardExp") & "/" & "1" & "/" & CP.Doc.GetText("DFcardYr")
+                Dim regDate As Date = Date.Now()
+                Dim completedDate As String = regDate.ToString("MMMM" & " " & "dd" & ", " & "yyyy")
+                'Dim complatedDate As String = CP.Doc.GetText("DFcardExp") & "/" & "1" & "/" & CP.Doc.GetText("DFcardYr")
+                '
+                '
+                Dim onDemandMethod As New Contensive.Addons.aoAccountBilling.apiClass.onDemandMethodStructApiVersion
+                onDemandMethod.useAch = CP.Doc.GetBoolean("DFPaymentType")
+                If onDemandMethod.useAch = True Then
+                    '
+                    ' check
+                    '
+
+                    onDemandMethod.achAccountName = checkacctName
+                    onDemandMethod.achAccountNumber = checkacctNumber
+                    onDemandMethod.achRoutingNumber = checkacctroutingNumber
+                Else
+                    '
+                    ' credit card
+                    '
+                    onDemandMethod.CreditCardNumber = cardNumber
+                    onDemandMethod.CreditCardExpiration = cardExpiration
+                    onDemandMethod.CreditCardExpiration = (New Date(CP.Doc.GetInteger("DFcardYr"), CP.Doc.GetInteger("DFcardExp"), 1)).ToShortDateString
+                    onDemandMethod.SecurityCode = cardCVV
+                End If
+                onDemandMethod.FirstName = firstName
+                onDemandMethod.LastName = lastName
+
+
+                If eCom.payOrder(CP, locUserError, locOrderID, onDemandMethod, 0, "Taxicab, Limousine and Paratransit Association Donation") Then
                     '
                     ' the payment ran OK
                     '
@@ -272,6 +352,7 @@ Namespace Contensive.Addons.aoDonations
                     '
                     '   insert Donation
                     '
+                    State = ""
                     If cs.Insert("Donations") Then
                         donationID = cs.GetInteger("id")
                         cs.SetField("name", "Donation made " & Date.Today & " by " & firstName & " " & lastName)
@@ -281,33 +362,50 @@ Namespace Contensive.Addons.aoDonations
                         cs.SetFormInput("address", "DFAddress")
                         cs.SetFormInput("address2", "DFAddress2")
                         cs.SetFormInput("city", "DFCity")
-                        cs.SetField("state", CP.Content.GetRecordName("States", CP.Utils.EncodeInteger(CP.Doc.Var("DFStateID"))))
+                        State = CP.Content.GetRecordName("States", CP.Doc.GetInteger("DFStateID"))
+                        cs.SetField("state", State)
                         cs.SetFormInput("zip", "DFZip")
                         cs.SetFormInput("phone", "DFPhone")
-                        cs.SetFormInput("email", "DFEmail")
-                        '
-                        cs.SetFormInput("amount", "DFAmount")
-                        'cs.SetFormInput("cardName", "DFCardName")
-                        'cs.SetField("cardNumber", cardNumber)
-                        'cs.SetField("cardExpiration", cardExpiration)
-                        'cs.SetField("cardBillingAddress", cardAddress)
-                        'cs.SetField("cardBillingZip", cardZip)
-                        'cs.SetField("cardCode", cardCVV)
+                        cs.SetFormInput("email", Email)
+                        cs.SetFormInput("amount", amount)
                         '
                         cs.SetField("processorReference", "Order #" & locOrderID)
                         cs.SetField("processorResponse", "Processed OK")
                         '
                         cs.SetField("memberID", CP.User.Id.ToString)
                         cs.SetField("visitID", CP.Visit.Id.ToString)
+
                     End If
                     cs.Close()
+                    '
+                    ' populate thank you page
+                    '
+                    '
+                    response.name = "Full Name:" & " " & firstName & " " & lastName & "</br>" & "Address:" & " " & Address & "</br>" & "City:" & " " & City & "</br>" & "State/Province:" & " " & State & "</br> " & "Zip/Postal Code:" & " " & Zip & "</br> " & "Email:" & " " & Email
+                    response.completedDate = completedDate
+                    response.donationType = DonationType
+                    response.donationAmount = tlpaDonationAmountString
+                    response.myDFPaymentType = CStr(DFPaymentType)
+                    If onDemandMethod.useAch = True Then
+                        '
+                        '
+                        '                      
+                        response.paymentHolderName = "Name on Account:" & " " & checkacctName & "</br>" & "Account Number: " & " " & checkacctNumber & "</br>" & "Bank Routing Number: " & " " & checkacctroutingNumber
+                    Else
+                        '
+                        '
+                        Dim newcardNumber = cardNumber.Substring(cardNumber.Length - 4, 4)
+                        '
+                        response.paymentHolderName = "Cardholder Name:" & " " & cardName & "</br>" & " " & newcardNumber & "</br>" & " " & cardType
+                    End If
+                    '
                     '
                     '   send notifications
                     '
                     copy += "First Name: " & firstName & br
                     copy += "Last Name: " & lastName & br
-                    copy += "Total Amount: " & amount & br
-                    copy += "Amount Paid: " & amount & br
+                    'copy += "Total Amount: " & amount & br
+                    copy += "Amount Paid: " & tlpaDonationAmountString & br
                     copy += "Payment Date: " & Date.Today & br
                     copy += "Account Number: " & Right(cardNumber, 4) & br
                     '
@@ -319,11 +417,36 @@ Namespace Contensive.Addons.aoDonations
                     copyPlus += copy
                     copyPlus += CP.Html.p("<a target=""_blank"" href=""http://" & recordLink & """>Click here for details</a>")
                     '
-                    CP.Email.sendSystem("Dontaion Form Auto Responder", copy, CP.User.Id)
-                    CP.Email.sendSystem("Donation Form Notification", copyPlus)
+                    Dim csDon As BaseClasses.CPCSBaseClass = CP.CSNew()
+                    Dim donUserId As Integer = 0
+                    'Dim existUser As Boolean = False
+                    '
+                    If csDon.Open("people", "email = " & CP.Db.EncodeSQLText(Email)) Then
+                        '
+                        ' he exists
+                        '
+                        donUserId = csDon.GetInteger("id")
+                    Else
+                        '
+                        ' does not exist
+                        '
+                        Call csDon.Close()
+                        Call csDon.Insert("people")
+                        Call csDon.SetField("Name", firstName & " " & lastName)
+                        Call csDon.SetField("email", Email)
+                        donUserId = csDon.GetInteger("id")
+                    End If
+                    Call csDon.Close()
+                    '
+                    CP.Utils.AppendLog("donationConfirmation.log", "returnCopy " & copy)
+                    CP.Email.sendSystem("Dontaion Form Auto Responder", copy, donUserId)
+                    CP.Email.sendSystem("Donation Form Notification", copy)
                 End If
                 '
-                Return processed
+                response.ProcessedOk = processed
+                '
+                returnResult = jsonSerializer.Serialize(response)
+                Return returnResult
             Catch ex As Exception
                 Try
                     CP.Site.ErrorReport(ex, "error in Contensive.Addons.Foundation.groupSignupHandlerClass.processFormPayment")
@@ -334,6 +457,7 @@ Namespace Contensive.Addons.aoDonations
                     errMsg += "There was a problem processing your payment. Please try again.<br />"
                 End Try
             End Try
+            Return returnResult
         End Function
         '
         '
@@ -377,6 +501,14 @@ Namespace Contensive.Addons.aoDonations
         Private Function getRegionID(CP As BaseClasses.CPBaseClass, p2 As Object) As Object
             Throw New NotImplementedException
         End Function
+
+        Private Sub text()
+            Throw New NotImplementedException
+        End Sub
+
+      
+
+       
 
     End Class
     '
