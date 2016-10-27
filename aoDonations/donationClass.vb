@@ -201,7 +201,7 @@ Namespace Contensive.Addons.aoDonations
                 'Dim aMan As New aoMembershipManager.apiClass
                 Dim locAccountID As Integer = getExistingAccountID(CP)
                 Dim errFlag As Boolean
-                Dim appName As String = ""
+                Dim newAccountName As String = ""
                 Dim locOrderID As Integer = 0
                 Dim locOrderDetailID As Integer
 
@@ -259,8 +259,9 @@ Namespace Contensive.Addons.aoDonations
                 '
                 CP.Utils.AppendLog("createAccount.log", "locAccountID: " & locAccountID)
                 If locAccountID = 0 Then
-                    CP.Utils.AppendLog("createAccount.log", "appName: " & appName)
-                    locAccountID = eCom.createAccount(CP, locUserError, CP.User.Id, appName)
+                    newAccountName = firstName & " " & lastName
+                    CP.Utils.AppendLog("createAccount.log", "newAccountName: " & newAccountName)
+                    locAccountID = eCom.createAccount(CP, locUserError, CP.User.Id, newAccountName)
                     If locUserError <> "" Then
                         CP.Utils.AppendLog("createAccount.log", "locUserError: " & locUserError)
                         errFlag = True
