@@ -247,6 +247,14 @@ Namespace Contensive.Addons.aoDonations
                     locItemID = cs.GetInteger("id")
                 End If
                 Call cs.Close()
+                If locItemID = 0 Then
+                    If cs.Insert("items") Then
+                        cs.SetField("name", "Donation")
+                        cs.SetField("ccguid", "{F12533E8-F736-40A7-94E3-BCBF874D11DE}")
+                    End If
+                    locItemID = cs.GetInteger("id")
+                    Call cs.Close()
+                End If
                 '
                 '
                 CP.Utils.AppendLog("createAccount.log", "locAccountID: " & locAccountID)
@@ -367,7 +375,7 @@ Namespace Contensive.Addons.aoDonations
                         cs.SetFormInput("zip", "DFZip")
                         cs.SetFormInput("phone", "DFPhone")
                         cs.SetFormInput("email", Email)
-                        cs.SetFormInput("amount", amount)
+                        cs.SetField("amount", amount.ToString)
                         '
                         cs.SetField("processorReference", "Order #" & locOrderID)
                         cs.SetField("processorResponse", "Processed OK")
