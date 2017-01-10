@@ -18,3 +18,4 @@ C:\Users\kmaAdmin\Documents\GitHub\aoDonations\aoDonations\obj\Debug\aoDonations
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\aoDonations\obj\Debug\aoDonations.dll
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\aoDonations\obj\Debug\aoDonations.xml
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\aoDonations\obj\Debug\aoDonations.pdb
+C:\Users\kmaAdmin\Documents\GitHub\aoDonations\aoDonations\obj\Debug\aoDonations.vbprojResolveAssemblyReference.cache

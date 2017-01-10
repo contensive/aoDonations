@@ -118,7 +118,7 @@ Namespace Contensive.Addons.aoDonations
                 End If
                 '
                 returnHtml += common.getHelpWrapper(CP, "")
-                CP.Utils.AppendLog("donationHandlerClass.log", "returnHtml:" & returnHtml)
+                ' CP.Utils.AppendLog("donationHandlerClass.log", "returnHtml:" & returnHtml)
                 '
             Catch ex As Exception
                 Try
