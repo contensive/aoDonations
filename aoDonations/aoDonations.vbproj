@@ -51,12 +51,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="accountBillingApi, Version=4.1.13.516, Culture=neutral, PublicKeyToken=d5c7c4dda88f732e, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Release\EcommerceApi\accountBillingApi.dll</HintPath>
+      <HintPath>packages\Contensive.ecommerceApi.1.0.2\lib\net35\accountBillingApi.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="CPBase">
-      <HintPath>..\..\Release\CPBase.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="CPBase, Version=4.1.2.0, Culture=neutral, PublicKeyToken=10b3c53389b845fb, processorArchitecture=MSIL">
+      <HintPath>packages\contensive.clib.4.1.2\lib\net35\CPBase.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -73,7 +73,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommonClass.vb" />
-    <Compile Include="donationClass.vb" />
+    <Compile Include="controllers\donationHandlerController.vb" />
+    <Compile Include="interfaces\addons\donationClass.vb" />
+    <Compile Include="interfaces\remotes\donationHandlerClass.vb" />
+    <Compile Include="models\donationFormThankYouModel.vb" />
+    <Compile Include="models\donationDetailsModel.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -89,6 +93,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="views\donationFormView.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -108,6 +113,10 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="interfaces\events\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

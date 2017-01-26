@@ -12,10 +12,9 @@ C:\Users\kmaAdmin\Documents\GitHub\aoDonations\aoDonations\bin\Debug\aoDonations
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\aoDonations\bin\Debug\aoDonations.pdb
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\aoDonations\bin\Debug\aoDonations.xml
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\aoDonations\bin\Debug\accountBillingApi.dll
-C:\Users\kmaAdmin\Documents\GitHub\aoDonations\aoDonations\bin\Debug\Newtonsoft.Json.dll
+C:\Users\kmaAdmin\Documents\GitHub\aoDonations\aoDonations\bin\Debug\CPBase.dll
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\aoDonations\obj\Debug\Resources.resources
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\aoDonations\obj\Debug\aoDonations.vbproj.GenerateResource.Cache
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\aoDonations\obj\Debug\aoDonations.dll
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\aoDonations\obj\Debug\aoDonations.xml
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\aoDonations\obj\Debug\aoDonations.pdb
-C:\Users\kmaAdmin\Documents\GitHub\aoDonations\aoDonations\obj\Debug\aoDonations.vbprojResolveAssemblyReference.cache

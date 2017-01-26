@@ -1,4 +1,4 @@
-﻿Namespace Contensive.Addons.donationForm
+﻿Namespace Contensive.Addons.aoDonations
     '
     Public Class commonClass
         '
