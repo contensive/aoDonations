@@ -1,0 +1,53 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+UnitTestProject1
+</name>
+</assembly>
+<members>
+<member name="T:My.Resources.Resources">
+<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+<member name="P:My.Resources.Resources.ResourceManager">
+<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member>
+<member name="P:My.Resources.Resources.Culture">
+<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+<member name="M:Contensive.Addons.aoDonations.UnitTest1.donationViewModelTEst">
+ <summary>
+ test:  test the donation view model
+ </summary>
+</member>
+<member name="M:Contensive.Addons.aoDonations.UnitTest1.donationSubmitValidationTest">
+ <summary>
+ test donation form valid case
+ </summary>
+</member>
+<member name="M:Contensive.Addons.aoDonations.UnitTest1.donationSubmitInValidationTest">
+ <summary>
+ test all donationform invalid cases
+ </summary>
+</member>
+<member name="M:Contensive.Addons.aoDonations.UnitTest1.helloWorldTest">
+ <summary>
+ test the basic application -- use a unit test template
+ </summary>
+</member>
+<member name="M:Contensive.Addons.aoDonations.UnitTest1.getValidDonationDetails(Contensive.BaseClasses.CPBaseClass)">
+ <summary>
+ create a donationDetails model that is valid
+ </summary>
+ <param name="cp"></param>
+ <returns></returns>
+</member>
+</members>
+</doc>

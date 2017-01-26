@@ -1,10 +1,15 @@
-﻿Namespace Contensive.Addons.aoDonations
+﻿
+Option Strict On
+Option Explicit On
+
+
+Namespace Contensive.Addons.aoDonations
     '
     Public Class commonClass
         '
         Public Shared Function getDate(ByVal CP As Contensive.BaseClasses.CPBaseClass, ByVal dateVal As Date) As Date
             Try
-                If dateVal < "1/1/1900" Then
+                If dateVal.CompareTo(New Date(1900, 1, 1)) <= 0 Then
                     dateVal = Date.MinValue
                 End If
                 '
@@ -90,8 +95,8 @@
                 Else
                     cs.Close()
                     If cs.Insert("Membership Requests") Then
-                        cs.SetField("visitID", CP.Visit.Id)
-                        cs.SetField("memberID", CP.User.Id)
+                        cs.SetField("visitID", CP.Visit.Id.ToString())
+                        cs.SetField("memberID", CP.User.Id.ToString())
                         recordID = cs.GetInteger("id")
                     End If
                 End If
@@ -136,8 +141,8 @@
                 Else
                     cs.Close()
                     If cs.Insert("Group Tour Requests") Then
-                        cs.SetField("visitID", CP.Visit.Id)
-                        cs.SetField("memberID", CP.User.Id)
+                        cs.SetField("visitID", CP.Visit.Id.ToString())
+                        cs.SetField("memberID", CP.User.Id.ToString())
                         recordID = cs.GetInteger("id")
                     End If
                 End If
@@ -203,7 +208,7 @@
                 returnHtml += "<select id=""" & requestNameB & """ class=""" & selectClassName & """ size=""1"" name=""" & requestNameB & """>"
                 returnHtml += "<option value="""" selected>YY</option>"
                 For counter = yearStart To yearEnd
-                    returnHtml += "<option value=""" & Right(counter, 2) & """>" & counter & "</option>"
+                    returnHtml += "<option value=""" & Right(counter.ToString(), 2) & """>" & counter & "</option>"
                 Next
                 returnHtml += "</select>"
                 '

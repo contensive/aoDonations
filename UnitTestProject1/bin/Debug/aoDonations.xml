@@ -1,0 +1,65 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+aoDonations
+</name>
+</assembly>
+<members>
+<member name="T:My.Resources.Resources">
+<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+<member name="P:My.Resources.Resources.ResourceManager">
+<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member>
+<member name="P:My.Resources.Resources.Culture">
+<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+<member name="M:Contensive.Addons.aoDonations.donationHandlerControllerAndView.processAndReturn(Contensive.BaseClasses.CPBaseClass,System.String@,Contensive.Addons.aoDonations.donationDetailsViewModel)">
+ <summary>
+ processes the donation form from the donationsDetails model. It returns an object with the return results
+ </summary>
+ <param name="CP"></param>
+ <param name="errMsg"></param>
+ <param name="donationDetails"></param>
+ <returns></returns>
+</member>
+<member name="M:Contensive.Addons.aoDonations.donationHandlerControllerAndView.verifyUserAndAccount(Contensive.BaseClasses.CPBaseClass,Contensive.Addons.aoDonations.donationDetailsViewModel,System.Int32@,System.Int32@,System.String@)">
+ <summary>
+ verify the user is authenticated or update his account from the donation model. Return the user's accountId. If cannot create the account, return false and the errMessage is a user error.
+ </summary>
+ <param name="CP"></param>
+ <returns></returns>
+</member>
+<member name="M:Contensive.Addons.aoDonations.donationClass.Execute(Contensive.BaseClasses.CPBaseClass)">
+ <summary>
+ donation form page
+ </summary>
+ <param name="CP"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:Contensive.Addons.aoDonations.donationHandlerClass.Execute(Contensive.BaseClasses.CPBaseClass)">
+ <summary>
+ donation form remote method
+ </summary>
+ <param name="CP"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:Contensive.Addons.aoDonations.donationFormView.getView(Contensive.BaseClasses.CPBaseClass)">
+ <summary>
+ 
+ </summary>
+ <param name="CP"></param>
+ <returns></returns>
+</member>
+</members>
+</doc>

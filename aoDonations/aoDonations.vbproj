@@ -73,7 +73,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommonClass.vb" />
-    <Compile Include="controllers\donationHandlerController.vb" />
+    <Compile Include="constantsModule.vb" />
+    <Compile Include="controllers\donationHandlerControllerAndView.vb" />
     <Compile Include="interfaces\addons\donationClass.vb" />
     <Compile Include="interfaces\remotes\donationHandlerClass.vb" />
     <Compile Include="models\donationFormThankYouModel.vb" />

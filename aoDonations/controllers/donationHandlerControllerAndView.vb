@@ -68,24 +68,24 @@ Namespace Contensive.Addons.aoDonations
                     With donationDetails
                         '
                         If (.firstName = "") Then
-                            response.errorMessage = "In order to continue, please complete the required First Name field."
+                            response.errorMessage = donationErrorFirstName
                             response.ProcessedOk = False
                         ElseIf (.lastName = "") Then
-                            response.errorMessage = "In order to continue, please complete the required Last Name field."
+                            response.errorMessage = donationErrorLastname
                             response.ProcessedOk = False
                         ElseIf (.Phone = "") Then
 
-                            response.errorMessage = "In order to continue, please complete the required Phone field."
+                            response.errorMessage = donationErrorPhone
                             response.ProcessedOk = False
                         ElseIf (.Address = "") Then
-                            response.errorMessage = "In order to continue, please complete the required Address field."
+                            response.errorMessage = donationErrorAddress
                             response.ProcessedOk = False
                         ElseIf (.Email = "") Then
-                            response.errorMessage = "In order to continue, please complete the required Email field."
+                            response.errorMessage = donationErrorEmail
                             response.ProcessedOk = False
 
                         ElseIf (.Zip = "") Then
-                            response.errorMessage = "In order to continue, please complete the required Zip field."
+                            response.errorMessage = donationErrorZip
                             response.ProcessedOk = False
                             'ElseIf Not verifyUserAndAccount(CP, donationDetails, donationAccountID, donationPersonId, errMessage) Then
                         ElseIf Not verifyUserAndAccount(CP, donationDetails, donationAccountID, donationPersonId, errMessage) Then
