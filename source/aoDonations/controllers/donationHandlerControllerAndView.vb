@@ -229,12 +229,12 @@ Namespace Contensive.Addons.aoDonations
                                 .State = ""
                                 If cs.Insert("Donations") Then
                                     donationID = cs.GetInteger("id")
-                                    cs.SetField("name", "Donation made " & Date.Today & " by " & .firstName & " " & .lastName)
+                                    cs.SetField("name", "Donation made " & Date.Today & " by " & .Name & .firstName & " " & .lastName)
                                     cs.SetField("firstName", .firstName)
                                     cs.SetFormInput("middleName", "DFMiddleName")
                                     cs.SetField("lastName", .lastName)
-                                    cs.SetFormInput("address", "DFAddress")
-                                    cs.SetFormInput("address2", "DFAddress2")
+                                    cs.SetFormInput("address", .Address)
+                                    cs.SetFormInput("address2", .Address2)
                                     cs.SetFormInput("city", "DFCity")
                                     .State = CP.Content.GetRecordName("States", CP.Doc.GetInteger("DFStateID"))
                                     cs.SetField("state", .State)
@@ -367,13 +367,21 @@ Namespace Contensive.Addons.aoDonations
                         ' ok to create a new donation user
                         '
                         cs.Close()
+
+
+                        '
                         If cs.Insert("people") Then
                             returnDonationPersonId = cs.GetInteger("id")
+                            cs.SetField("Name", donationDetails.Name)
                             cs.SetField("lastName", donationDetails.lastName)
                             cs.SetField("firstName", donationDetails.firstName)
                             cs.SetField("email", donationDetails.Email)
+                            cs.SetField("BillName", donationDetails.Name)
+
                         End If
                         cs.Close()
+                        CP.User.LoginByID(returnDonationPersonId.ToString)
+
                     End If
                 Else
                     '
@@ -384,6 +392,7 @@ Namespace Contensive.Addons.aoDonations
                         returnDonationAccountID = cs.GetInteger("accountID")
                     End If
                     cs.Close()
+                    returnDonationAccountID = cs.GetInteger("accountID")
                     '
                     '   verify account record exists
                     '
@@ -391,11 +400,11 @@ Namespace Contensive.Addons.aoDonations
                         returnDonationAccountID = 0
                     End If
                     cs.Close()
-                End If
-                '
-                ' verify the donationUser has a donationAccount
-                '
-                If (returnDonationAccountID = 0) Then
+                    End If
+                    '
+                    ' verify the donationUser has a donationAccount
+                    '
+                    If (returnDonationAccountID = 0) Then
                     returnDonationAccountID = eCommerce.createAccount(CP, ecommerceErrorMessage, returnDonationPersonId)
                     If Not String.IsNullOrEmpty(ecommerceErrorMessage) Then
                         '
@@ -405,6 +414,7 @@ Namespace Contensive.Addons.aoDonations
                         Return False
                     Else
                         eCommerce.addAccountNote(CP, ecommerceErrorMessage, returnDonationAccountID, newAccountMessage, newAccountMessage, False)
+
                         If Not String.IsNullOrEmpty(ecommerceErrorMessage) Then
                             '
                             ' there was an ecommerce error
@@ -414,8 +424,12 @@ Namespace Contensive.Addons.aoDonations
                         Else
                             If cs.Open("people", "id=" & returnDonationPersonId) Then
                                 Call cs.SetField("accountId", returnDonationAccountID.ToString)
+                                Call cs.SetField("BillName", donationDetails.Name)
                             End If
                             Call cs.Close()
+                            ' CP.Db.ExecuteSQL("update abaccounts set memberId=" & returnDonationPersonId & ",billingmemberId=" & returnDonationPersonId & " where id=" & returnDonationAccountID)
+                            eCommerce.setAccountBillingContact(CP, ecommerceErrorMessage, returnDonationAccountID, CP.User.Id)
+                            eCommerce.setAccountPrimaryContact(CP, ecommerceErrorMessage, returnDonationAccountID, CP.User.Id)
                         End If
                     End If
                 End If

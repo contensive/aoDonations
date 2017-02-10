@@ -196,7 +196,7 @@ Namespace Contensive.Addons.aoDonations
             Dim donationDetails As New donationDetailsViewModel(cp)
             donationDetails.firstName = "test"
             donationDetails.lastName = "tester"
-            donationDetails.Name = "test tester"
+            donationDetails.Name = donationDetails.firstName & " " & donationDetails.lastName
             donationDetails.Address = "here st"
             donationDetails.Address2 = "apt1"
             donationDetails.City = "ny"
