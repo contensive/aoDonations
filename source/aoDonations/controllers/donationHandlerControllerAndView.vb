@@ -229,7 +229,7 @@ Namespace Contensive.Addons.aoDonations
                                 .State = ""
                                 If cs.Insert("Donations") Then
                                     donationID = cs.GetInteger("id")
-                                    cs.SetField("name", "Donation made " & Date.Today & " by " & .Name & .firstName & " " & .lastName)
+                                    cs.SetField("name", "Donation made " & Date.Today & " by " & .firstName & " " & .lastName)
                                     cs.SetField("firstName", .firstName)
                                     cs.SetFormInput("middleName", "DFMiddleName")
                                     cs.SetField("lastName", .lastName)
@@ -392,7 +392,7 @@ Namespace Contensive.Addons.aoDonations
                         returnDonationAccountID = cs.GetInteger("accountID")
                     End If
                     cs.Close()
-                    returnDonationAccountID = cs.GetInteger("accountID")
+                    ' returnDonationAccountID = cs.GetInteger("accountID")
                     '
                     '   verify account record exists
                     '
