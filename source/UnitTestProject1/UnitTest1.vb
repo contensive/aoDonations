@@ -9,7 +9,7 @@ Imports Contensive.BaseClasses
 Namespace Contensive.Addons.aoDonations
 
     <TestClass()> Public Class UnitTest1
-        Public testAppName As String = "vince-tlpa"
+        Public testAppName As String = "aoDonations"
 
         ''' <summary>
         ''' test:  test the donation view model

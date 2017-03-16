@@ -1,0 +1,13 @@
+C:\Users\jay\OneDrive\Documents\aoDonations\source\wwwRoot\bin\wwwRoot.dll.config
+C:\Users\jay\OneDrive\Documents\aoDonations\source\wwwRoot\bin\wwwRoot.dll
+C:\Users\jay\OneDrive\Documents\aoDonations\source\wwwRoot\bin\wwwRoot.pdb
+C:\Users\jay\OneDrive\Documents\aoDonations\source\wwwRoot\bin\wwwRoot.xml
+C:\Users\jay\OneDrive\Documents\aoDonations\source\wwwRoot\bin\CPBase.dll
+C:\Users\jay\OneDrive\Documents\aoDonations\source\wwwRoot\bin\Processor.dll
+C:\Users\jay\OneDrive\Documents\aoDonations\source\wwwRoot\bin\CommonLibrary.dll
+C:\Users\jay\OneDrive\Documents\aoDonations\source\wwwRoot\bin\Interop.CSGUID.dll
+C:\Users\jay\OneDrive\Documents\aoDonations\source\wwwRoot\obj\Debug\Resources.resources
+C:\Users\jay\OneDrive\Documents\aoDonations\source\wwwRoot\obj\Debug\wwwRoot.vbproj.GenerateResource.Cache
+C:\Users\jay\OneDrive\Documents\aoDonations\source\wwwRoot\obj\Debug\wwwRoot.dll
+C:\Users\jay\OneDrive\Documents\aoDonations\source\wwwRoot\obj\Debug\wwwRoot.xml
+C:\Users\jay\OneDrive\Documents\aoDonations\source\wwwRoot\obj\Debug\wwwRoot.pdb

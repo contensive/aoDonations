@@ -17,6 +17,8 @@
     <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -56,8 +58,9 @@
       <HintPath>..\aoDonations\packages\contensive.clib.4.1.2\lib\net35\CPBase.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Processor">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\kma\Contensive\Processor.dll</HintPath>
+    <Reference Include="Processor, Version=4.1.2.2, Culture=neutral, PublicKeyToken=64348879ab5dff0f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\kma\Contensive\Processor.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

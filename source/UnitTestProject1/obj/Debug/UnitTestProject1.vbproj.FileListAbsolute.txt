@@ -31,3 +31,5 @@ C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\UnitTestProject1\obj\Debug
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\UnitTestProject1\obj\Debug\UnitTestProject1.xml
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\UnitTestProject1\obj\Debug\UnitTestProject1.pdb
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\UnitTestProject1\bin\Debug\aoDonations.xml
+C:\Users\jay\OneDrive\Documents\aoDonations\source\UnitTestProject1\obj\Debug\Resources.resources
+C:\Users\jay\OneDrive\Documents\aoDonations\source\UnitTestProject1\obj\Debug\UnitTestProject1.vbproj.GenerateResource.Cache

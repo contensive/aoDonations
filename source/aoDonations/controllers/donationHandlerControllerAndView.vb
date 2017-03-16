@@ -2,15 +2,15 @@
 Option Strict On
 Option Explicit On
 
-Imports common = Contensive.Addons.donationForm.commonClass
+'Imports common = Contensive.Addons.donationForm.commonClass
 '
 Namespace Contensive.Addons.aoDonations
 
     Public Class donationHandlerControllerAndView
 
         Private Const itemGuidOnce1 As String = "{F12533E8-F736-40A7-94E3-BCBF874D11DE}"
-        Private Const itemGuidWeekly2 As String = "{D475BE89-1B7A-4AB1-B9E1-C8ED4768AE90}"
-        Private Const itemGuidMonthly3 As String = "{B5A437F1-A6EB-4B82-9ED0-089EA230D06F}"
+        Private Const itemGuidMonthly2 As String = "{D475BE89-1B7A-4AB1-B9E1-C8ED4768AE90}"
+        Private Const itemGuidQuarterly3 As String = "{B5A437F1-A6EB-4B82-9ED0-089EA230D06F}"
         Private Const itemGuidAnnual4 As String = "{184FC137-64EB-4BD0-865F-97ECDA1B970E}"
         '
         ''' <summary>
@@ -103,9 +103,9 @@ Namespace Contensive.Addons.aoDonations
                                 Case 1
                                     itemGuid = itemGuidOnce1
                                 Case 2
-                                    itemGuid = itemGuidWeekly2
+                                    itemGuid = itemGuidMonthly2
                                 Case 3
-                                    itemGuid = itemGuidMonthly3
+                                    itemGuid = itemGuidQuarterly3
                                 Case 4
                                     itemGuid = itemGuidAnnual4
                                 Case Else
@@ -340,7 +340,7 @@ Namespace Contensive.Addons.aoDonations
                 Dim clearFlag As Boolean = False
                 Dim donationUserName As String = ""
                 'Dim donationAccountID As Integer = 0
-                Dim mustSetAccountName As Boolean
+                'Dim mustSetAccountName As Boolean
                 Dim eCommerce As New aoAccountBilling.apiClass
                 Dim newAccountMessage As String = "Donations created account. "
                 'im DonationUserId As Integer

@@ -1,0 +1,14 @@
+C:\Users\jay\OneDrive\Documents\aoDonations\source\wwwRoot\bin\CPBase.dll
+C:\Users\jay\OneDrive\Documents\aoDonations\source\wwwRoot\bin\Processor.dll
+C:\Users\jay\OneDrive\Documents\aoDonations\source\wwwRoot\bin\CommonLibrary.dll
+C:\Users\jay\OneDrive\Documents\aoDonations\source\wwwRoot\bin\Interop.CSGUID.dll
+C:\Users\jay\OneDrive\Documents\aoDonations\source\wwwRoot\obj\Release\Resources.resources
+C:\Users\jay\OneDrive\Documents\aoDonations\source\wwwRoot\obj\Release\wwwRoot.vbproj.GenerateResource.Cache
+C:\Users\jay\OneDrive\Documents\aoDonations\source\wwwRoot\obj\Release\wwwRoot.dll
+C:\Users\jay\OneDrive\Documents\aoDonations\source\wwwRoot\obj\Release\wwwRoot.xml
+C:\Users\jay\OneDrive\Documents\aoDonations\source\wwwRoot\obj\Release\wwwRoot.pdb
+C:\Users\jay\OneDrive\Documents\aoDonations\source\wwwRoot\bin\wwwRoot.dll.config
+C:\Users\jay\OneDrive\Documents\aoDonations\source\wwwRoot\bin\wwwRoot.dll
+C:\Users\jay\OneDrive\Documents\aoDonations\source\wwwRoot\bin\wwwRoot.pdb
+C:\Users\jay\OneDrive\Documents\aoDonations\source\wwwRoot\bin\wwwRoot.xml
+C:\Users\jay\OneDrive\Documents\aoDonations\source\wwwRoot\obj\Release\wwwRoot.vbprojResolveAssemblyReference.cache

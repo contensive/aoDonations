@@ -24,7 +24,7 @@ Namespace Contensive.Addons.aoDonations
                 'returnHtml = CP.Utils.EncodeText(donationHandler.Execute(CP))
                 returnHtml = CP.Html.div(returnHtml, , , "DFContainer")
             Catch ex As Exception
-                CP.Site.ErrorReport(ex, "error in Contensive.Addons.Foundation.groupSignupClass.execute")
+                CP.Site.ErrorReport(ex, "error in Contensive.Addons.aoDonations.execute")
             End Try
             Return returnHtml
         End Function
