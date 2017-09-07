@@ -110,6 +110,7 @@ else {
         var DFChkAccountNo = jQuery("#js-checkAcctNo").val();
         var DFChkRoutNo = jQuery("#js-checkRouteNo").val();
         //var DFSubmitted = jQuery("#js-checkRouteNo").val(1);
+		
         var queryString = 'DFFirstName=' + DFFirstName +
             '&DFMiddleName=' + DFMiddleName + '&DFSubmitted=1' +
             '&DFLastName=' + DFLastName + '&DFPhone=' + DFPhone +
@@ -125,9 +126,10 @@ else {
             '&DFChkAccountNo=' + DFChkAccountNo +
             '&DFChkRoutNo=' + DFChkRoutNo;
         //console.log(queryString);
+		
         cj.remote({
+			'formId':'donationInputForm',
             'method': 'DonationFormHandler',
-            'queryString': queryString,
             'callback': donationCallback
         });
       }
@@ -278,8 +280,6 @@ function donationCallback(response) {
 		<PageTitle></PageTitle>
 		<RemoteAssetLink></RemoteAssetLink>
 		<Styles><![CDATA[
-
-
 #js-payByCheckTR{
 display:none;
 };
@@ -357,7 +357,6 @@ display:none;
 		<RemoteAssetLink></RemoteAssetLink>
 		<Styles></Styles>
 		<Scripting Language="" EntryPoint="" Timeout="5000"/>
-		<IncludeSharedStyle name="donation-form-exclusive-styles" guid="{87fcccba-6fa7-4ee0-aac9-82ef8293af3e}"/>
 	</Addon>
 	<data>
 		<record content="layouts" guid="{5F7A9A40-C01D-4B30-8720-26BF4E81C9AA}" name="aoDonation Form Layout">
@@ -579,6 +578,10 @@ display:none;
 														</div>
 													</div>
 												</div>
+												<div class="row-four form-row">
+													<div class="form-pmt-inputs recaptcha">
+														{{reCaptcha}}
+												</div>
 										</div>
 										<!-- end credit card form -->
 									</div>
@@ -735,292 +738,6 @@ display:none;
 			<field name="StylesFilename"></field>
 			<field name="Active">True</field>
 			<field name="SortOrder"></field>
-		</record>
-		<record content="groups" guid="{5d2615de-ea6e-42b7-9ec3-dec19ac88960}" name="Online Donation, Monthly">
-			<field name="Active">True</field>
-			<field name="SortOrder"></field>
-			<field name="Caption"><![CDATA[Online Donation, Monthly]]></field>
-			<field name="CopyFilename"></field>
-			<field name="AllowBulkEmail">True</field>
-			<field name="PublicJoin">False</field>
-			<field name="AllowCommerceSpecialPrice">False</field>
-			<field name="CommerceDiscount">0</field>
-			<field name="CommerceAdmin">False</field>
-			<field name="AllowCommerceOrdering">False</field>
-			<field name="groupTypeId"></field>
-		</record>
-		<record content="groups" guid="{e4df5756-f1e2-4cf6-a245-ae4ab284e2e9}" name="Online Donation, OneTime">
-			<field name="Active">True</field>
-			<field name="SortOrder"></field>
-			<field name="Caption"><![CDATA[Online Donation, OneTime]]></field>
-			<field name="CopyFilename"></field>
-			<field name="AllowBulkEmail">True</field>
-			<field name="PublicJoin">False</field>
-			<field name="AllowCommerceSpecialPrice">False</field>
-			<field name="CommerceDiscount">0</field>
-			<field name="CommerceAdmin">False</field>
-			<field name="AllowCommerceOrdering">False</field>
-			<field name="groupTypeId"></field>
-		</record>
-		<record content="items" guid="{184FC137-64EB-4BD0-865F-97ECDA1B970E}" name="Donation, Annually">
-			<field name="Active">True</field>
-			<field name="SortOrder"></field>
-			<field name="ItemNumber"></field>
-			<field name="UPC"></field>
-			<field name="Options"></field>
-			<field name="OrganizationID"></field>
-			<field name="SourceItemNumber"></field>
-			<field name="CategoryID"></field>
-			<field name="Copy"></field>
-			<field name="CopyFilename"></field>
-			<field name="Overview"></field>
-			<field name="BriefFilename"></field>
-			<field name="GroupID">{AA197345-2DC9-48D4-A012-5C64EB13B91D}</field>
-			<field name="GroupExpirationPeriod">0</field>
-			<field name="UnitCost">0</field>
-			<field name="UnitPrice">0</field>
-			<field name="SalePrice">0</field>
-			<field name="SpecialPrice">0</field>
-			<field name="OnSale">False</field>
-			<field name="Featured">False</field>
-			<field name="New">False</field>
-			<field name="ShippingRequired">True</field>
-			<field name="Weight">1</field>
-			<field name="QuantityOnHand">0</field>
-			<field name="QuantityLow">0</field>
-			<field name="Viewings">0</field>
-			<field name="AltSizeList"></field>
-			<field name="altThumbSizeList"></field>
-			<field name="Thumbnail"></field>
-			<field name="HideOrderButton">False</field>
-			<field name="receiptCopy"></field>
-			<field name="allowReceiptCopy">False</field>
-			<field name="membershipGracePeriodDays">0</field>
-			<field name="isInCatalog">False</field>
-			<field name="isCommissionable">False</field>
-			<field name="MsgToBillingWhenPaid"></field>
-			<field name="GroupExpirationPeriodMonths">12</field>
-			<field name="recurringPrebillDays">0</field>
-			<field name="AffiliatePayment">0</field>
-			<field name="AffiliateSetupPayment">0</field>
-			<field name="membershipDurationTypeId">2</field>
-			<field name="membershipMonthId"></field>
-			<field name="isRecurringPurchase">True</field>
-			<field name="recurringPrice">0</field>
-			<field name="sendFulfillmentNotification">False</field>
-			<field name="fulfillmentNotificationGroupId"></field>
-			<field name="invoiceCopy"></field>
-			<field name="allowInvoiceCopy">False</field>
-			<field name="generalLedgerAccountId"></field>
-			<field name="showBundledItems">False</field>
-			<field name="reportCashBasis">False</field>
-			<field name="isTaxable">True</field>
-			<field name="inMyAccount">True</field>
-			<field name="hideInvoiceLineIfNoCharge">False</field>
-			<field name="quantityMax">0</field>
-			<field name="blockDupRecurringPurchases">False</field>
-			<field name="orderButtonModeId">2</field>
-			<field name="defermentGeneralLedgerAccountId"></field>
-			<field name="defermentDate">12/30/1899 12:00:00 AM</field>
-			<field name="numberOfDefermentTransactions">12</field>
-			<field name="generalLedgerPostMethodId">1</field>
-			<field name="sendRenewalNotification">False</field>
-			<field name="payMethodCompatibility">1</field>
-		</record>
-		<record content="items" guid="{B5A437F1-A6EB-4B82-9ED0-089EA230D06F}" name="Donation, Quarterly">
-			<field name="Active">True</field>
-			<field name="SortOrder"></field>
-			<field name="ItemNumber"></field>
-			<field name="UPC"></field>
-			<field name="Options"></field>
-			<field name="OrganizationID"></field>
-			<field name="SourceItemNumber"></field>
-			<field name="CategoryID"></field>
-			<field name="Copy"></field>
-			<field name="CopyFilename"></field>
-			<field name="Overview"></field>
-			<field name="BriefFilename"></field>
-			<field name="GroupID"></field>
-			<field name="GroupExpirationPeriod">0</field>
-			<field name="UnitCost">0</field>
-			<field name="UnitPrice">0</field>
-			<field name="SalePrice">0</field>
-			<field name="SpecialPrice">0</field>
-			<field name="OnSale">False</field>
-			<field name="Featured">False</field>
-			<field name="New">False</field>
-			<field name="ShippingRequired">True</field>
-			<field name="Weight">1</field>
-			<field name="QuantityOnHand">0</field>
-			<field name="QuantityLow">0</field>
-			<field name="Viewings">0</field>
-			<field name="AltSizeList"></field>
-			<field name="altThumbSizeList"></field>
-			<field name="Thumbnail"></field>
-			<field name="HideOrderButton">False</field>
-			<field name="receiptCopy"></field>
-			<field name="allowReceiptCopy">False</field>
-			<field name="membershipGracePeriodDays">0</field>
-			<field name="isInCatalog">False</field>
-			<field name="isCommissionable">False</field>
-			<field name="MsgToBillingWhenPaid"></field>
-			<field name="GroupExpirationPeriodMonths">3</field>
-			<field name="recurringPrebillDays">0</field>
-			<field name="AffiliatePayment">0</field>
-			<field name="AffiliateSetupPayment">0</field>
-			<field name="membershipDurationTypeId">2</field>
-			<field name="membershipMonthId"></field>
-			<field name="isRecurringPurchase">True</field>
-			<field name="recurringPrice">0</field>
-			<field name="sendFulfillmentNotification">False</field>
-			<field name="fulfillmentNotificationGroupId"></field>
-			<field name="invoiceCopy"></field>
-			<field name="allowInvoiceCopy">False</field>
-			<field name="generalLedgerAccountId"></field>
-			<field name="showBundledItems">False</field>
-			<field name="reportCashBasis">False</field>
-			<field name="isTaxable">True</field>
-			<field name="inMyAccount">True</field>
-			<field name="hideInvoiceLineIfNoCharge">False</field>
-			<field name="quantityMax">0</field>
-			<field name="blockDupRecurringPurchases">False</field>
-			<field name="orderButtonModeId">2</field>
-			<field name="defermentGeneralLedgerAccountId"></field>
-			<field name="defermentDate">12/30/1899 12:00:00 AM</field>
-			<field name="numberOfDefermentTransactions">12</field>
-			<field name="generalLedgerPostMethodId">1</field>
-			<field name="sendRenewalNotification">False</field>
-			<field name="payMethodCompatibility">1</field>
-		</record>
-		<record content="items" guid="{D475BE89-1B7A-4AB1-B9E1-C8ED4768AE90}" name="Donation, Monthly">
-			<field name="Active">True</field>
-			<field name="SortOrder"></field>
-			<field name="ItemNumber"></field>
-			<field name="UPC"></field>
-			<field name="Options"></field>
-			<field name="OrganizationID"></field>
-			<field name="SourceItemNumber"></field>
-			<field name="CategoryID"></field>
-			<field name="Copy"></field>
-			<field name="CopyFilename"></field>
-			<field name="Overview"></field>
-			<field name="BriefFilename"></field>
-			<field name="GroupID">{5d2615de-ea6e-42b7-9ec3-dec19ac88960}</field>
-			<field name="GroupExpirationPeriod">0</field>
-			<field name="UnitCost">0</field>
-			<field name="UnitPrice">0</field>
-			<field name="SalePrice">0</field>
-			<field name="SpecialPrice">0</field>
-			<field name="OnSale">False</field>
-			<field name="Featured">False</field>
-			<field name="New">False</field>
-			<field name="ShippingRequired">True</field>
-			<field name="Weight">1</field>
-			<field name="QuantityOnHand">0</field>
-			<field name="QuantityLow">0</field>
-			<field name="Viewings">0</field>
-			<field name="AltSizeList"></field>
-			<field name="altThumbSizeList"></field>
-			<field name="Thumbnail"></field>
-			<field name="HideOrderButton">False</field>
-			<field name="receiptCopy"></field>
-			<field name="allowReceiptCopy">False</field>
-			<field name="membershipGracePeriodDays">0</field>
-			<field name="isInCatalog">False</field>
-			<field name="isCommissionable">False</field>
-			<field name="MsgToBillingWhenPaid"></field>
-			<field name="GroupExpirationPeriodMonths">1</field>
-			<field name="recurringPrebillDays">0</field>
-			<field name="AffiliatePayment">0</field>
-			<field name="AffiliateSetupPayment">0</field>
-			<field name="membershipDurationTypeId">2</field>
-			<field name="membershipMonthId"></field>
-			<field name="isRecurringPurchase">True</field>
-			<field name="recurringPrice">0</field>
-			<field name="sendFulfillmentNotification">False</field>
-			<field name="fulfillmentNotificationGroupId"></field>
-			<field name="invoiceCopy"></field>
-			<field name="allowInvoiceCopy">False</field>
-			<field name="generalLedgerAccountId"></field>
-			<field name="showBundledItems">False</field>
-			<field name="reportCashBasis">False</field>
-			<field name="isTaxable">True</field>
-			<field name="inMyAccount">True</field>
-			<field name="hideInvoiceLineIfNoCharge">False</field>
-			<field name="quantityMax">0</field>
-			<field name="blockDupRecurringPurchases">False</field>
-			<field name="orderButtonModeId">2</field>
-			<field name="defermentGeneralLedgerAccountId"></field>
-			<field name="defermentDate">12/30/1899 12:00:00 AM</field>
-			<field name="numberOfDefermentTransactions">12</field>
-			<field name="generalLedgerPostMethodId">1</field>
-			<field name="sendRenewalNotification">False</field>
-			<field name="payMethodCompatibility">1</field>
-		</record>
-		<record content="items" guid="{F12533E8-F736-40A7-94E3-BCBF874D11DE}" name="Donation, One-Time">
-			<field name="Active">True</field>
-			<field name="SortOrder"></field>
-			<field name="ItemNumber"></field>
-			<field name="UPC"></field>
-			<field name="Options"></field>
-			<field name="OrganizationID"></field>
-			<field name="SourceItemNumber"></field>
-			<field name="CategoryID"></field>
-			<field name="Copy"></field>
-			<field name="CopyFilename"></field>
-			<field name="Overview"></field>
-			<field name="BriefFilename"></field>
-			<field name="GroupID">{e4df5756-f1e2-4cf6-a245-ae4ab284e2e9}</field>
-			<field name="GroupExpirationPeriod">0</field>
-			<field name="UnitCost">0</field>
-			<field name="UnitPrice">0</field>
-			<field name="SalePrice">0</field>
-			<field name="SpecialPrice">0</field>
-			<field name="OnSale">False</field>
-			<field name="Featured">False</field>
-			<field name="New">False</field>
-			<field name="ShippingRequired">True</field>
-			<field name="Weight">1</field>
-			<field name="QuantityOnHand">0</field>
-			<field name="QuantityLow">0</field>
-			<field name="Viewings">0</field>
-			<field name="AltSizeList"></field>
-			<field name="altThumbSizeList"></field>
-			<field name="Thumbnail"></field>
-			<field name="HideOrderButton">False</field>
-			<field name="receiptCopy"></field>
-			<field name="allowReceiptCopy">False</field>
-			<field name="membershipGracePeriodDays">0</field>
-			<field name="isInCatalog">True</field>
-			<field name="isCommissionable">False</field>
-			<field name="MsgToBillingWhenPaid"></field>
-			<field name="GroupExpirationPeriodMonths">0</field>
-			<field name="recurringPrebillDays">0</field>
-			<field name="AffiliatePayment">0</field>
-			<field name="AffiliateSetupPayment">0</field>
-			<field name="membershipDurationTypeId"></field>
-			<field name="membershipMonthId"></field>
-			<field name="isRecurringPurchase">False</field>
-			<field name="recurringPrice">0</field>
-			<field name="sendFulfillmentNotification">True</field>
-			<field name="fulfillmentNotificationGroupId"></field>
-			<field name="invoiceCopy"></field>
-			<field name="allowInvoiceCopy">False</field>
-			<field name="generalLedgerAccountId"></field>
-			<field name="showBundledItems">False</field>
-			<field name="reportCashBasis">False</field>
-			<field name="isTaxable">True</field>
-			<field name="inMyAccount">False</field>
-			<field name="hideInvoiceLineIfNoCharge">False</field>
-			<field name="quantityMax">0</field>
-			<field name="blockDupRecurringPurchases">True</field>
-			<field name="orderButtonModeId"></field>
-			<field name="defermentGeneralLedgerAccountId"></field>
-			<field name="defermentDate">12/30/1899 12:00:00 AM</field>
-			<field name="numberOfDefermentTransactions">12</field>
-			<field name="generalLedgerPostMethodId"></field>
-			<field name="sendRenewalNotification">False</field>
-			<field name="payMethodCompatibility"></field>
 		</record>
 	</data>
 	<CDef Name="Donations" Active="1" AdminOnly="0" AllowAdd="1" AllowCalendarEvents="0" AllowContentChildTool="0" AllowContentTracking="0" AllowDelete="1" AllowMetaContent="0" AllowTopicRules="0" AllowWorkflowAuthoring="0" AuthoringDataSourceName="Default" AuthoringTableName="donations" ContentDataSourceName="Default" ContentTableName="donations" DefaultSortMethod="By Name" DeveloperOnly="0" DropDownFieldList="Name" EditorGroupName="" Parent="" IconLink="" IconHeight="0" IconWidth="0" IconSprites="0" isbasecontent="0" guid="{685FFB09-5F88-495C-A895-2861AE00E8A3}" >
@@ -2453,71 +2170,6 @@ table.donateCheck input { width: 100%; }
 
 .donatePay .form-row .form-input-label {font-family: 'Raleway', sans-serif; font-size:16px;width:100%;}
 .donatePay label {width:100%;text-align:;padding-right: 10px; display: block;}
-.donatePay .creditCard input {width:100%; max-width:350px;}
-
-.form-row.form-name-entry .form-input.fn, .form-row.form-name-entry .form-input.mi, .form-row.form-name-entry .form-input.ln,.form-row.form-contact-entry .phone, .form-row.form-contact-entry .email,
-.form-row.form-csz-entry .form-input.city, .form-row.form-csz-entry .form-input.zip, .form-row.form-csz-entry .form-input.state {width:100%;}
-
-.creditCard .form-row .form-pmt-inputs.cardType {width:100%;}
-.creditCard .form-row .form-pmt-inputs.expDate {width:60%; display:inline-block;}
-.creditCard .form-row .form-pmt-inputs.cvv {width:35%; display:inline-block;}
-.creditCard .form-row .form-pmt-inputs.cvv input {width: 100px;}
-
-.form-pmt-inputs {margin-bottom:15px;}
-
-/***** ERROR *****/
-.donationForm label.error {font-size:10px;color:#00a0d2;background:transparent;}
-
-@media (max-width: 768px) {
-.donate-user, .donate-pmt {width:100%; display:block;}
-.donationForm input, .donationForm select {width:100%; max-width:100%;}
-.donateUser .form-row .form-input input {width:100%; max-width:100%;}
-.donatePay .creditCard input {width:100%; max-width:100%;}
-.form-container {display: block;}
-}
-
-@media (max-width: 412px) {
-  .creditCard .form-row .form-pmt-inputs.expDate {width:100%; display:block;}
-  .creditCard .form-row .form-pmt-inputs.cvv {width:100%; display:block;}
-}
-]]></SharedStyle>
-	<SharedStyle Name="donation-form-exclusive-styles" guid="{87fcccba-6fa7-4ee0-aac9-82ef8293af3e}" alwaysInclude="False" prefix="" suffix="" sortOrder=""><![CDATA[input {margin-bottom:0;}
-.donationForm {font-family: 'Raleway', sans-serif; font-size:16px;}
-.donationForm input, .donationForm select {padding:7px;
-    width:100%;
-    max-width:350px;
-    border: 1px solid #999;
-    border-radius:3px;border-style: inset;
-    border: 1px solid transparent;
-    border-top: none;
-    border-bottom: 1px solid #ddd;
-    box-shadow: inset 0 1px 2px rgba(0,0,0,.39), 0 -1px 1px #fff, 0 1px 0 #fff;}
-/*.donationForm input {box-shadow: inset 0 0 9px #3e3d3d; background-color: #f7f7f7;}*/
-.donationForm input[type='submit'] {color: #fff; font-size:16px; background-color:#49c0f0;padding:10px 15px;box-shadow:none;border:0;background-image: linear-gradient(to bottom, #49c0f0, #2CAFE3);
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-      max-width: 200px;}
-.donationForm input[type='submit']:hover {background-color:#1ab0ec;padding:10px 15px;background-image: linear-gradient(to bottom, #1ab0ec, #1a92c2);    background-image: -webkit-gradient(linear, left top, left bottom, from(#1ab0ec), to(#1a92c2));
-    background-image: -webkit-linear-gradient(top, #1ab0ec, #1a92c2);}
-.donationForm #field, .donationForm label {font-family: 'Raleway', sans-serif; font-size:16px;}
-
-.donateBox h3 {margin-bottom:10px; border-bottom:1px solid #999;font-size: 22px;}
-.donateBox .donBtn {background-color: #b2d4e2;}
-.donateBox .donBtn:hover {background-color:#ffc107;}
-
-.form-container {display: flex;}
-.form-row{ width:100%; padding-bottom: 15px;}
-.form-input{}
-  .form-input{padding-bottom:15px;}
-  .form-row{padding-bottom: 0;}
-
-.donate-user, .donate-pmt {width:48%; display:inline-block;}
-
-.donateUser .form-row .form-input label {width:100%;}
-.donateUser .form-row .form-input input {width:100%; max-width:350px;}
-
-.donatePay .form-row .form-input-label {font-family: 'Raleway', sans-serif; font-size:16px;width:100%;}
-.donatePay label {width:100%;text-align:;padding-right: 10px;}
 .donatePay .creditCard input {width:100%; max-width:350px;}
 
 .form-row.form-name-entry .form-input.fn, .form-row.form-name-entry .form-input.mi, .form-row.form-name-entry .form-input.ln,.form-row.form-contact-entry .phone, .form-row.form-contact-entry .email,
