@@ -42,28 +42,28 @@ Namespace Contensive.Addons.aoDonations
             cp.Doc.SetProperty("DFPaymentType", "20")
             '
             ' act
-            Dim donationDetails As New donationDetailsViewModel(cp)
+            Dim donationDetails As New donationRequestModel(cp)
             ''
             ''assert
-            Assert.AreEqual("1", donationDetails.Address)
-            Assert.AreEqual("2", donationDetails.Address2)
-            Assert.AreEqual("3", donationDetails.firstName)
-            Assert.AreEqual("4", donationDetails.lastName)
-            Assert.AreEqual("5", donationDetails.City)
-            Assert.AreEqual("6", donationDetails.State)
-            Assert.AreEqual("7", donationDetails.Zip)
-            Assert.AreEqual("8", donationDetails.Phone)
-            Assert.AreEqual("9", donationDetails.Email)
-            Assert.AreEqual(10, donationDetails.DonationType)
-            Assert.AreEqual("11", donationDetails.cardName)
-            Assert.AreEqual("12", donationDetails.cardNumber)
-            Assert.AreEqual("13", donationDetails.cardType)
-            Assert.AreEqual("14", donationDetails.cardCVV)
-            Assert.AreEqual("15", donationDetails.cardAddress)
-            Assert.AreEqual("16", donationDetails.cardZip)
-            Assert.AreEqual("17", donationDetails.checkacctName)
-            Assert.AreEqual("18", donationDetails.checkacctNumber)
-            Assert.AreEqual("19", donationDetails.checkacctroutingNumber)
+            Assert.AreEqual("1", donationDetails.DFAddress)
+            'Assert.AreEqual("2", donationDetails.Address2)
+            Assert.AreEqual("3", donationDetails.DFFirstName)
+            Assert.AreEqual("4", donationDetails.DFLastName)
+            Assert.AreEqual("5", donationDetails.DFCity)
+            Assert.AreEqual("6", donationDetails.DFState)
+            Assert.AreEqual("7", donationDetails.DFZip)
+            Assert.AreEqual("8", donationDetails.DFPhone)
+            Assert.AreEqual("9", donationDetails.DFEmail)
+            Assert.AreEqual(10, donationDetails.DFType)
+            Assert.AreEqual("11", donationDetails.DFcardName)
+            Assert.AreEqual("12", donationDetails.DFcardNo)
+            Assert.AreEqual("13", donationDetails.DFcardType)
+            Assert.AreEqual("14", donationDetails.DFcardCVV)
+            'Assert.AreEqual("15", donationDetails.cardAddress)
+            'Assert.AreEqual("16", donationDetails.cardZip)
+            'Assert.AreEqual("17", donationDetails.checkacctName)
+            'Assert.AreEqual("18", donationDetails.checkacctNumber)
+            'Assert.AreEqual("19", donationDetails.checkacctroutingNumber)
             Assert.AreEqual(20, donationDetails.DFPaymentType)
 
             cp.Dispose()
@@ -79,10 +79,10 @@ Namespace Contensive.Addons.aoDonations
             '
             ' assign
             '
-            Dim donationDetails As donationDetailsViewModel = getValidDonationDetails(cp)
+            Dim donationDetails As donationRequestModel = getValidDonationDetails(cp)
             '
             ' act
-            Dim result As donationFormRequestModel = donationHandlerControllerAndView.processAndReturn(cp, errorMessage, donationDetails)
+            Dim result As donationResponseModel = donationHandlerControllerAndView.processAndReturn(cp, errorMessage, donationDetails)
             '
             ' assert
             Assert.AreEqual(True, result.ProcessedOk)
@@ -97,13 +97,13 @@ Namespace Contensive.Addons.aoDonations
             cp.Context.appName = testAppName
             cp.getDoc(True)
             Dim errorMessage As String = ""
-            Dim donationDetails As donationDetailsViewModel
-            Dim result As donationFormRequestModel
+            Dim donationDetails As donationRequestModel
+            Dim result As donationResponseModel
             '
             ' assign
             '
             donationDetails = getValidDonationDetails(cp)
-            donationDetails.firstName = ""
+            donationDetails.DFFirstName = ""
             '
             ' act
             result = donationHandlerControllerAndView.processAndReturn(cp, errorMessage, donationDetails)
@@ -115,7 +115,7 @@ Namespace Contensive.Addons.aoDonations
             ' assign
             '
             donationDetails = getValidDonationDetails(cp)
-            donationDetails.lastName = ""
+            donationDetails.DFLastName = ""
             '
             ' act
             result = donationHandlerControllerAndView.processAndReturn(cp, errorMessage, donationDetails)
@@ -127,7 +127,7 @@ Namespace Contensive.Addons.aoDonations
             ' assign
             '
             donationDetails = getValidDonationDetails(cp)
-            donationDetails.Phone = ""
+            donationDetails.DFPhone = ""
             '
             ' act
             result = donationHandlerControllerAndView.processAndReturn(cp, errorMessage, donationDetails)
@@ -139,7 +139,7 @@ Namespace Contensive.Addons.aoDonations
             ' assign
             '
             donationDetails = getValidDonationDetails(cp)
-            donationDetails.Address = ""
+            donationDetails.DFAddress = ""
             '
             ' act
             result = donationHandlerControllerAndView.processAndReturn(cp, errorMessage, donationDetails)
@@ -151,7 +151,7 @@ Namespace Contensive.Addons.aoDonations
             ' assign
             '
             donationDetails = getValidDonationDetails(cp)
-            donationDetails.Email = ""
+            donationDetails.DFEmail = ""
             '
             ' act
             result = donationHandlerControllerAndView.processAndReturn(cp, errorMessage, donationDetails)
@@ -163,7 +163,7 @@ Namespace Contensive.Addons.aoDonations
             ' assign
             '
             donationDetails = getValidDonationDetails(cp)
-            donationDetails.Zip = ""
+            donationDetails.DFZip = ""
             '
             ' act
             result = donationHandlerControllerAndView.processAndReturn(cp, errorMessage, donationDetails)
@@ -192,24 +192,24 @@ Namespace Contensive.Addons.aoDonations
         ''' </summary>
         ''' <param name="cp"></param>
         ''' <returns></returns>
-        Private Function getValidDonationDetails(cp As CPBaseClass) As donationDetailsViewModel
-            Dim donationDetails As New donationDetailsViewModel(cp)
-            donationDetails.firstName = "test"
-            donationDetails.lastName = "tester"
-            donationDetails.Name = donationDetails.firstName & " " & donationDetails.lastName
-            donationDetails.Address = "here st"
-            donationDetails.Address2 = "apt1"
-            donationDetails.City = "ny"
-            donationDetails.State = "va"
-            donationDetails.Zip = "1234"
-            donationDetails.Email = cp.Utils.GetRandomInteger.ToString
-            donationDetails.Phone = "5678"
-            donationDetails.cardZip = "123456"
-            donationDetails.cardAddress = "here"
-            donationDetails.cardType = "credit"
-            donationDetails.cardName = "VISA"
-            donationDetails.cardNumber = "1234"
-            donationDetails.cardCVV = "123"
+        Private Function getValidDonationDetails(cp As CPBaseClass) As donationRequestModel
+            Dim donationDetails As New donationRequestModel(cp)
+            donationDetails.DFFirstName = "test"
+            donationDetails.DFLastName = "tester"
+            donationDetails.DFName = donationDetails.DFFirstName & " " & donationDetails.DFLastName
+            donationDetails.DFAddress = "here st"
+            'donationDetails.Address2 = "apt1"
+            donationDetails.DFCity = "ny"
+            donationDetails.DFState = "va"
+            donationDetails.DFZip = "1234"
+            donationDetails.DFEmail = cp.Utils.GetRandomInteger.ToString
+            donationDetails.DFPhone = "5678"
+            'donationDetails.cardZip = "123456"
+            'donationDetails.cardAddress = "here"
+            donationDetails.DFcardType = "credit"
+            donationDetails.DFcardName = "VISA"
+            donationDetails.DFcardNo = "1234"
+            donationDetails.DFcardCVV = "123"
             Return donationDetails
         End Function
 

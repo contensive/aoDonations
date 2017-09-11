@@ -22,16 +22,16 @@ aoDonations
   resource lookups using this strongly typed resource class.
 </summary>
 </member>
-<member name="M:Contensive.Addons.aoDonations.donationHandlerControllerAndView.processAndReturn(Contensive.BaseClasses.CPBaseClass,System.String@,Contensive.Addons.aoDonations.donationDetailsViewModel)">
+<member name="M:Contensive.Addons.aoDonations.donationHandlerControllerAndView.processAndReturn(Contensive.BaseClasses.CPBaseClass,System.String@,Contensive.Addons.aoDonations.donationRequestModel)">
  <summary>
  processes the donation form from the donationsDetails model. It returns an object with the return results
  </summary>
  <param name="CP"></param>
  <param name="errMsg"></param>
- <param name="donationDetails"></param>
+ <param name="donationRequest"></param>
  <returns></returns>
 </member>
-<member name="M:Contensive.Addons.aoDonations.donationHandlerControllerAndView.verifyUserAndAccount(Contensive.BaseClasses.CPBaseClass,Contensive.Addons.aoDonations.donationDetailsViewModel,System.Int32@,System.Int32@,System.String@)">
+<member name="M:Contensive.Addons.aoDonations.donationHandlerControllerAndView.verifyUserAndAccount(Contensive.BaseClasses.CPBaseClass,Contensive.Addons.aoDonations.donationRequestModel,System.Int32@,System.Int32@,System.String@)">
  <summary>
  verify the user is authenticated or update his account from the donation model. Return the user's accountId. If cannot create the account, return false and the errMessage is a user error.
  </summary>

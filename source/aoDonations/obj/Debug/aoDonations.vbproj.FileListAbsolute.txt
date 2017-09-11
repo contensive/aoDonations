@@ -37,3 +37,11 @@ C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\aoDonations\obj\Debug\aoDo
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\aoDonations\obj\Debug\aoDonations.dll
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\aoDonations\obj\Debug\aoDonations.xml
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\aoDonations\obj\Debug\aoDonations.pdb
+C:\Users\jay\OneDrive\Documents\git\aoDonations\source\aoDonations\bin\Debug\aoDonations.dll
+C:\Users\jay\OneDrive\Documents\git\aoDonations\source\aoDonations\bin\Debug\aoDonations.pdb
+C:\Users\jay\OneDrive\Documents\git\aoDonations\source\aoDonations\bin\Debug\aoDonations.xml
+C:\Users\jay\OneDrive\Documents\git\aoDonations\source\aoDonations\obj\Debug\Resources.resources
+C:\Users\jay\OneDrive\Documents\git\aoDonations\source\aoDonations\obj\Debug\aoDonations.vbproj.GenerateResource.Cache
+C:\Users\jay\OneDrive\Documents\git\aoDonations\source\aoDonations\obj\Debug\aoDonations.dll
+C:\Users\jay\OneDrive\Documents\git\aoDonations\source\aoDonations\obj\Debug\aoDonations.xml
+C:\Users\jay\OneDrive\Documents\git\aoDonations\source\aoDonations\obj\Debug\aoDonations.pdb

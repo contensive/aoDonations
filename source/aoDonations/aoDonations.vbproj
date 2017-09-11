@@ -80,8 +80,8 @@
     <Compile Include="controllers\donationHandlerControllerAndView.vb" />
     <Compile Include="interfaces\addons\donationClass.vb" />
     <Compile Include="interfaces\remotes\donationHandlerClass.vb" />
-    <Compile Include="models\donationFormThankYouModel.vb" />
-    <Compile Include="models\donationDetailsModel.vb" />
+    <Compile Include="models\donationResponseModel.vb" />
+    <Compile Include="models\donationRequestModel.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -123,13 +123,6 @@
     <Folder Include="interfaces\events\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
   <PropertyGroup>
     <PostBuildEvent>copy $(TargetDir)"*.dll" "%25programfiles%25\kma\Contensive\Addons"</PostBuildEvent>
   </PropertyGroup>

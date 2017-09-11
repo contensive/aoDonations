@@ -5,7 +5,7 @@ Option Explicit On
 Namespace Contensive.Addons.aoDonations
     '
     '
-    Public Class donationFormRequestModel
+    Public Class donationResponseModel
         '
         ' if processedOk is false, the errorMessage is a user message to be displayed on the UI
         '

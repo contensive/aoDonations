@@ -20,15 +20,13 @@ Namespace Contensive.Addons.aoDonations
         ''' </summary>
         ''' <param name="CP"></param>
         ''' <param name="errMsg"></param>
-        ''' <param name="donationDetails"></param>
+        ''' <param name="donationRequest"></param>
         ''' <returns></returns>
-        Public Shared Function processAndReturn(ByVal CP As BaseClasses.CPBaseClass, ByRef errMsg As String, donationDetails As donationDetailsViewModel) As donationFormRequestModel
-            Dim response As New donationFormRequestModel
+        Public Shared Function processAndReturn(ByVal CP As BaseClasses.CPBaseClass, ByRef errMsg As String, donationRequest As donationRequestModel) As donationResponseModel
+            Dim response As New donationResponseModel
             Try
-                ' Dim processed As Boolean = False
                 Dim cs As BaseClasses.CPCSBaseClass = CP.CSNew()
                 Dim csA As BaseClasses.CPCSBaseClass = CP.CSNew()
-                'donationDetails = New donationDetailsViewModel(CP)
                 Dim rS As String = ""   '   response stream
                 Dim resultDoc As New System.Xml.XmlDocument
                 Dim ppResponse As String = ""
@@ -40,16 +38,11 @@ Namespace Contensive.Addons.aoDonations
                 Dim copy As String = br & br
                 Dim copyPlus As String = ""
                 Dim recordLink As String = ""
-                Dim amount As Double = CP.Doc.GetNumber("DFAmount")
-                Dim tlpaDonationAmountString As String
-
                 Dim donationID As Integer = 0
                 Dim eCom As New aoAccountBilling.apiClass
                 Dim acctStatus As New aoAccountBilling.apiClass.accountStatusStructAPIVersion
-                Dim locUserError As String = ""
                 Dim donationAccountID As Integer = 0
                 Dim donationPersonId As Integer = 0
-                'Dim errFlag As Boolean
                 Dim newAccountName As String = ""
                 Dim locOrderID As Integer = 0
                 Dim locOrderDetailID As Integer
@@ -61,12 +54,17 @@ Namespace Contensive.Addons.aoDonations
                 Dim existingEmail As String = ""
                 Dim errMessage As String = ""
                 '
+                'Dim recaptchaChallenge As String = CP.Doc.GetText("recaptcha_challenge_field")
+                'Dim recaptchaResponse As String = CP.Doc.GetText("recaptcha_response_field")
+
+                'Dim recaptchaOk As Boolean = CP.Visit.GetBoolean("recaptcha:" & recaptchaChallenge)
+                'If (Not recaptchaOk) Then
+
+                'End If
                 CP.Doc.SetProperty("Challenge", CP.Doc.GetText("recaptcha_challenge_field"))
                 CP.Doc.SetProperty("Response", CP.Doc.GetText("recaptcha_response_field"))
-                Dim reCaptchaProcessGuidResponse = CP.Utils.ExecuteAddon(reCaptchaProcessGuid)
-                CP.Utils.AppendLog("reCaptchaProcessGuid.log", "Here:")
-                CP.Utils.AppendLog("reCaptchaProcessGuid.log", reCaptchaProcessGuidResponse)
-                If Not CP.UserError.OK Then
+                Dim reCaptchaResponse As String = CP.Utils.ExecuteAddon(reCaptchaProcessGuid)
+                If (Not String.IsNullOrEmpty(reCaptchaResponse)) Then
                     '
                     ' -- recaptcha error
                     response.errorMessage = "The Recaptcha text did not match. Please try again."
@@ -76,35 +74,35 @@ Namespace Contensive.Addons.aoDonations
                     ' -- recapcha ok
                     '
                     If True Then
-                        tlpaDonationAmountString = FormatCurrency(amount)
+                        Dim donationAmount As Double = CP.Utils.EncodeNumber(donationRequest.donateAmountOther)
+                        Dim donationAmountString As String = FormatCurrency(donationRequest.donateAmountOther)
                         response.ProcessedOk = True
-                        '
-                        CP.Utils.AppendLog("createAccount.log", "Start Process Form")
-                        '
-                        With donationDetails
-                            '
-                            If (.firstName = "") Then
+                        With donationRequest
+                            If (donationAmount <= 0) Then
+                                response.errorMessage = donationErrorAmount
+                                response.ProcessedOk = False
+                            ElseIf (.DFFirstName = "") Then
                                 response.errorMessage = donationErrorFirstName
                                 response.ProcessedOk = False
-                            ElseIf (.lastName = "") Then
+                            ElseIf (.DFLastName = "") Then
                                 response.errorMessage = donationErrorLastname
                                 response.ProcessedOk = False
-                            ElseIf (.Phone = "") Then
+                            ElseIf (.DFPhone = "") Then
 
                                 response.errorMessage = donationErrorPhone
                                 response.ProcessedOk = False
-                            ElseIf (.Address = "") Then
+                            ElseIf (.DFAddress = "") Then
                                 response.errorMessage = donationErrorAddress
                                 response.ProcessedOk = False
-                            ElseIf (.Email = "") Then
+                            ElseIf (.DFEmail = "") Then
                                 response.errorMessage = donationErrorEmail
                                 response.ProcessedOk = False
 
-                            ElseIf (.Zip = "") Then
+                            ElseIf (.DFZip = "") Then
                                 response.errorMessage = donationErrorZip
                                 response.ProcessedOk = False
                                 'ElseIf Not verifyUserAndAccount(CP, donationDetails, donationAccountID, donationPersonId, errMessage) Then
-                            ElseIf Not verifyUserAndAccount(CP, donationDetails, donationAccountID, donationPersonId, errMessage) Then
+                            ElseIf Not verifyUserAndAccount(CP, donationRequest, donationAccountID, donationPersonId, errMessage) Then
                                 '
                                 ' problem verifying the user or account
                                 '
@@ -115,7 +113,7 @@ Namespace Contensive.Addons.aoDonations
                                 ' if authenticated, accountUserid = cp.user.id
                                 '
                                 Dim itemGuid As String = ""
-                                Select Case .DonationType
+                                Select Case CP.Utils.EncodeInteger(.DFType)
                                     Case 1
                                         itemGuid = itemGuidOnce1
                                     Case 2
@@ -146,158 +144,125 @@ Namespace Contensive.Addons.aoDonations
                                 '
                                 CP.Utils.AppendLog("createAccount.log", "locAccountID: " & donationAccountID)
                                 If donationAccountID = 0 Then
-                                    newAccountName = .firstName & " " & .lastName
+                                    '
+                                    ' -- create new account
+                                    newAccountName = .DFFirstName & " " & .DFLastName
                                     CP.Utils.AppendLog("createAccount.log", "newAccountName: " & newAccountName)
-                                    donationAccountID = eCom.createAccount(CP, locUserError, CP.User.Id, newAccountName)
-                                    If locUserError <> "" Then
-                                        CP.Utils.AppendLog("createAccount.log", "locUserError: " & locUserError)
-                                        response.ProcessedOk = False
-                                        response.errorMessage = locUserError & br
-                                        locUserError = ""
+                                    donationAccountID = eCom.createAccount(CP, response.errorMessage, CP.User.Id, newAccountName)
+                                    response.ProcessedOk = String.IsNullOrEmpty(response.errorMessage)
+                                    If response.ProcessedOk Then
+                                        '
+                                        ' -- set current use as primary and billing
+                                        eCom.setAccountPrimaryContact(CP, response.errorMessage, donationAccountID, CP.User.Id)
+                                        response.ProcessedOk = String.IsNullOrEmpty(response.errorMessage)
+                                        '
+                                        eCom.setAccountBillingContact(CP, response.errorMessage, donationAccountID, CP.User.Id)
+                                        response.ProcessedOk = String.IsNullOrEmpty(response.errorMessage)
                                     End If
                                 End If
                                 '
                                 '
                                 If response.ProcessedOk Then
-                                    locOrderID = eCom.createOrder(CP, locUserError)
-                                    If locUserError <> "" Then
-                                        response.ProcessedOk = False
-                                        response.errorMessage = locUserError & br
-                                        locUserError = ""
-                                    End If
+                                    locOrderID = eCom.createOrder(CP, response.errorMessage)
+                                    response.ProcessedOk = String.IsNullOrEmpty(response.errorMessage)
                                     '
-                                    '
-                                    eCom.setOrderAccount(CP, locUserError, locOrderID, donationAccountID)
-                                    If locUserError <> "" Then
-                                        response.ProcessedOk = False
-                                        response.errorMessage = locUserError & br
-                                        locUserError = ""
-                                    End If
+                                    eCom.setOrderAccount(CP, response.errorMessage, locOrderID, donationAccountID)
+                                    response.ProcessedOk = String.IsNullOrEmpty(response.errorMessage)
                                 End If
                                 '
                                 '
                                 If response.ProcessedOk Then
-                                    locOrderDetailID = eCom.addOrderItem(CP, locUserError, locOrderID, locItemID)
-                                    If locUserError <> "" Then
-                                        response.ProcessedOk = False
-                                        response.errorMessage = locUserError & br
-                                        locUserError = ""
+                                    locOrderDetailID = eCom.addOrderItem(CP, response.errorMessage, locOrderID, locItemID)
+                                    response.ProcessedOk = String.IsNullOrEmpty(response.errorMessage)
+                                    If (response.ProcessedOk) Then
+                                        Call CP.Db.ExecuteSQL("update orderdetails set unitPriceOverride=" & CP.Db.EncodeSQLNumber(donationAmount) & " where id=" & locOrderDetailID)
                                     End If
-                                    Call CP.Db.ExecuteSQL("update orderdetails set unitPriceOverride=" & CP.Db.EncodeSQLNumber(amount) & " where id=" & locOrderDetailID)
                                 End If
-                                '
                                 '
                                 '   payment for order if no errors
                                 '
-                                Dim cardExpiration As String = CP.Doc.GetText("DFcardExp") & "/" & "1" & "/" & CP.Doc.GetText("DFcardYr")
-                                Dim regDate As Date = Date.Now()
-                                Dim completedDate As String = regDate.ToString("MMMM" & " " & "dd" & ", " & "yyyy")
-                                'Dim complatedDate As String = CP.Doc.GetText("DFcardExp") & "/" & "1" & "/" & CP.Doc.GetText("DFcardYr")
-                                '
-                                '
                                 Dim onDemandMethod As New Contensive.Addons.aoAccountBilling.apiClass.onDemandMethodStructApiVersion
-                                onDemandMethod.useAch = CP.Doc.GetBoolean("DFPaymentType")
-                                If onDemandMethod.useAch = True Then
-                                    '
-                                    ' check
-                                    '
-
-                                    onDemandMethod.achAccountName = .checkacctName
-                                    onDemandMethod.achAccountNumber = .checkacctNumber
-                                    onDemandMethod.achRoutingNumber = .checkacctroutingNumber
-                                Else
-                                    '
-                                    ' credit card
-                                    '
-                                    onDemandMethod.CreditCardNumber = .cardNumber
-                                    onDemandMethod.CreditCardExpiration = cardExpiration
-                                    onDemandMethod.CreditCardExpiration = (New Date(CP.Doc.GetInteger("DFcardYr"), CP.Doc.GetInteger("DFcardExp"), 1)).ToShortDateString
-                                    onDemandMethod.SecurityCode = .cardCVV
-                                End If
-                                onDemandMethod.FirstName = .firstName
-                                onDemandMethod.LastName = .lastName
-
-                                response.ProcessedOk = eCom.payOrder(CP, locUserError, locOrderID, onDemandMethod, 0, "Taxicab, Limousine and Paratransit Association Donation")
+                                onDemandMethod.useAch = False
+                                onDemandMethod.CreditCardNumber = .DFcardNo
+                                onDemandMethod.CreditCardExpiration = (New Date(CP.Doc.GetInteger("DFcardYr"), CP.Doc.GetInteger("DFcardExp"), 1)).ToShortDateString
+                                onDemandMethod.SecurityCode = .DFcardCVV
+                                onDemandMethod.FirstName = .DFFirstName
+                                onDemandMethod.LastName = .DFLastName
+                                response.ProcessedOk = eCom.payOrder(CP, response.errorMessage, locOrderID, onDemandMethod, 0, "Taxicab, Limousine and Paratransit Association Donation")
                                 If response.ProcessedOk Then
                                     '
                                     '   login user
                                     '
                                     CP.User.LoginByID(CP.User.Id.ToString)
-                                    '
-                                    eCom.setAccountPrimaryContact(CP, locUserError, donationAccountID, CP.User.Id)
-                                    If locUserError <> "" Then
-                                        response.ProcessedOk = False
-                                        response.errorMessage = locUserError & br
-                                        locUserError = ""
-                                    End If
-                                    '
-                                    eCom.setAccountBillingContact(CP, locUserError, donationAccountID, CP.User.Id)
-                                    If locUserError <> "" Then
-                                        response.ProcessedOk = False
-                                        response.errorMessage = locUserError & br
-                                    End If
+                                    ''
+                                    'eCom.setAccountPrimaryContact(CP, response.errorMessage, donationAccountID, CP.User.Id)
+                                    'response.ProcessedOk = String.IsNullOrEmpty(response.errorMessage)
+                                    ''
+                                    'eCom.setAccountBillingContact(CP, response.errorMessage, donationAccountID, CP.User.Id)
+                                    'response.ProcessedOk = String.IsNullOrEmpty(response.errorMessage)
                                 End If
                                 '
                                 If response.ProcessedOk Then
                                     '
                                     '   insert Donation
                                     '
-                                    .State = ""
                                     If cs.Insert("Donations") Then
                                         donationID = cs.GetInteger("id")
-                                        cs.SetField("name", "Donation made " & Date.Today & " by " & .firstName & " " & .lastName)
-                                        cs.SetField("firstName", .firstName)
-                                        cs.SetFormInput("middleName", "DFMiddleName")
-                                        cs.SetField("lastName", .lastName)
-                                        cs.SetFormInput("address", .Address)
-                                        cs.SetFormInput("address2", .Address2)
-                                        cs.SetFormInput("city", "DFCity")
-                                        .State = CP.Content.GetRecordName("States", CP.Doc.GetInteger("DFStateID"))
-                                        cs.SetField("state", .State)
-                                        cs.SetFormInput("zip", "DFZip")
-                                        cs.SetFormInput("phone", "DFPhone")
-                                        cs.SetFormInput("email", .Email)
-                                        cs.SetField("amount", amount.ToString)
-                                        '
+                                        cs.SetField("name", "Donation made " & Date.Today & " by " & .DFFirstName & " " & .DFLastName)
+                                        cs.SetField("firstName", .DFFirstName)
+                                        cs.SetField("middleName", .DFMiddleName)
+                                        cs.SetField("lastName", .DFLastName)
+                                        cs.SetField("address", .DFAddress)
+                                        cs.SetField("city", .DFCity)
+                                        cs.SetField("state", .DFState)
+                                        cs.SetField("zip", .DFZip)
+                                        cs.SetField("phone", .DFPhone)
+                                        cs.SetField("email", .DFEmail)
+                                        cs.SetField("amount", donationAmount.ToString())
                                         cs.SetField("processorReference", "Order #" & locOrderID)
                                         cs.SetField("processorResponse", "Processed OK")
-                                        '
                                         cs.SetField("memberID", CP.User.Id.ToString)
                                         cs.SetField("visitID", CP.Visit.Id.ToString)
-
+                                        cs.SetField("accountid", donationAccountID.ToString())
                                     End If
                                     cs.Close()
                                     '
                                     ' populate thank you page
                                     '
-                                    '
-                                    response.name = "Full Name:" & " " & .firstName & " " & .lastName & "</br>" & "Address:" & " " & .Address & "</br>" & "City:" & " " & .City & "</br>" & "State/Province:" & " " & .State & "</br> " & "Zip/Postal Code:" & " " & .Zip & "</br> " & "Email:" & " " & .Email
+                                    Dim regDate As Date = Date.Now()
+                                    Dim completedDate As String = regDate.ToString("MMMM" & " " & "dd" & ", " & "yyyy")
+                                    response.name = "Full Name:" & " " & .DFFirstName & " " & .DFLastName & "</br>" & "Address:" & " " & .DFAddress & "</br>" & "City:" & " " & .DFCity & "</br>" & "State/Province:" & " " & .DFState & "</br> " & "Zip/Postal Code:" & " " & .DFZip & "</br> " & "Email:" & " " & .DFEmail
                                     response.completedDate = completedDate
-                                    response.donationType = .DonationType
-                                    response.donationAmount = tlpaDonationAmountString
+                                    response.donationType = CP.Utils.EncodeInteger(.DFType)
+                                    response.donationAmount = donationAmountString
                                     response.myDFPaymentType = CStr(.DFPaymentType)
-                                    If onDemandMethod.useAch = True Then
-                                        '
-                                        '
-                                        '                      
-                                        response.paymentHolderName = "Name on Account:" & " " & .checkacctName & "</br>" & "Account Number: " & " " & .checkacctNumber & "</br>" & "Bank Routing Number: " & " " & .checkacctroutingNumber
-                                    Else
-                                        '
-                                        '
-                                        Dim newcardNumber = .cardNumber.Substring(.cardNumber.Length - 4, 4)
-                                        '
-                                        response.paymentHolderName = "Cardholder Name:" & " " & .cardName & "</br>" & " " & newcardNumber & "</br>" & " " & .cardType
+                                    Dim newcardNumber As String = .DFcardNo
+                                    If (.DFcardNo.Length > 4) Then
+                                        newcardNumber = newcardNumber.Substring(newcardNumber.Length - 4, 4)
                                     End If
+                                    response.paymentHolderName = "Cardholder Name:" & " " & .DFcardName & "</br>" & " " & newcardNumber & "</br>" & " " & .DFcardType
+                                    'If onDemandMethod.useAch = True Then
+                                    '    '
+                                    '    '
+                                    '    '                      
+                                    '    response.paymentHolderName = "Name on Account:" & " " & .checkacctName & "</br>" & "Account Number: " & " " & .checkacctNumber & "</br>" & "Bank Routing Number: " & " " & .checkacctroutingNumber
+                                    'Else
+                                    '    '
+                                    '    '
+                                    '    Dim newcardNumber = .DFcardNo.Substring(.DFcardNo.Length - 4, 4)
+                                    '    '
+                                    '    response.paymentHolderName = "Cardholder Name:" & " " & .DFcardName & "</br>" & " " & newcardNumber & "</br>" & " " & .DFcardType
+                                    'End If
                                     '
                                     '
                                     '   send notifications
                                     '
-                                    copy += "First Name: " & .firstName & br
-                                    copy += "Last Name: " & .lastName & br
+                                    copy += "First Name: " & .DFFirstName & br
+                                    copy += "Last Name: " & .DFLastName & br
                                     'copy += "Total Amount: " & amount & br
-                                    copy += "Amount Paid: " & tlpaDonationAmountString & br
+                                    copy += "Amount Paid: " & donationAmountString & br
                                     copy += "Payment Date: " & Date.Today & br
-                                    copy += "Account Number: " & Right(.cardNumber, 4) & br
+                                    copy += "Account Number: " & Right(.DFcardNo, 4) & br
                                     '
                                     '   add link to email
                                     '
@@ -311,7 +276,7 @@ Namespace Contensive.Addons.aoDonations
                                     Dim donUserId As Integer = 0
                                     'Dim existUser As Boolean = False
                                     '
-                                    If csDon.Open("people", "email = " & CP.Db.EncodeSQLText(.Email)) Then
+                                    If csDon.Open("people", "email = " & CP.Db.EncodeSQLText(.DFEmail)) Then
                                         '
                                         ' he exists
                                         '
@@ -322,8 +287,8 @@ Namespace Contensive.Addons.aoDonations
                                         '
                                         Call csDon.Close()
                                         Call csDon.Insert("people")
-                                        Call csDon.SetField("Name", .firstName & " " & .lastName)
-                                        Call csDon.SetField("email", .Email)
+                                        Call csDon.SetField("Name", .DFFirstName & " " & .DFLastName)
+                                        Call csDon.SetField("email", .DFEmail)
                                         donUserId = csDon.GetInteger("id")
                                     End If
                                     Call csDon.Close()
@@ -349,7 +314,7 @@ Namespace Contensive.Addons.aoDonations
         ''' </summary>
         ''' <param name="CP"></param>
         ''' <returns></returns>
-        Private Shared Function verifyUserAndAccount(ByVal CP As BaseClasses.CPBaseClass, donationDetails As donationDetailsViewModel, ByRef returnDonationAccountID As Integer, ByRef returnDonationPersonId As Integer, ByRef returnErrMessage As String) As Boolean
+        Private Shared Function verifyUserAndAccount(ByVal CP As BaseClasses.CPBaseClass, donationDetails As donationRequestModel, ByRef returnDonationAccountID As Integer, ByRef returnDonationPersonId As Integer, ByRef returnErrMessage As String) As Boolean
             Dim result As Boolean = True
             '
             Try
@@ -372,7 +337,7 @@ Namespace Contensive.Addons.aoDonations
                     ' create new account for this user
                     '
                     returnDonationAccountID = 0
-                    If cs.Open("people", "email=" & CP.Db.EncodeSQLText(donationDetails.Email)) Then
+                    If cs.Open("people", "email=" & CP.Db.EncodeSQLText(donationDetails.DFEmail)) Then
                         '
                         ' this email is in user
                         '
@@ -389,11 +354,11 @@ Namespace Contensive.Addons.aoDonations
                         '
                         If cs.Insert("people") Then
                             returnDonationPersonId = cs.GetInteger("id")
-                            cs.SetField("Name", donationDetails.Name)
-                            cs.SetField("lastName", donationDetails.lastName)
-                            cs.SetField("firstName", donationDetails.firstName)
-                            cs.SetField("email", donationDetails.Email)
-                            cs.SetField("BillName", donationDetails.Name)
+                            cs.SetField("Name", donationDetails.DFName)
+                            cs.SetField("lastName", donationDetails.DFLastName)
+                            cs.SetField("firstName", donationDetails.DFFirstName)
+                            cs.SetField("email", donationDetails.DFEmail)
+                            cs.SetField("BillName", donationDetails.DFName)
 
                         End If
                         cs.Close()
@@ -417,11 +382,11 @@ Namespace Contensive.Addons.aoDonations
                         returnDonationAccountID = 0
                     End If
                     cs.Close()
-                    End If
-                    '
-                    ' verify the donationUser has a donationAccount
-                    '
-                    If (returnDonationAccountID = 0) Then
+                End If
+                '
+                ' verify the donationUser has a donationAccount
+                '
+                If (returnDonationAccountID = 0) Then
                     returnDonationAccountID = eCommerce.createAccount(CP, ecommerceErrorMessage, returnDonationPersonId)
                     If Not String.IsNullOrEmpty(ecommerceErrorMessage) Then
                         '
@@ -441,7 +406,7 @@ Namespace Contensive.Addons.aoDonations
                         Else
                             If cs.Open("people", "id=" & returnDonationPersonId) Then
                                 Call cs.SetField("accountId", returnDonationAccountID.ToString)
-                                Call cs.SetField("BillName", donationDetails.Name)
+                                Call cs.SetField("BillName", donationDetails.DFName)
                             End If
                             Call cs.Close()
                             ' CP.Db.ExecuteSQL("update abaccounts set memberId=" & returnDonationPersonId & ",billingmemberId=" & returnDonationPersonId & " where id=" & returnDonationAccountID)

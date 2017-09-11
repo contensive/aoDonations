@@ -17,8 +17,8 @@ Namespace Contensive.Addons.aoDonations
             Dim resultJSON As String = ""
             Try
                 Dim errMsg As String = ""
-                Dim donationDetails = New donationDetailsViewModel(CP)
-                Dim response As donationFormRequestModel
+                Dim donationDetails = New donationRequestModel(CP)
+                Dim response As donationResponseModel
                 Dim jsonSerializer As New System.Web.Script.Serialization.JavaScriptSerializer
                 '
                 ' verify if the user is not logged in, we log them out
