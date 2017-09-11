@@ -43,9 +43,13 @@ Namespace Contensive.Addons.aoDonations
             DFcardExp = cp.Doc.GetText("DFcardExp") & "/" & cp.Doc.GetText("DFcardYr")
             DFcardCVV = cp.Doc.GetText("DFCardCVV")
             DFPaymentType = cp.Doc.GetText("DFPaymentType")
-            donationAmount = cp.Doc.GetText("donationAmount")
+            donationAmount = cp.Doc.GetText("donateAmt")
             donateAmountOther = cp.Doc.GetText("donateAmountOther")
+            '
+            cp.Utils.AppendLog("debug.log", "donationREquestModel, DFFirstName=[" & DFFirstName & "]")
+            cp.Utils.AppendLog("debug.log", "donationREquestModel, donationAmount=[" & donationAmount & "],donateAmountOther=[" & donateAmountOther & "]")
         End Sub
+        '
 
 
     End Class

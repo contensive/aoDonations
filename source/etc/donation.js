@@ -8,22 +8,22 @@ jQuery(document).ready(function() {
     //
     jQuery("#js-donAmt01").click(function() {
         jQuery("#donationAmount").val(5.00);
-        jQuery("#donationAmount").prop("disabled", true);
+        //jQuery("#donationAmount").prop("disabled", true);
     });
     //
     jQuery("#js-donAmt02").click(function() {
         jQuery("#donationAmount").val(10.00);
-        jQuery("#donationAmount").prop("disabled", true);
+        //jQuery("#donationAmount").prop("disabled", true);
     });
     //
     jQuery("#js-donAmt03").click(function() {
         jQuery("#donationAmount").val(15.00);
-        jQuery("#donationAmount").prop("disabled", true);
+        //jQuery("#donationAmount").prop("disabled", true);
     });
     //
     jQuery("#js-donAmtOther").click(function() {
         jQuery("#donationAmount").val("");
-        jQuery("#donationAmount").prop("disabled", false);
+        //jQuery("#donationAmount").prop("disabled", false);
     });
 	//
 	var form = $( "#donationInputForm" );

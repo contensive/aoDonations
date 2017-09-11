@@ -74,8 +74,11 @@ Namespace Contensive.Addons.aoDonations
                     ' -- recapcha ok
                     '
                     If True Then
-                        Dim donationAmount As Double = CP.Utils.EncodeNumber(donationRequest.donateAmountOther)
-                        Dim donationAmountString As String = FormatCurrency(donationRequest.donateAmountOther)
+                        Dim donationAmount As Double = CP.Utils.EncodeNumber(donationRequest.donationAmount)
+                        If (donationAmount = 0) Then
+                            donationAmount = CP.Utils.EncodeNumber(donationRequest.donateAmountOther)
+                        End If
+                        Dim donationAmountString As String = FormatCurrency(donationAmount)
                         response.ProcessedOk = True
                         With donationRequest
                             If (donationAmount <= 0) Then

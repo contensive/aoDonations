@@ -31,22 +31,22 @@ jQuery(document).ready(function() {
     //
     jQuery("#js-donAmt01").click(function() {
         jQuery("#donationAmount").val(5.00);
-        jQuery("#donationAmount").prop("disabled", true);
+        //jQuery("#donationAmount").prop("disabled", true);
     });
     //
     jQuery("#js-donAmt02").click(function() {
         jQuery("#donationAmount").val(10.00);
-        jQuery("#donationAmount").prop("disabled", true);
+        //jQuery("#donationAmount").prop("disabled", true);
     });
     //
     jQuery("#js-donAmt03").click(function() {
         jQuery("#donationAmount").val(15.00);
-        jQuery("#donationAmount").prop("disabled", true);
+        //jQuery("#donationAmount").prop("disabled", true);
     });
     //
     jQuery("#js-donAmtOther").click(function() {
         jQuery("#donationAmount").val("");
-        jQuery("#donationAmount").prop("disabled", false);
+        //jQuery("#donationAmount").prop("disabled", false);
     });
 	//
 	var form = $( "#donationInputForm" );
@@ -2089,4 +2089,5 @@ table.donateCheck input { width: 100%; }
 	<ImportCollection name="JQuery">{A435BF70-041B-43D1-8A8D-5D9D59A7FCD0}</ImportCollection>
 	<Resource name="aodonations.dll" type="executable" path="" />
 	<Resource name="accountbillingapi.dll" type="executable" path="" />
+	<Resource name="newtonsoft.json.dll" type="executable" path="" />
 </Collection>
