@@ -15,8 +15,6 @@ C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\wwwRoot\bin\wwwRoot.dll.co
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\wwwRoot\bin\wwwRoot.dll
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\wwwRoot\bin\wwwRoot.pdb
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\wwwRoot\bin\wwwRoot.xml
-C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\wwwRoot\bin\accountBillingApi.dll
-C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\wwwRoot\bin\adminFramework.dll
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\wwwRoot\bin\CPBase.dll
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\wwwRoot\bin\Processor.dll
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\wwwRoot\bin\CommonLibrary.dll
