@@ -23,4 +23,3 @@ C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\wwwRoot\obj\Debug\wwwRoot.
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\wwwRoot\obj\Debug\wwwRoot.dll
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\wwwRoot\obj\Debug\wwwRoot.xml
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\wwwRoot\obj\Debug\wwwRoot.pdb
-C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\wwwRoot\obj\Debug\wwwRoot.vbprojResolveAssemblyReference.cache

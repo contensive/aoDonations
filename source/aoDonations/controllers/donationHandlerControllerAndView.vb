@@ -417,6 +417,18 @@ Namespace Contensive.Addons.aoDonations
                             eCommerce.setAccountPrimaryContact(CP, ecommerceErrorMessage, returnDonationAccountID, CP.User.Id)
                         End If
                     End If
+                Else
+                    '
+                    ' -- Account provided, verify it is ok
+                    Dim accountStatus As aoAccountBilling.apiClass.accountStatusStructAPIVersion = eCommerce.getAccountStatus(CP, returnErrMessage, returnDonationAccountID)
+                    If (String.IsNullOrEmpty(returnErrMessage)) Then
+                        If (Not accountStatus.exists) Then
+                            returnDonationAccountID = 0
+                        ElseIf (accountStatus.closed) Then
+                            returnErrMessage = "Your account is closed."
+                            result = False
+                        End If
+                    End If
                 End If
             Catch ex As Exception
                 Try
