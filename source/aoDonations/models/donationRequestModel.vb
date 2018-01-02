@@ -46,8 +46,8 @@ Namespace Contensive.Addons.aoDonations
             donationAmount = cp.Doc.GetText("donateAmt")
             donateAmountOther = cp.Doc.GetText("donateAmountOther")
             '
-            cp.Utils.AppendLog("debug.log", "donationREquestModel, DFFirstName=[" & DFFirstName & "]")
-            cp.Utils.AppendLog("debug.log", "donationREquestModel, donationAmount=[" & donationAmount & "],donateAmountOther=[" & donateAmountOther & "]")
+            'cp.Utils.AppendLog("debug.log", "donationREquestModel, DFFirstName=[" & DFFirstName & "]")
+            ' cp.Utils.AppendLog("debug.log", "donationREquestModel, donationAmount=[" & donationAmount & "],donateAmountOther=[" & donateAmountOther & "]")
         End Sub
         '
 
