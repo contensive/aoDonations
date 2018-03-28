@@ -21,3 +21,17 @@ C:\Users\jay\OneDrive\Documents\aoDonations\source\UnitTestProject1\obj\Debug\Un
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\UnitTestProject1\obj\Debug\Resources.resources
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\UnitTestProject1\obj\Debug\UnitTestProject1.vbproj.GenerateResource.Cache
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\UnitTestProject1\obj\Debug\UnitTestProject1.vbprojResolveAssemblyReference.cache
+C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\UnitTestProject1\bin\Debug\UnitTestProject1.dll
+C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\UnitTestProject1\bin\Debug\UnitTestProject1.pdb
+C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\UnitTestProject1\bin\Debug\UnitTestProject1.xml
+C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\UnitTestProject1\bin\Debug\aoDonations.dll
+C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\UnitTestProject1\bin\Debug\CPBase.dll
+C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\UnitTestProject1\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\UnitTestProject1\bin\Debug\Processor.dll
+C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\UnitTestProject1\bin\Debug\accountBillingApi.dll
+C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\UnitTestProject1\bin\Debug\CommonLibrary.dll
+C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\UnitTestProject1\bin\Debug\Interop.CSGUID.dll
+C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\UnitTestProject1\bin\Debug\aoDonations.pdb
+C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\UnitTestProject1\obj\Debug\UnitTestProject1.dll
+C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\UnitTestProject1\obj\Debug\UnitTestProject1.xml
+C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\UnitTestProject1\obj\Debug\UnitTestProject1.pdb

@@ -45,4 +45,3 @@ C:\Users\jay\OneDrive\Documents\git\aoDonations\source\aoDonations\obj\Debug\aoD
 C:\Users\jay\OneDrive\Documents\git\aoDonations\source\aoDonations\obj\Debug\aoDonations.dll
 C:\Users\jay\OneDrive\Documents\git\aoDonations\source\aoDonations\obj\Debug\aoDonations.xml
 C:\Users\jay\OneDrive\Documents\git\aoDonations\source\aoDonations\obj\Debug\aoDonations.pdb
-C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\aoDonations\obj\Debug\aoDonations.vbprojResolveAssemblyReference.cache

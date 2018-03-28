@@ -2,6 +2,43 @@
 <Collection name="Donations" guid="{A44634C2-D002-428E-818E-1531BF1EBFB0}" system="No" updatable="Yes" blockNavigatorNode="No">
 	<HelpLink>http://support.contensive.com/</HelpLink>
 	<Help></Help>
+	<Addon name="DonationFormHandler" guid="{8D03670D-0258-4C2A-8BA4-8EC795842D88}" type="Add-on">
+		<Copy></Copy>
+		<CopyText></CopyText>
+		<ActiveXProgramID></ActiveXProgramID>
+		<DotNetClass><![CDATA[Contensive.Addons.aoDonations.donationHandlerClass]]></DotNetClass>
+		<ArgumentList></ArgumentList>
+		<AsAjax>No</AsAjax>
+		<Filter>No</Filter>
+		<Help></Help>
+		<HelpLink></HelpLink>
+		<Icon Link="" width="0" height="0" sprites="0" />
+		<InIframe>No</InIframe>
+		<BlockEditTools>No</BlockEditTools>
+		<FormXML></FormXML>
+		<IsInline>No</IsInline>
+		<JavascriptOnLoad></JavascriptOnLoad>
+		<JavascriptInHead></JavascriptInHead>
+		<JavascriptBodyEnd></JavascriptBodyEnd>
+		<MetaDescription></MetaDescription>
+		<OtherHeadTags></OtherHeadTags>
+		<Content>No</Content>
+		<Template>No</Template>
+		<Email>No</Email>
+		<Admin>No</Admin>
+		<OnPageEndEvent>No</OnPageEndEvent>
+		<OnPageStartEvent>No</OnPageStartEvent>
+		<OnBodyStart>No</OnBodyStart>
+		<OnBodyEnd>No</OnBodyEnd>
+		<RemoteMethod>Yes</RemoteMethod>
+		<ProcessInterval>0</ProcessInterval>
+		<PageTitle></PageTitle>
+		<RemoteAssetLink></RemoteAssetLink>
+		<Styles></Styles>
+		<StylesLinkHref></StylesLinkHref>
+		<Styles></Styles>
+		<Scripting Language="" EntryPoint="" Timeout="5000"/>
+	</Addon>
 	<Addon name="Donation Form addon" guid="{E480941D-8696-4E5C-91EC-8E68977A2E9B}" type="Add-on">
 		<Copy></Copy>
 		<CopyText></CopyText>
@@ -162,11 +199,54 @@ function donationCallback(response) {
 		<OnBodyStart>No</OnBodyStart>
 		<OnBodyEnd>No</OnBodyEnd>
 		<RemoteMethod>No</RemoteMethod>
-		<ProcessRunOnce>No</ProcessRunOnce>
 		<ProcessInterval>0</ProcessInterval>
 		<PageTitle></PageTitle>
 		<RemoteAssetLink></RemoteAssetLink>
 		<Styles><![CDATA[
+
+
+#js-payByCheckTR{
+display:none;
+};
+p #js-DFFirstName{
+display:none;
+color:red;
+};
+
+
+
+#js-donationConfirmation{
+display:none;
+};
+
+.DFButtonRow a {
+    display: inline;
+    position: relative;
+    font-family: 'HelveticaNeueB',serif;
+    text-align: left;
+    font-size: 15px;
+    text-transform: uppercase;
+    color: #8E2022;
+    padding: 5px 35px 5px 10px;
+    border: 1px solid #8E2022;
+    border-radius: 4px;
+    margin: 0 10px 0 0;
+};
+.tlpaTierSection input[type="submit"]:hover, .tlpaTierSection input[type="button"]:hover, .tlpaTierSection button:hover {
+    border: 1px solid #1090c3;
+    background-color: #1ab0ec;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#1ab0ec), to(#1a92c2));
+    background-image: -webkit-linear-gradient(top, #1ab0ec, #1a92c2);
+    background-image: -moz-linear-gradient(top, #1ab0ec, #1a92c2);
+    background-image: -ms-linear-gradient(top, #1ab0ec, #1a92c2);
+    background-image: -o-linear-gradient(top, #1ab0ec, #1a92c2);
+    background-image: linear-gradient(to bottom, #1ab0ec, #1a92c2);
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#1ab0ec, endColorstr=#1a92c2);
+}]]></Styles>
+		<StylesLinkHref></StylesLinkHref>
+		<Styles><![CDATA[
+
+
 #js-payByCheckTR{
 display:none;
 };
@@ -208,42 +288,6 @@ display:none;
 		<Scripting Language="" EntryPoint="" Timeout="5000"/>
 		<IncludeSharedStyle name="donation Style sheet" guid="{1ce57458-6c6f-4d04-847b-68b158f4b772}"/>
 		<IncludeSharedStyle name="donation styles 2" guid="{6061ec56-ce0a-4ed8-aedb-4bc4f08b472a}"/>
-	</Addon>
-	<Addon name="DonationFormHandler" guid="{8D03670D-0258-4C2A-8BA4-8EC795842D88}" type="Add-on">
-		<Copy></Copy>
-		<CopyText></CopyText>
-		<ActiveXProgramID></ActiveXProgramID>
-		<DotNetClass><![CDATA[Contensive.Addons.aoDonations.donationHandlerClass]]></DotNetClass>
-		<ArgumentList></ArgumentList>
-		<AsAjax>No</AsAjax>
-		<Filter>No</Filter>
-		<Help></Help>
-		<HelpLink></HelpLink>
-		<Icon Link="" width="0" height="0" sprites="0" />
-		<InIframe>No</InIframe>
-		<BlockEditTools>No</BlockEditTools>
-		<FormXML></FormXML>
-		<IsInline>No</IsInline>
-		<JavascriptOnLoad></JavascriptOnLoad>
-		<JavascriptInHead></JavascriptInHead>
-		<JavascriptBodyEnd></JavascriptBodyEnd>
-		<MetaDescription></MetaDescription>
-		<OtherHeadTags></OtherHeadTags>
-		<Content>No</Content>
-		<Template>No</Template>
-		<Email>No</Email>
-		<Admin>No</Admin>
-		<OnPageEndEvent>No</OnPageEndEvent>
-		<OnPageStartEvent>No</OnPageStartEvent>
-		<OnBodyStart>No</OnBodyStart>
-		<OnBodyEnd>No</OnBodyEnd>
-		<RemoteMethod>Yes</RemoteMethod>
-		<ProcessRunOnce>No</ProcessRunOnce>
-		<ProcessInterval>0</ProcessInterval>
-		<PageTitle></PageTitle>
-		<RemoteAssetLink></RemoteAssetLink>
-		<Styles></Styles>
-		<Scripting Language="" EntryPoint="" Timeout="5000"/>
 	</Addon>
 	<data>
 		<record content="layouts" guid="{5F7A9A40-C01D-4B30-8720-26BF4E81C9AA}" name="aoDonation Form Layout">
@@ -626,7 +670,7 @@ display:none;
 			<field name="SortOrder"></field>
 		</record>
 	</data>
-	<CDef Name="Donations" Active="1" AdminOnly="0" AllowAdd="1" AllowCalendarEvents="0" AllowContentChildTool="0" AllowContentTracking="0" AllowDelete="1" AllowMetaContent="0" AllowTopicRules="0" AllowWorkflowAuthoring="0" AuthoringDataSourceName="Default" AuthoringTableName="donations" ContentDataSourceName="Default" ContentTableName="donations" DefaultSortMethod="By Name" DeveloperOnly="0" DropDownFieldList="Name" EditorGroupName="" Parent="" IconLink="" IconHeight="0" IconWidth="0" IconSprites="0" isbasecontent="0" guid="{685FFB09-5F88-495C-A895-2861AE00E8A3}" >
+	<CDef Name="Donations" Active="1" AdminOnly="0" AllowAdd="1" AllowCalendarEvents="0" AllowContentChildTool="0" AllowContentTracking="0" AllowDelete="1" AllowTopicRules="0" AllowWorkflowAuthoring="0" AuthoringDataSourceName="Default" AuthoringTableName="donations" ContentDataSourceName="Default" ContentTableName="donations" DefaultSortMethod="By Name" DeveloperOnly="0" DropDownFieldList="Name" EditorGroupName="" Parent="" IconLink="" IconHeight="0" IconWidth="0" IconSprites="0" isbasecontent="0" guid="{685FFB09-5F88-495C-A895-2861AE00E8A3}" >
 		<Field Name="Name" active="True" AdminOnly="False" Authorable="True" Caption="Name" DeveloperOnly="False" EditSortPriority="110" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="0" RedirectID="0" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
 			<HelpDefault><![CDATA[Name of the donation record - informational purposes only]]></HelpDefault>
 		</Field>
