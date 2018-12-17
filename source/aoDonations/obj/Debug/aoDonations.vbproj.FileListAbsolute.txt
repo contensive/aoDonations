@@ -45,3 +45,15 @@ C:\Users\jay\OneDrive\Documents\git\aoDonations\source\aoDonations\obj\Debug\aoD
 C:\Users\jay\OneDrive\Documents\git\aoDonations\source\aoDonations\obj\Debug\aoDonations.dll
 C:\Users\jay\OneDrive\Documents\git\aoDonations\source\aoDonations\obj\Debug\aoDonations.xml
 C:\Users\jay\OneDrive\Documents\git\aoDonations\source\aoDonations\obj\Debug\aoDonations.pdb
+C:\Users\jay\Documents\Git\aoDonations\source\aoDonations\bin\Debug\aoDonations.dll
+C:\Users\jay\Documents\Git\aoDonations\source\aoDonations\bin\Debug\aoDonations.pdb
+C:\Users\jay\Documents\Git\aoDonations\source\aoDonations\bin\Debug\aoDonations.xml
+C:\Users\jay\Documents\Git\aoDonations\source\aoDonations\bin\Debug\accountBillingApi.dll
+C:\Users\jay\Documents\Git\aoDonations\source\aoDonations\bin\Debug\CPBase.dll
+C:\Users\jay\Documents\Git\aoDonations\source\aoDonations\obj\Debug\aoDonations.vbprojResolveAssemblyReference.cache
+C:\Users\jay\Documents\Git\aoDonations\source\aoDonations\obj\Debug\Resources.resources
+C:\Users\jay\Documents\Git\aoDonations\source\aoDonations\obj\Debug\aoDonations.vbproj.GenerateResource.Cache
+C:\Users\jay\Documents\Git\aoDonations\source\aoDonations\obj\Debug\aoDonations.vbproj.CoreCompileInputs.cache
+C:\Users\jay\Documents\Git\aoDonations\source\aoDonations\obj\Debug\aoDonations.dll
+C:\Users\jay\Documents\Git\aoDonations\source\aoDonations\obj\Debug\aoDonations.xml
+C:\Users\jay\Documents\Git\aoDonations\source\aoDonations\obj\Debug\aoDonations.pdb

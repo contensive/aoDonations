@@ -61,9 +61,12 @@ Namespace Contensive.Addons.aoDonations
                 'If (Not recaptchaOk) Then
 
                 'End If
-                CP.Doc.SetProperty("Challenge", CP.Doc.GetText("recaptcha_challenge_field"))
-                CP.Doc.SetProperty("Response", CP.Doc.GetText("recaptcha_response_field"))
-                Dim reCaptchaResponse As String = CP.Utils.ExecuteAddon(reCaptchaProcessGuid)
+                Dim reCaptchaResponse As String = ""
+                If (CP.Site.GetBoolean("Donations Add Recaptcha", "0")) Then
+                    CP.Doc.SetProperty("Challenge", CP.Doc.GetText("recaptcha_challenge_field"))
+                    CP.Doc.SetProperty("Response", CP.Doc.GetText("recaptcha_response_field"))
+                    reCaptchaResponse = CP.Utils.ExecuteAddon(reCaptchaProcessGuid)
+                End If
                 If (Not String.IsNullOrEmpty(reCaptchaResponse)) Then
                     '
                     ' -- recaptcha error
