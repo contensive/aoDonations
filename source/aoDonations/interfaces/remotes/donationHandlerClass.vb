@@ -21,6 +21,9 @@ Namespace Contensive.Addons.aoDonations
                 Dim response As donationResponseModel
                 Dim jsonSerializer As New System.Web.Script.Serialization.JavaScriptSerializer
                 '
+                ' -- track if the user is authenticated on entry. If not and their email matches an existing account, we will let them use the account then log then back out on exit
+                Dim authenticatedOnEnter As Boolean = CP.User.IsAuthenticated()
+                '
                 ' verify if the user is not logged in, we log them out
                 '
                 If Not (CP.User.IsAuthenticated()) Then
@@ -33,6 +36,10 @@ Namespace Contensive.Addons.aoDonations
                 ' 
                 response = donationHandlerControllerAndView.processAndReturn(CP, errMsg, donationDetails)
                 resultJSON = jsonSerializer.Serialize(response)
+                '
+                If (Not authenticatedOnEnter) And (CP.User.IsAuthenticated) Then
+                    CP.User.Logout()
+                End If
 
             Catch ex As Exception
                 CP.Site.ErrorReport(ex)

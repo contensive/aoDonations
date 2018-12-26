@@ -327,14 +327,11 @@ Namespace Contensive.Addons.aoDonations
                 Dim cs As BaseClasses.CPCSBaseClass = CP.CSNew()
                 Dim clearFlag As Boolean = False
                 Dim donationUserName As String = ""
-                'Dim donationAccountID As Integer = 0
-                'Dim mustSetAccountName As Boolean
                 Dim eCommerce As New aoAccountBilling.apiClass
                 Dim newAccountMessage As String = "Donations created account. "
-                'im DonationUserId As Integer
                 Dim ecommerceErrorMessage As String = ""
                 Dim Name As String = CP.Doc.GetText("DFFirstName") & " " & CP.Doc.GetText("DFLastName")
-
+                '
                 If Not (CP.User.IsAuthenticated()) Then
                     If (CP.User.IsRecognized()) Then
                         CP.User.Logout()
@@ -343,34 +340,45 @@ Namespace Contensive.Addons.aoDonations
                     ' create new account for this user
                     '
                     returnDonationAccountID = 0
-                    If cs.Open("people", "email=" & CP.Db.EncodeSQLText(donationDetails.DFEmail)) Then
-                        '
-                        ' this email is in user
-                        '
-                        returnErrMessage = "Please login or select a different email address"
-                        cs.Close()
-                        Return False
-                    Else
-                        '
-                        ' ok to create a new donation user
-                        '
-                        cs.Close()
-
-
-                        '
-                        If cs.Insert("people") Then
-                            returnDonationPersonId = cs.GetInteger("id")
-                            cs.SetField("Name", donationDetails.DFName)
-                            cs.SetField("lastName", donationDetails.DFLastName)
-                            cs.SetField("firstName", donationDetails.DFFirstName)
-                            cs.SetField("email", donationDetails.DFEmail)
-                            cs.SetField("BillName", donationDetails.DFName)
-
-                        End If
-                        cs.Close()
-                        CP.User.LoginByID(returnDonationPersonId.ToString)
+                    ' 20181226 - allow duplicate email accounts
+                    If cs.Insert("people") Then
+                        returnDonationPersonId = cs.GetInteger("id")
+                        cs.SetField("Name", donationDetails.DFName)
+                        cs.SetField("lastName", donationDetails.DFLastName)
+                        cs.SetField("firstName", donationDetails.DFFirstName)
+                        cs.SetField("email", donationDetails.DFEmail)
+                        cs.SetField("BillName", donationDetails.DFName)
 
                     End If
+                    cs.Close()
+                    CP.User.LoginByID(returnDonationPersonId.ToString)
+                    'If cs.Open("people", "email=" & CP.Db.EncodeSQLText(donationDetails.DFEmail)) Then
+                    '    ' this email is in user
+                    '    '
+                    '    returnErrMessage = "Please login or select a different email address"
+                    '    cs.Close()
+                    '    Return False
+                    'Else
+                    '    '
+                    '    ' ok to create a new donation user
+                    '    '
+                    '    cs.Close()
+
+
+                    '    '
+                    '    If cs.Insert("people") Then
+                    '        returnDonationPersonId = cs.GetInteger("id")
+                    '        cs.SetField("Name", donationDetails.DFName)
+                    '        cs.SetField("lastName", donationDetails.DFLastName)
+                    '        cs.SetField("firstName", donationDetails.DFFirstName)
+                    '        cs.SetField("email", donationDetails.DFEmail)
+                    '        cs.SetField("BillName", donationDetails.DFName)
+
+                    '    End If
+                    '    cs.Close()
+                    '    CP.User.LoginByID(returnDonationPersonId.ToString)
+
+                    'End If
                 Else
                     '
                     ' authenticated - return this user's accountid
