@@ -384,7 +384,7 @@ Namespace Contensive.Addons.aoDonations
                     ' authenticated - return this user's accountid
                     '
                     returnDonationPersonId = CP.User.Id
-                    If cs.Open("People", "id=" & returnDonationPersonId, , , "accountID") Then
+                    If cs.Open("People", "id=" & returnDonationPersonId, "", True, "accountID") Then
                         returnDonationAccountID = cs.GetInteger("accountID")
                     End If
                     cs.Close()
@@ -392,7 +392,7 @@ Namespace Contensive.Addons.aoDonations
                     '
                     '   verify account record exists
                     '
-                    If Not cs.Open("Accounts", "id=" & returnDonationAccountID, , , "id") Then
+                    If Not cs.Open("Accounts", "id=" & returnDonationAccountID, "", True, "id") Then
                         returnDonationAccountID = 0
                     End If
                     cs.Close()

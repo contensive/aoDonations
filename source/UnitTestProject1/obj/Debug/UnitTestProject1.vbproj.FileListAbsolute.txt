@@ -35,3 +35,5 @@ C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\UnitTestProject1\bin\Debug
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\UnitTestProject1\obj\Debug\UnitTestProject1.dll
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\UnitTestProject1\obj\Debug\UnitTestProject1.xml
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\UnitTestProject1\obj\Debug\UnitTestProject1.pdb
+C:\Users\kmaadmin\Documents\GitHub\aoDonations\source\UnitTestProject1\obj\Debug\UnitTestProject1.vbprojAssemblyReference.cache
+C:\Users\kmaadmin\Documents\GitHub\aoDonations\source\UnitTestProject1\obj\Debug\UnitTestProject1.vbproj.CoreCompileInputs.cache

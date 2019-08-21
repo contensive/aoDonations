@@ -16,7 +16,7 @@ Namespace Contensive.Addons.aoDonations
             Try
                 Dim cs As BaseClasses.CPCSBaseClass = CP.CSNew()
 
-                If cs.Open("Layouts", "ccGUID='{5F7A9A40-C01D-4B30-8720-26BF4E81C9AA}'", , , "layout") Then
+                If cs.Open("Layouts", "ccGUID='{5F7A9A40-C01D-4B30-8720-26BF4E81C9AA}'", "", True, "layout") Then
                     returnHtml = cs.GetText("layout")
                 End If
                 returnHtml = returnHtml.Replace("{{State Select}}", commonClass.getStateSelect(CP, "DFStateID"))

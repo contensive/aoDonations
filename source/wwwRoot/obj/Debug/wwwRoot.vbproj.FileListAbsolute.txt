@@ -24,3 +24,5 @@ C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\wwwRoot\obj\Debug\wwwRoot.
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\wwwRoot\obj\Debug\wwwRoot.xml
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\wwwRoot\obj\Debug\wwwRoot.pdb
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\wwwRoot\bin\Interop.CSGUID.dll
+C:\Users\kmaadmin\Documents\GitHub\aoDonations\source\wwwRoot\obj\Debug\wwwRoot.vbprojAssemblyReference.cache
+C:\Users\kmaadmin\Documents\GitHub\aoDonations\source\wwwRoot\obj\Debug\wwwRoot.vbproj.CoreCompileInputs.cache

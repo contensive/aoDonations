@@ -1,7 +1,7 @@
 ﻿
 Option Strict On
 Option Explicit On
-
+Imports Contensive.Addons.aoDonations
 Namespace Contensive.Addons.aoDonations
     Public Class donationHandlerClass
         Inherits BaseClasses.AddonBaseClass

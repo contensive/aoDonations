@@ -25,7 +25,7 @@ Namespace Contensive.Addons.aoDonations
                 Dim cs As BaseClasses.CPCSBaseClass = CP.CSNew()
                 Dim recordID As Integer = 0
                 '
-                If cs.Open("States", , "name", , "id,name") Then
+                If cs.Open("States", "", "name", True, "id,name") Then
                     returnHtml += "<select name=""" & requestName & """ id=""" & requestName & """>"
                     returnHtml += "<option value="""">Select One</option>"
                     Do While cs.OK()
@@ -90,7 +90,7 @@ Namespace Contensive.Addons.aoDonations
                 Dim recordID As Integer = 0
                 Dim cs As BaseClasses.CPCSBaseClass = CP.CSNew()
                 '
-                If cs.Open("Membership Requests", "(visitID=" & CP.Visit.Id & ") and (completed<>1)", , , "id") Then
+                If cs.Open("Membership Requests", "(visitID=" & CP.Visit.Id & ") and (completed<>1)", "", True, "id") Then
                     recordID = cs.GetInteger("id")
                 Else
                     cs.Close()
@@ -136,7 +136,7 @@ Namespace Contensive.Addons.aoDonations
                 Dim recordID As Integer = 0
                 Dim cs As BaseClasses.CPCSBaseClass = CP.CSNew()
                 '
-                If cs.Open("Group Tour Requests", "(visitID=" & CP.Visit.Id & ") and (completed<>1)", , , "id") Then
+                If cs.Open("Group Tour Requests", "(visitID=" & CP.Visit.Id & ") and (completed<>1)", "", True, "id") Then
                     recordID = cs.GetInteger("id")
                 Else
                     cs.Close()
@@ -159,7 +159,7 @@ Namespace Contensive.Addons.aoDonations
                 Dim amount As Double = 0
                 Dim cs As BaseClasses.CPCSBaseClass = CP.CSNew()
                 '
-                If cs.Open("Corporate Sponsorship Levels", "id=" & corporateSponsorshipLevelID, , , "sponsorshipAmount") Then
+                If cs.Open("Corporate Sponsorship Levels", "id=" & corporateSponsorshipLevelID, "", True, "sponsorshipAmount") Then
                     amount = cs.GetNumber("sponsorshipAmount")
                 End If
                 cs.Close()
@@ -175,7 +175,7 @@ Namespace Contensive.Addons.aoDonations
                 Dim amount As Double = 0
                 Dim cs As BaseClasses.CPCSBaseClass = CP.CSNew()
                 '
-                If cs.Open("Membership Levels", "id=" & membershipLevelID, , , "membershipAmount") Then
+                If cs.Open("Membership Levels", "id=" & membershipLevelID, "", True, "membershipAmount") Then
                     amount = cs.GetNumber("membershipAmount")
                 End If
                 cs.Close()
@@ -487,7 +487,7 @@ Namespace Contensive.Addons.aoDonations
                 '
                 If (CP.User.IsAdmin()) And (CP.User.IsEditingAnything()) Then
                     If content = "" Then
-                        If cs.Open("Add-on Collections", "ccGUID='{A44634C2-D002-428E-818E-1531BF1EBFB0}'", , , "helpLink") Then
+                        If cs.Open("Add-on Collections", "ccGUID='{A44634C2-D002-428E-818E-1531BF1EBFB0}'", "", True, "helpLink") Then
                             content = cs.GetText("helpLink")
                             '
                             '   add some copy
