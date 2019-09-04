@@ -56,11 +56,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="accountBillingApi, Version=4.1.14.1, Culture=neutral, PublicKeyToken=d5c7c4dda88f732e, processorArchitecture=MSIL">
-      <HintPath>..\packages\Contensive.ecommerceApi.5.0.4\lib\net35\accountBillingApi.dll</HintPath>
+      <HintPath>..\packages\Contensive.ecommerceApi.1.0.12\lib\net35\accountBillingApi.dll</HintPath>
     </Reference>
     <Reference Include="CPBase, Version=4.1.2.0, Culture=neutral, PublicKeyToken=10b3c53389b845fb, processorArchitecture=MSIL">
       <HintPath>..\packages\Contensive.CPBaseClass.5.0.6\lib\net461\CPBase.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

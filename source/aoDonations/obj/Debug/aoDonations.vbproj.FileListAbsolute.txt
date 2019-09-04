@@ -60,3 +60,4 @@ C:\Users\jay\Documents\Git\aoDonations\source\aoDonations\obj\Debug\aoDonations.
 C:\Users\kmaadmin\Documents\GitHub\aoDonations\source\aoDonations\obj\Debug\aoDonations.vbproj.CoreCompileInputs.cache
 C:\Users\kmaadmin\Documents\GitHub\aoDonations\source\aoDonations\obj\Debug\aoDonations.vbproj.CopyComplete
 C:\Users\kmaadmin\Documents\GitHub\aoDonations\source\aoDonations\obj\Debug\aoDonations.vbprojAssemblyReference.cache
+C:\Users\kmaadmin\Documents\GitHub\aoDonations\source\aoDonations\bin\Debug\CPBase.dll

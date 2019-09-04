@@ -17,7 +17,7 @@ Namespace Contensive.Addons.aoDonations
         <TestMethod()> Public Sub donationViewModelTEst()
             Dim cp As New Contensive.Processor.CPClass
             cp.Context.appName = testAppName
-            cp.getDoc(True)
+            cp.Doc.GetBoolean(CType(True, String))
             '
             ' assign
             cp.Doc.SetProperty("DFAddress", "1")
