@@ -1,208 +1,41 @@
-<?xml version="1.0" encoding="windows-1252"?>
-<Collection name="Donations" guid="{A44634C2-D002-428E-818E-1531BF1EBFB0}" system="No" updatable="Yes" blockNavigatorNode="No">
-	<HelpLink>http://support.contensive.com/</HelpLink>
-	<Help></Help>
-	<Addon name="DonationFormHandler" guid="{8D03670D-0258-4C2A-8BA4-8EC795842D88}" type="Add-on">
-		<Copy></Copy>
-		<CopyText></CopyText>
-		<ActiveXProgramID></ActiveXProgramID>
-		<DotNetClass><![CDATA[Contensive.Addons.aoDonations.donationHandlerClass]]></DotNetClass>
-		<ArgumentList></ArgumentList>
-		<AsAjax>No</AsAjax>
-		<Filter>No</Filter>
-		<Help></Help>
-		<HelpLink></HelpLink>
-		<Icon Link="" width="0" height="0" sprites="0" />
-		<InIframe>No</InIframe>
-		<BlockEditTools>No</BlockEditTools>
-		<FormXML></FormXML>
-		<IsInline>No</IsInline>
-		<JavascriptOnLoad></JavascriptOnLoad>
-		<JavascriptInHead></JavascriptInHead>
-		<JavascriptBodyEnd></JavascriptBodyEnd>
-		<MetaDescription></MetaDescription>
-		<OtherHeadTags></OtherHeadTags>
-		<Content>No</Content>
-		<Template>No</Template>
-		<Email>No</Email>
-		<Admin>No</Admin>
-		<OnPageEndEvent>No</OnPageEndEvent>
-		<OnPageStartEvent>No</OnPageStartEvent>
-		<OnBodyStart>No</OnBodyStart>
-		<OnBodyEnd>No</OnBodyEnd>
-		<RemoteMethod>Yes</RemoteMethod>
-		<ProcessInterval>0</ProcessInterval>
-		<PageTitle></PageTitle>
-		<RemoteAssetLink></RemoteAssetLink>
-		<Styles></Styles>
-		<StylesLinkHref></StylesLinkHref>
-		<Styles></Styles>
-		<Scripting Language="" EntryPoint="" Timeout="5000"/>
-	</Addon>
-	<Addon name="Donation Form addon" guid="{E480941D-8696-4E5C-91EC-8E68977A2E9B}" type="Add-on">
-		<Copy></Copy>
-		<CopyText></CopyText>
-		<ActiveXProgramID></ActiveXProgramID>
-		<DotNetClass><![CDATA[Contensive.Addons.aoDonations.donationClass
-    ]]></DotNetClass>
-		<ArgumentList></ArgumentList>
-		<AsAjax>No</AsAjax>
-		<Filter>No</Filter>
-		<Help></Help>
-		<HelpLink></HelpLink>
-		<Icon Link="" width="0" height="0" sprites="0" />
-		<InIframe>No</InIframe>
-		<BlockEditTools>No</BlockEditTools>
-		<FormXML></FormXML>
-		<IncludeAddon name="JQuery" guid="{9C882078-0DAC-48E3-AD4B-CF2AA230DF80}"/>
-		<IncludeAddon name="jQuery BlockUI" guid="{F6087787-E01E-4E09-AC02-502D0387E048}"/>
-		<IsInline>No</IsInline>
-		<JavascriptOnLoad></JavascriptOnLoad>
-		<JavascriptInHead><![CDATA[
-jQuery(document).ready(function() {
-    jQuery("#js-donPayCheck").click(function() {
-        // alert("Ready")
-        jQuery("#js-payByCreditCardTR").hide();
-        jQuery("#js-payByCheckTR").show();
-    });
-    //
-    jQuery("#js-donAmt01").click(function() {
-        jQuery("#donationAmount").val(5.00);
-        //jQuery("#donationAmount").prop("disabled", true);
-    });
-    //
-    jQuery("#js-donAmt02").click(function() {
-        jQuery("#donationAmount").val(10.00);
-        //jQuery("#donationAmount").prop("disabled", true);
-    });
-    //
-    jQuery("#js-donAmt03").click(function() {
-        jQuery("#donationAmount").val(15.00);
-        //jQuery("#donationAmount").prop("disabled", true);
-    });
-    //
-    jQuery("#js-donAmtOther").click(function() {
-        jQuery("#donationAmount").val("");
-        //jQuery("#donationAmount").prop("disabled", false);
-    });
-	//
-	var form = $( "#donationInputForm" );
-	form.validate();
-	$("#subDonInput").click(function(e) {
-        jQuery("#js-processError").hide();
-		// alert( "Valid: " + form.valid() );
-		if(form.valid() == false) {
-			// alert('not valid');
-			// e.preventDefault(); 
-			jQuery.validator.setDefaults({
-				debug: true,
-				success: "valid"
-			});
-			$( "#donationInputForm" ).validate({
-				rules: {
-					DFFirstName: {
-						required: true
-					},
-					DFcardYr: {
-						required: true
-					},
-					DFcardType: {
-						required: true
-					},
-					DFcardExp: {
-						required: true
-					}
-				}
-			});
-		} else {
-			jQuery('.donationForm').block();
-			e.preventDefault(); 
-			e.stopPropagation();
-			cj.remote({
-				'formId':'donationInputForm',
-				'method': 'DonationFormHandler',
-				'callback': donationCallback
-			});
-		}
-	});
-}); 
-//*****************************************************
-//donationCallback
-//
-function donationCallback(response) {
-    //var json = (response);
-	jQuery('.donationForm').unblock();
-    var myObject = JSON.parse(response);
-    if (myObject) {
-        if (!myObject.ProcessedOk) {
-			// processing error
-			jQuery('#js-processError').html(myObject.errorMessage);
-            jQuery("#js-donationConfirmation").hide();
-            jQuery("#donationInputForm").show();
-            jQuery("#js-processError").show();
-		} else {
-			// thank you
-            jQuery("#donationInputForm").hide();
-            jQuery("#js-donationConfirmation").show();
-            if (myObject.name) {
-                jQuery('#tyDonater').html(myObject.name);
-            }
-            if (myObject.completedDate) {
-                jQuery('#tyDate').html(myObject.completedDate);
-            }
-            if (myObject.donationAmount) {
-                jQuery('#tyAmount').html(myObject.donationAmount);
-            }
-            if (myObject.paymentHolderName) {
-                jQuery('#tyPaymentInfo').html(myObject.paymentHolderName);
-            }
-			if (myObject.errorList)	{
-				jquery('#js-errorList').html(myObject.errorList).show;
-			}
-			if (myObject.myDFPaymentMethod == '1'){
-                jQuery('#tyPayMethod').html("Check")
-            }else{
-                jQuery('#tyPayMethod').html("Credit Card")
-            };
-			switch(myObject.donationType) {
-				case 1:
-					jQuery('#tyDonateType').html("Once");
-					break;
-				case 2:
-					jQuery('#tyDonateType').html("Monthly");
-					break;
-				case 3:
-					jQuery('#tyDonateType').html("Quarterly");
-					break;
-				case 4:
-					jQuery('#tyDonateType').html("Annually");
-					break;
-				default:
-					jQuery('#tyDonateType').html("Once");
-			}
-        }
-   }
+/*
+* from addon-styles
+*/
+#js-payByCheckTR{
+	display:none;
+};
+p #js-DFFirstName{
+	display:none;
+	color:red;
+};
+#js-donationConfirmation{
+	display:none;
+};
+.DFButtonRow a {
+    display: inline;
+    position: relative;
+    font-family: 'HelveticaNeueB',serif;
+    text-align: left;
+    font-size: 15px;
+    text-transform: uppercase;
+    color: #8E2022;
+    padding: 5px 35px 5px 10px;
+    border: 1px solid #8E2022;
+    border-radius: 4px;
+    margin: 0 10px 0 0;
+};
+.tlpaTierSection input[type="submit"]:hover, .tlpaTierSection input[type="button"]:hover, .tlpaTierSection button:hover {
+    border: 1px solid #1090c3;
+    background-color: #1ab0ec;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#1ab0ec), to(#1a92c2));
+    background-image: -webkit-linear-gradient(top, #1ab0ec, #1a92c2);
+    background-image: -moz-linear-gradient(top, #1ab0ec, #1a92c2);
+    background-image: -ms-linear-gradient(top, #1ab0ec, #1a92c2);
+    background-image: -o-linear-gradient(top, #1ab0ec, #1a92c2);
+    background-image: linear-gradient(to bottom, #1ab0ec, #1a92c2);
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#1ab0ec, endColorstr=#1a92c2);
 }
-]]></JavascriptInHead>
-		<JavascriptBodyEnd></JavascriptBodyEnd>
-		<MetaDescription></MetaDescription>
-		<OtherHeadTags><![CDATA[<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.js"></script>
 
-<link rel="stylesheet" href="https://jqueryvalidation.org/files/demo/site-demos.css">]]></OtherHeadTags>
-		<Content>Yes</Content>
-		<Template>Yes</Template>
-		<Email>No</Email>
-		<Admin>No</Admin>
-		<OnPageEndEvent>No</OnPageEndEvent>
-		<OnPageStartEvent>No</OnPageStartEvent>
-		<OnBodyStart>No</OnBodyStart>
-		<OnBodyEnd>No</OnBodyEnd>
-		<RemoteMethod>No</RemoteMethod>
-		<ProcessInterval>0</ProcessInterval>
-		<PageTitle></PageTitle>
-		<RemoteAssetLink></RemoteAssetLink>
-		<Styles><![CDATA[
 
 
 #js-payByCheckTR{
@@ -242,509 +75,11 @@ display:none;
     background-image: -o-linear-gradient(top, #1ab0ec, #1a92c2);
     background-image: linear-gradient(to bottom, #1ab0ec, #1a92c2);
     filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#1ab0ec, endColorstr=#1a92c2);
-}]]></Styles>
-		<StylesLinkHref></StylesLinkHref>
-		<Styles><![CDATA[
-
-
-#js-payByCheckTR{
-display:none;
-};
-p #js-DFFirstName{
-display:none;
-color:red;
-};
-
-
-
-#js-donationConfirmation{
-display:none;
-};
-
-.DFButtonRow a {
-    display: inline;
-    position: relative;
-    font-family: 'HelveticaNeueB',serif;
-    text-align: left;
-    font-size: 15px;
-    text-transform: uppercase;
-    color: #8E2022;
-    padding: 5px 35px 5px 10px;
-    border: 1px solid #8E2022;
-    border-radius: 4px;
-    margin: 0 10px 0 0;
-};
-.tlpaTierSection input[type="submit"]:hover, .tlpaTierSection input[type="button"]:hover, .tlpaTierSection button:hover {
-    border: 1px solid #1090c3;
-    background-color: #1ab0ec;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#1ab0ec), to(#1a92c2));
-    background-image: -webkit-linear-gradient(top, #1ab0ec, #1a92c2);
-    background-image: -moz-linear-gradient(top, #1ab0ec, #1a92c2);
-    background-image: -ms-linear-gradient(top, #1ab0ec, #1a92c2);
-    background-image: -o-linear-gradient(top, #1ab0ec, #1a92c2);
-    background-image: linear-gradient(to bottom, #1ab0ec, #1a92c2);
-    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#1ab0ec, endColorstr=#1a92c2);
-}]]></Styles>
-		<Scripting Language="" EntryPoint="" Timeout="5000"/>
-		<IncludeSharedStyle name="donation Style sheet" guid="{1ce57458-6c6f-4d04-847b-68b158f4b772}"/>
-		<IncludeSharedStyle name="donation styles 2" guid="{6061ec56-ce0a-4ed8-aedb-4bc4f08b472a}"/>
-	</Addon>
-	<data>
-		<record content="layouts" guid="{5F7A9A40-C01D-4B30-8720-26BF4E81C9AA}" name="aoDonation Form Layout">
-			<field name="Layout"><![CDATA[<!-- Donation Form   -->
-<form id="donationInputForm" >
-	<div><h1>Donation Form</h1></div>
-	<div class="donationForm">
-		<div class="donationFormInner">
-			<div class="donateTable">
-				<div class="form-container">
-
-					<!-- personal info-->
-					<div class="donate-user donateBox">
-						<h3>Your Information</h3>
-						<div class="donateUser">
-							<div class="form-row form-name-entry">
-									<div class="form-input fn">
-										<label>First Name <span class="req">*</span></label>
-										<input name="DFFirstName" required="" type="text" class="left">
-									</div>
-									<!-- <div class="form-input mi">
-										<label>M.I.</label>
-										<input name="DFMiddleName" type="text">
-									</div>-->
-									<div class="form-input ln">
-										<label>Last Name <span class="req">*</span></label>
-										<input name="DFLastName" required="" type="text">
-									</div>
-							</div>
-							<div class="form-row form-contact-entry">
-									<div class="form-input phone">
-										<label>Phone <span class="req">*</span></label>
-										<input name="DFPhone" required="" type="number">
-									</div>
-									<div class="form-input email">
-										<label>E-mail <span class="req">*</span></label>
-										<input name="DFEmail" required="" type="email">
-									</div>
-							</div>
-							<div class="form-row">
-								<div class="form-input address">
-										<label>Address <span class="req">*</span></label>
-										<input name="DFAddress" required="" type="text">
-								</div>
-							</div>
-							<div class="form-row form-csz-entry">
-								<div class="form-input city">
-									<label>City <span class="req">*</span></label>
-									<input name="DFCity" required="" type="text">
-								</div>
-								<div class="form-input state">
-									<label>State/Province <span class="req">*</span></label>
-									<input name="DFState" required="" type="text">
-								</div>
-								<div class="form-input zip">
-									<label>Zip Code/PostalCode<span class="req">*</span></label>
-									<input name="DFZip" required="" type="number">
-								</div>
-								<div class="form-input">
-									<label style="display:none;">Error List</label>
-									<input style="display:none;" id="js-errorList" name="errorList" type="text">
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- end personal info -->
-
-					<!-- payment info -->
-					<div class="donate-pmt donateBox">
-						<h3>Donation Information</h3>
-						<div id="ccPayform"></div>
-						<div id="checkForm"></div>
-						<div class="donatePay">
-								<div class="form-row">
-									<div class="form-input-label">Donation Type:</div>
-									<div class="form-pmt-inputs">
-										<ul class="donateUL">
-											<li>
-												<div class="toggleBtns">
-												<input id="js-donateOnce" name="DFType" class="toggle-radio" value="1" type="radio"> <label for="js-donateOnce" class="donBtn">Once</label>
-												</div>
-											</li>
-											<li>
-												<div class="toggleBtns">
-												<input id="js-donateMonthly" name="DFType" class="toggle-radio" value="2" type="radio"> <label for="js-donateMonthly" class="donBtn">Monthly</label>
-												</div>
-											</li>
-											<li>
-												<div class="toggleBtns">
-												<input id="js-donateQuarterly" name="DFType" class="toggle-radio" value="3" type="radio"> <label for="js-donateQuarterly" class="donBtn">Quarterly</label>
-												</div>
-											</li>
-											<li>
-												<div class="toggleBtns">
-												<input id="js-donateAnnually" name="DFType" class="toggle-radio" value="4" type="radio"> <label for="js-donateAnnually" class="donBtn">Annually</label>
-												</div>
-											</li>
-										</ul>
-									</div>
-								</div>
-								<div class="form-row">
-									<div class="form-input-label">Donation Amount:</div>
-									<div class="form-pmt-inputs">
-										<ul class="amountsUL donateUL">
-											<li>
-												<div class="toggleBtns">
-												<input id="js-donAmt01" name="donateAmt" class="toggle-radio" type="radio"> <label for="js-donAmt01" class="donBtn">$5.00</label>
-												</div>
-											</li>
-											<li>
-												<div class="toggleBtns">
-												<input id="js-donAmt02" name="donateAmt" class="toggle-radio" type="radio"> <label for="js-donAmt02" class="donBtn">$10.00</label>
-												</div>
-											</li>
-											<li>
-												<div class="toggleBtns">
-												<input id="js-donAmt03" name="donateAmt" class="toggle-radio" type="radio"> <label for="js-donAmt03" class="donBtn">$15.00</label>
-												</div>
-											</li>
-											<li>
-												<div class="toggleBtns">
-												<input id="js-donAmtOther" name="donateAmt" class="toggle-radio" type="radio"> <label for="js-donAmtOther" class="donBtn">Other</label>
-												</div>
-											</li>
-										</ul>
-									</div>
-									<!-- other amt -->
-								</div>
-								<div class="form-row">
-									<div class="form-input-label">Other Amount:</div>
-									<div class="form-pmt-inputs"><input id="donationAmount" placeholder="$" type="number" name="donateAmountOther" required=""></div>
-								</div>
-								<!-- end other amt -->
-								<!--
-								<div class="form-row">
-									<div class="form-input-label">Payment Method:</div>
-									<div class="form-pmt-inputs">
-										<ul class="donateUL">
-											<li>
-												<div class="toggleBtns">
-												<input id="js-donPayCredit" name="DFPaymentType" class="toggle-radio" value="0" type="radio" required=""> <label for="js-donPayCredit" class="donBtn">Credit Card</label>
-												</div>
-											</li>
-										</ul>
-									</div>
-								</div>
-								-->
-								<!-- only display if credit card payment selected -->
-								<div class="form-row" id="js-payByCreditCardTR">
-									<div class="form-input-label"><strong>Pay by Credit Card:</strong>
-										<!-- credit card form -->
-										<div class="creditCard">
-												<div class="form-row">
-													<div class="form-pmt-inputs">
-														<label for="js-cardName">Name on Card</label>
-														<input name="DFcardName" id="js-cardName" type="text" required="">
-													</div>
-												</div>
-												<div class="form-row">
-													<div class="form-pmt-inputs">
-														<label for="js-cardNo">Card Number</label>
-														<input id="js-cardNo" type="number" name="DFcardNo" required="">
-													</div>
-												</div>
-												<div class="row-three form-row">
-													<div class="form-pmt-inputs cardType">
-														<label for="js-cardType">Card Type</label>
-														<select name="DFcardType" id="js-cardType" title="Please select something!">
-															<option value="">Select</option>
-															<option>American Express</option>
-															<option>MasterCard</option>
-															<option>Visa</option>
-														</select>
-													</div>
-													<div class="form-pmt-inputs cvv">
-														<label for="js-cardCVV">CVV</label>
-														<input id="js-cardCVV" class="" type="number" name="DFcardCVV" required="">
-													</div>
-													<div class="form-pmt-inputs expDate">
-														<div>
-															<label>Card Expiration</label>
-														</div>
-														<div class="inBlock">
-															<select name="DFcardExp" id="js-cardExpMo" title="Please select something!">
-																<option value="">Month</option>
-																<option value="1">January</option>
-																<option value="2">February</option>
-																<option value="3">March</option>
-																<option value="4">April</option>
-																<option value="5">May</option>
-																<option value="6">June</option>
-																<option value="7">July</option>
-																<option value="8">August</option>
-																<option value="9">September</option>
-																<option value="10">October</option>
-																<option value="11">November</option>
-																<option value="12">December</option>
-															</select>
-														</div>
-														<div class="inBlock">
-															<select name="DFcardYr" id="js-cardExpYr" title="Please select something!">
-																<option value="">Year</option>
-																<option>2016</option>
-																<option>2017</option>
-																<option>2018</option>
-																<option>2019</option>
-																<option>2020</option>
-																<option>2021</option>
-																<option>2022</option>
-																<option>2023</option>
-																<option>2024</option>
-																<option>2025</option>
-																<option>2026</option>
-																<option>2027</option>
-																<option>2028</option>
-																<option>2029</option>
-																<option>2030</option>
-															</select>
-														</div>
-													</div>
-												</div>
-												<div class="row-four form-row">
-													<div class="form-pmt-inputs recaptcha">
-														{{reCaptcha}}
-													</div>
-												</div>
-										</div>
-										<!-- end credit card form -->
-									</div>
-								</div>
-								<!-- only display if check payment method selected -->
-								<div class="form-row" id="js-payByCheckTR">
-									<div class="form-input-label"><strong>Pay by Check:</strong>
-										<!-- pay by check form -->
-										<!-- end pay by check form -->
-									</div>
-								</div>
-						</div>
-					</div>
-				</div>
-				<!-- end payment info -->
-			</div>
-		</div>
-		<div id="js-processError" style="padding:10px;display:none;text-align: center;color:red"></div>
-		<!-- donate button -->
-		<div class="beginLetter">
-				<input id="subDonInput" value="Make Donation" type="submit" value="Validate!">
-			</div>
-		<!-- end donate button -->
-	</div>
-</form>
-<!--  end Donation Form   -->
-
-<!--  Start Thank you form   -->
-<form id="js-donationConfirmation" style="display:none;" >
-  <div><h1>Donation Form (CONFIRMATION)</h1></div>
-  <!-- donation form -->
-  <div class="donationForm">
-	  <div class="donationFormInner">
-      <h1>Thank you!</h1>
-      <p>Thank you for your donation. A receipt/confirmation has been sent to your email. You may also print this page and keep it for your records.</p>
-
-	    <!-- print receipt -->
-      <div class="receiptBox">
-	      <div class="receiptBoxInner">
-	      <h2>Thank you for your donation!</h2>
-          <table>
-              <tbody>
-                  <tr>
-                      <td><strong>Date:</strong></td>
-                      <td id="tyDate">December 4, 2015</td>
-                  </tr>
-                  <tr>
-                      <td><strong>Donator:</strong></td>
-                      <td id="tyDonater">
-                          Full Name<br>
-                          Address<br>
-                          City, State ZIP
-                      </td>
-                  </tr>
-                  <tr>
-                      <td><strong>Donation Type:</strong></td>
-                      <td id="tyDonateType">One-time</td>
-                  </tr>
-                  <tr>
-                      <td><strong>Donation Amount:</strong></td>
-                      <td id="tyAmount">$100.00</td>
-                  </tr>
-                  <tr>
-                      <td><strong>Payment Method:</strong></td>
-                      <td id="tyPayMethod">Credit Card</td>
-                  </tr>
-                  <tr>
-                      <td><strong>Payment Info:</strong></td>
-                      <td id="tyPaymentInfo">
-                          Cardholder Name<br>
-                          XXXX-XXXX-XXXX-1234<br>
-                          VISA<br>
-                      </td>
-                  </tr>
-              </tbody>
-          </table>
-	      </div>
-      </div>
-      <!-- end print receipt -->
-
-	  </div>
-  </div>
-</form>
-]]></field>
-			<field name="StylesFilename"></field>
-			<field name="Active">True</field>
-			<field name="SortOrder"></field>
-		</record>
-		<record content="layouts" guid="{377D3038-85FF-43F7-A097-4C4ABCDF907E}" name="aoDonationThankYouForm">
-			<field name="Layout"><![CDATA[&&&&&theform*****
-       <form id="donationConfirmation" style="display:none;" >
-                <div class="contentBox"><h1>Donation Form (CONFIRMATION)</h1></div>
-                
-                <!-- donation form -->
-                <div class="donationForm">
-                <div class="donationFormInner">
-                    <h1>Thank you!</h1>
-                    <p>Thank you for your donation. A receipt/confirmation has been sent to your email. You may also print this page and keep it for your records.</p>
-                    
-                  <!-- print receipt -->
-                    <div class="receiptBox">
-                    <div class="receiptBoxInner">
-                        <h2>Thank you for your donation!</h2>
-                        
-                        <table>
-                            <tbody>
-                                <tr>
-                                    <td><strong>Date:</strong></td>
-                                    <td>December 4, 2015</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Donator:</strong></td>
-                                    <td>
-                                        Full Name<br />
-                                        Address<br />
-                                        City, State ZIP
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Donation Type:</strong></td>
-                                    <td>One-time</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Donation Amount:</strong></td>
-                                    <td>$100.00</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Payment Method:</strong></td>
-                                    <td>Credit Card</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Payment Info:</strong></td>
-                                    <td>
-                                        Cardholder Name<br />
-                                        XXXX-XXXX-XXXX-1234<br />
-                                        VISA<br />
-                                        Expiration: MM/YYYY
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        
-                    </div>
-                    </div>
-                    <!-- end print receipt -->
-                    
-                </div>
-                </div>
-	</form>
-                
-           ]]></field>
-			<field name="StylesFilename"></field>
-			<field name="Active">True</field>
-			<field name="SortOrder"></field>
-		</record>
-	</data>
-	<CDef Name="Donations" Active="1" AdminOnly="0" AllowAdd="1" AllowCalendarEvents="0" AllowContentChildTool="0" AllowContentTracking="0" AllowDelete="1" AllowTopicRules="0" AllowWorkflowAuthoring="0" AuthoringDataSourceName="Default" AuthoringTableName="donations" ContentDataSourceName="Default" ContentTableName="donations" DefaultSortMethod="By Name" DeveloperOnly="0" DropDownFieldList="Name" EditorGroupName="" Parent="" IconLink="" IconHeight="0" IconWidth="0" IconSprites="0" isbasecontent="0" guid="{685FFB09-5F88-495C-A895-2861AE00E8A3}" >
-		<Field Name="Name" active="True" AdminOnly="False" Authorable="True" Caption="Name" DeveloperOnly="False" EditSortPriority="110" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="0" RedirectID="0" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
-			<HelpDefault><![CDATA[Name of the donation record - informational purposes only]]></HelpDefault>
-		</Field>
-		<Field Name="Active" active="True" AdminOnly="False" Authorable="True" Caption="Active" DeveloperOnly="False" EditSortPriority="200" FieldType="Boolean" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="0" RedirectID="0" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="1" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" ></Field>
-		<Field Name="SortOrder" active="True" AdminOnly="False" Authorable="False" Caption="Alpha Sort Order" DeveloperOnly="False" EditSortPriority="2000" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="0" RedirectID="0" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" ></Field>
-		<Field Name="firstName" active="True" AdminOnly="False" Authorable="True" Caption="First Name" DeveloperOnly="False" EditSortPriority="210" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
-			<HelpDefault><![CDATA[First name of the user given during the donation]]></HelpDefault>
-		</Field>
-		<Field Name="lastName" active="True" AdminOnly="False" Authorable="True" Caption="Last Name" DeveloperOnly="False" EditSortPriority="220" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
-			<HelpDefault><![CDATA[Last name of the user given during the donation]]></HelpDefault>
-		</Field>
-		<Field Name="middleName" active="True" AdminOnly="False" Authorable="False" Caption="Middle Name" DeveloperOnly="False" EditSortPriority="215" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
-			<HelpDefault><![CDATA[Middle name of the user given during the donation]]></HelpDefault>
-		</Field>
-		<Field Name="address" active="True" AdminOnly="False" Authorable="True" Caption="Address" DeveloperOnly="False" EditSortPriority="230" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
-			<HelpDefault><![CDATA[Address of the user given during the donation]]></HelpDefault>
-		</Field>
-		<Field Name="address2" active="True" AdminOnly="False" Authorable="False" Caption="Address 2" DeveloperOnly="False" EditSortPriority="240" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
-			<HelpDefault><![CDATA[Address 2 of the user given during the donation]]></HelpDefault>
-		</Field>
-		<Field Name="city" active="True" AdminOnly="False" Authorable="True" Caption="City" DeveloperOnly="False" EditSortPriority="250" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
-			<HelpDefault><![CDATA[City of the user given during the donation]]></HelpDefault>
-		</Field>
-		<Field Name="state" active="True" AdminOnly="False" Authorable="True" Caption="State" DeveloperOnly="False" EditSortPriority="260" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
-			<HelpDefault><![CDATA[State of the user given during the donation]]></HelpDefault>
-		</Field>
-		<Field Name="zip" active="True" AdminOnly="False" Authorable="True" Caption="Zip" DeveloperOnly="False" EditSortPriority="270" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
-			<HelpDefault><![CDATA[Zip of the user given during the donation]]></HelpDefault>
-		</Field>
-		<Field Name="phone" active="True" AdminOnly="False" Authorable="True" Caption="Phone" DeveloperOnly="False" EditSortPriority="280" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
-			<HelpDefault><![CDATA[Phone of the user given during the donation]]></HelpDefault>
-		</Field>
-		<Field Name="email" active="True" AdminOnly="False" Authorable="True" Caption="Email" DeveloperOnly="False" EditSortPriority="290" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
-			<HelpDefault><![CDATA[Email of the user given during the donation]]></HelpDefault>
-		</Field>
-		<Field Name="cardName" active="True" AdminOnly="False" Authorable="False" Caption="Card Name" DeveloperOnly="False" EditSortPriority="100" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
-			<HelpDefault><![CDATA[Name on card charged for the donation]]></HelpDefault>
-		</Field>
-		<Field Name="cardNumber" active="True" AdminOnly="False" Authorable="False" Caption="Card Number" DeveloperOnly="False" EditSortPriority="110" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
-			<HelpDefault><![CDATA[Account number charged for the donation]]></HelpDefault>
-		</Field>
-		<Field Name="cardExpiration" active="True" AdminOnly="False" Authorable="False" Caption="Card Expiration" DeveloperOnly="False" EditSortPriority="120" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
-			<HelpDefault><![CDATA[Expiration of the card charged for the donation]]></HelpDefault>
-		</Field>
-		<Field Name="amount" active="True" AdminOnly="False" Authorable="True" Caption="Amount" DeveloperOnly="False" EditSortPriority="1100" FieldType="Currency" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
-			<HelpDefault><![CDATA[Amount charged for the donation]]></HelpDefault>
-		</Field>
-		<Field Name="cardBillingAddress" active="True" AdminOnly="False" Authorable="False" Caption="Card Billing Address" DeveloperOnly="False" EditSortPriority="130" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
-			<HelpDefault><![CDATA[Billing address of the card charged for the donation]]></HelpDefault>
-		</Field>
-		<Field Name="cardBillingZip" active="True" AdminOnly="False" Authorable="False" Caption="Card Billing Zip" DeveloperOnly="False" EditSortPriority="140" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
-			<HelpDefault><![CDATA[Billing zip of the card charged for the donation]]></HelpDefault>
-		</Field>
-		<Field Name="cardCode" active="True" AdminOnly="False" Authorable="False" Caption="Card Code" DeveloperOnly="False" EditSortPriority="150" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
-			<HelpDefault><![CDATA[CVV Code (three digits on the back) of the card charged for the donation]]></HelpDefault>
-		</Field>
-		<Field Name="processorReference" active="True" AdminOnly="False" Authorable="True" Caption="Reference Number" DeveloperOnly="False" EditSortPriority="1110" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
-			<HelpDefault><![CDATA[Reference number from the payment gateway for this transaction]]></HelpDefault>
-		</Field>
-		<Field Name="processorResponse" active="True" AdminOnly="False" Authorable="True" Caption="Processor Response" DeveloperOnly="False" EditSortPriority="1120" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
-			<HelpDefault><![CDATA[Response from the payment gateway for this transaction]]></HelpDefault>
-		</Field>
-		<Field Name="memberID" active="True" AdminOnly="False" Authorable="True" Caption="Member" DeveloperOnly="False" EditSortPriority="300" FieldType="Lookup" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="" Scramble="False" LookupList="" NotEditable="True" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="People" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
-			<HelpDefault><![CDATA[The member record associated the the user who donated]]></HelpDefault>
-		</Field>
-		<Field Name="visitID" active="True" AdminOnly="False" Authorable="True" Caption="Visit" DeveloperOnly="False" EditSortPriority="310" FieldType="Integer" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
-			<HelpDefault><![CDATA[Visit ID of the user during the donation - informational purposes only]]></HelpDefault>
-		</Field>
-		<Field Name="checkAccountName" active="True" AdminOnly="False" Authorable="False" Caption="Check Account Name" DeveloperOnly="False" EditSortPriority="175" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" ></Field>
-		<Field Name="checkAccountNumber" active="True" AdminOnly="False" Authorable="False" Caption="check Account Number" DeveloperOnly="False" EditSortPriority="180" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" ></Field>
-		<Field Name="checkAccountRoutingNumber" active="True" AdminOnly="False" Authorable="False" Caption="Check Account Routing Number" DeveloperOnly="False" EditSortPriority="190" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" ></Field>
-		<Field Name="accountId" active="True" AdminOnly="False" Authorable="True" Caption="Account" DeveloperOnly="False" EditSortPriority="1000" FieldType="Lookup" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="Accounts" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" ></Field>
-	</CDef>
-	<SharedStyle Name="donation Style sheet" guid="{1ce57458-6c6f-4d04-847b-68b158f4b772}" alwaysInclude="False" prefix="" suffix="" sortOrder=""><![CDATA[@charset "utf-8";
+}
+/*
+* from shared-styles
+*/
+@charset "utf-8";
 /* REMOVE HTTP ONCE IT'S ON THE SERVER */
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700,700italic|Raleway:400,700|Quicksand:400,700);
 
@@ -755,7 +90,6 @@ display:none;
     box-sizing: border-box;
 }
 
-html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video { border: 0; font-size: 100%; margin: 0; outline: 0; padding: 0; vertical-align: baseline; /* background: transparent; */ }
 article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section { display: block; }
 sub { font-size: 70%; vertical-align: sub; }
 sup { font-size: 70%; vertical-align: super; }
@@ -1845,7 +1179,7 @@ table.donatePay td { border: none; width: inherit; }
 table.donatePay label { cursor: pointer; }
 ul.donateUL { list-style: none; margin: 0; padding: 0; }
 ul.donateUL ul { list-style: none; margin-left: 1.5em; margin-top: 0.25em; }
-ul.donateUL li { display: inline-block; vertical-align: middle; margin-bottom: 0.25em; }
+ul.donateUL li { display: inline-block; vertical-align: middle; margin: 8px 8px 0 0; }
 table.creditCard { border-spacing: 0px 10px; width: 100%; }
 table.creditCard label { display: block; }
 table.creditCard input,
@@ -2063,8 +1397,10 @@ table.donateCheck input { width: 100%; }
 .shoppingCartCon ul.scNav li.scNavItem a {
     margin: 0 !important;
 }
-]]></SharedStyle>
-	<SharedStyle Name="donation styles 2" guid="{6061ec56-ce0a-4ed8-aedb-4bc4f08b472a}" alwaysInclude="False" prefix="" suffix="" sortOrder=""><![CDATA[input {margin-bottom:0;}
+/*
+* from shared-styles
+*/
+input {margin-bottom:0;}
 .donationForm {font-family: 'Raleway', sans-serif; font-size:16px;}
 .donationForm input, .donationForm select {padding:7px;
     width:100%;
@@ -2104,7 +1440,7 @@ table.donateCheck input { width: 100%; }
 .donatePay .creditCard input {width:100%; max-width:350px;}
 
 .form-row.form-name-entry .form-input.fn, .form-row.form-name-entry .form-input.mi, .form-row.form-name-entry .form-input.ln,.form-row.form-contact-entry .phone, .form-row.form-contact-entry .email,
-.form-row.form-csz-entry .form-input.city, .form-row.form-csz-entry .form-input.zip, .form-row.form-csz-entry .form-input.state {width:100%;}
+.form-row.form-csz-entry .form-input.city, .form-row.form-csz-entry .form-input.zip, .form-row.form-csz-entry .form-input.state, .form-input.address , .form-pmt-inputs {width:100%;}
 
 .creditCard .form-row .form-pmt-inputs.cardType {width:100%;}
 .creditCard .form-row .form-pmt-inputs.expDate {width:60%; display:inline-block;}
@@ -2128,10 +1464,3 @@ table.donateCheck input { width: 100%; }
   .creditCard .form-row .form-pmt-inputs.expDate {width:100%; display:block;}
   .creditCard .form-row .form-pmt-inputs.cvv {width:100%; display:block;}
 }
-]]></SharedStyle>
-	<ImportCollection name="Ecommerce">{8DBE6B55-18DB-44EB-9A4A-5CBBA84DF35A}</ImportCollection>
-	<ImportCollection name="reCAPTCHA">{B0330AE8-225D-429A-8985-B5F602E295E2}</ImportCollection>
-	<ImportCollection name="JQuery">{A435BF70-041B-43D1-8A8D-5D9D59A7FCD0}</ImportCollection>
-	<Resource name="aodonations.dll" type="executable" path="" />
-	<Resource name="accountbillingapi.dll" type="executable" path="" />
-</Collection>

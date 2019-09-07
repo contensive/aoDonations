@@ -15,8 +15,7 @@ Namespace Contensive.Addons.aoDonations
         ''' test:  test the donation view model
         ''' </summary>
         <TestMethod()> Public Sub donationViewModelTEst()
-            Dim cp As New Contensive.Processor.CPClass
-            cp.Context.appName = testAppName
+            Dim cp As New Contensive.Processor.CPClass(testAppName)
             cp.Doc.GetBoolean(CType(True, String))
             '
             ' assign
@@ -72,9 +71,7 @@ Namespace Contensive.Addons.aoDonations
         ''' test donation form valid case
         ''' </summary>
         <TestMethod()> Public Sub donationSubmitValidationTest()
-            Dim cp As New Contensive.Processor.CPClass
-            cp.Context.appName = testAppName
-            cp.getDoc(True)
+            Dim cp As New Contensive.Processor.CPClass(testAppName)
             Dim errorMessage As String = ""
             '
             ' assign
@@ -93,9 +90,7 @@ Namespace Contensive.Addons.aoDonations
         ''' test all donationform invalid cases
         ''' </summary>
         <TestMethod()> Public Sub donationSubmitInValidationTest()
-            Dim cp As New Contensive.Processor.CPClass
-            cp.Context.appName = testAppName
-            cp.getDoc(True)
+            Dim cp As New Contensive.Processor.CPClass(testAppName)
             Dim errorMessage As String = ""
             Dim donationDetails As donationRequestModel
             Dim result As donationResponseModel
@@ -178,9 +173,7 @@ Namespace Contensive.Addons.aoDonations
         ''' test the basic application -- use a unit test template
         ''' </summary>
         <TestMethod()> Public Sub helloWorldTest()
-            Dim cp As New Contensive.Processor.CPClass
-            cp.Context.appName = testAppName
-            cp.getDoc(True)
+            Dim cp As New Contensive.Processor.CPClass(testAppName)
             '
             Assert.AreEqual(testAppName, cp.Site.Name)
             '

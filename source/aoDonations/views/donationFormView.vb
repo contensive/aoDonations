@@ -20,7 +20,7 @@ Namespace Contensive.Addons.aoDonations
                     returnHtml = cs.GetText("layout")
                 End If
                 returnHtml = returnHtml.Replace("{{State Select}}", commonClass.getStateSelect(CP, "DFStateID"))
-                returnHtml = returnHtml.Replace("{{reCaptcha}}", CP.Utils.ExecuteAddon("reCAPTCHA Display"))
+                returnHtml = returnHtml.Replace("{{reCaptcha}}", CP.Addon.Execute("reCAPTCHA Display").ToString())
                 returnHtml += commonClass.getHelpWrapper(CP, "")
             Catch ex As Exception
                 CP.Site.ErrorReport(ex)

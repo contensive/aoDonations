@@ -502,7 +502,7 @@ Namespace Contensive.Addons.aoDonations
                     '   final check
                     '
                     If content <> "" Then
-                        returnHtml += CP.Html.div(CP.Html.div(content, , "ccHintWrapperContent"), , "ccHintWrapper")
+                        returnHtml += CP.Html.div(CP.Html.div(content, "", "ccHintWrapperContent"), "", "ccHintWrapper")
                     End If
                 End If
             Catch ex As Exception

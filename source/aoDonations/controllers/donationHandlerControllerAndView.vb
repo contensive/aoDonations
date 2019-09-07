@@ -62,10 +62,10 @@ Namespace Contensive.Addons.aoDonations
 
                 'End If
                 Dim reCaptchaResponse As String = ""
-                If (CP.Site.GetBoolean("Donations Add Recaptcha", "0")) Then
+                If (CP.Site.GetBoolean("Donations Add Recaptcha", False)) Then
                     CP.Doc.SetProperty("Challenge", CP.Doc.GetText("recaptcha_challenge_field"))
                     CP.Doc.SetProperty("Response", CP.Doc.GetText("recaptcha_response_field"))
-                    reCaptchaResponse = CP.Utils.ExecuteAddon(reCaptchaProcessGuid)
+                    reCaptchaResponse = CStr(CP.Addon.Execute(reCaptchaProcessGuid))
                 End If
                 If (Not String.IsNullOrEmpty(reCaptchaResponse)) Then
                     '
