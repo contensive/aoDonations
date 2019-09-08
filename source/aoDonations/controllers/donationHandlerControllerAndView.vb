@@ -237,7 +237,7 @@ Namespace Contensive.Addons.aoDonations
                                     '
                                     Dim regDate As Date = Date.Now()
                                     Dim completedDate As String = regDate.ToString("MMMM" & " " & "dd" & ", " & "yyyy")
-                                    response.name = "Full Name:" & " " & .DFFirstName & " " & .DFLastName & "</br>" & "Address:" & " " & .DFAddress & "</br>" & "City:" & " " & .DFCity & "</br>" & "State/Province:" & " " & .DFState & "</br> " & "Zip/Postal Code:" & " " & .DFZip & "</br> " & "Email:" & " " & .DFEmail
+                                    response.name = .DFFirstName & " " & .DFLastName & "</br>" & "Address:" & " " & .DFAddress & "</br>" & "City:" & " " & .DFCity & "</br>" & "State/Province:" & " " & .DFState & "</br> " & "Zip/Postal Code:" & " " & .DFZip & "</br> " & "Email:" & " " & .DFEmail
                                     response.completedDate = completedDate
                                     response.donationType = CP.Utils.EncodeInteger(.DFType)
                                     response.donationAmount = donationAmountString
@@ -247,25 +247,11 @@ Namespace Contensive.Addons.aoDonations
                                         newcardNumber = newcardNumber.Substring(newcardNumber.Length - 4, 4)
                                     End If
                                     response.paymentHolderName = "Cardholder Name:" & " " & .DFcardName & "</br>" & " " & newcardNumber & "</br>" & " " & .DFcardType
-                                    'If onDemandMethod.useAch = True Then
-                                    '    '
-                                    '    '
-                                    '    '                      
-                                    '    response.paymentHolderName = "Name on Account:" & " " & .checkacctName & "</br>" & "Account Number: " & " " & .checkacctNumber & "</br>" & "Bank Routing Number: " & " " & .checkacctroutingNumber
-                                    'Else
-                                    '    '
-                                    '    '
-                                    '    Dim newcardNumber = .DFcardNo.Substring(.DFcardNo.Length - 4, 4)
-                                    '    '
-                                    '    response.paymentHolderName = "Cardholder Name:" & " " & .DFcardName & "</br>" & " " & newcardNumber & "</br>" & " " & .DFcardType
-                                    'End If
-                                    '
                                     '
                                     '   send notifications
                                     '
                                     copy += "First Name: " & .DFFirstName & br
                                     copy += "Last Name: " & .DFLastName & br
-                                    'copy += "Total Amount: " & amount & br
                                     copy += "Amount Paid: " & donationAmountString & br
                                     copy += "Payment Date: " & Date.Today & br
                                     copy += "Account Number: " & Right(.DFcardNo, 4) & br
@@ -299,11 +285,9 @@ Namespace Contensive.Addons.aoDonations
                                     End If
                                     Call csDon.Close()
                                     '
-                                    CP.Utils.AppendLog("donationConfirmation.log", "returnCopy " & copy)
                                     CP.Email.sendSystem("Dontaion Form Auto Responder", copy, donUserId)
                                     CP.Email.sendSystem("Donation Form Notification", copy)
                                 End If
-                                '
                             End If
                         End With
                     End If

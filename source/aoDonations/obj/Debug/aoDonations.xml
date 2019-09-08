@@ -27,48 +27,14 @@ aoDonations
   Looks up a localized string similar to &lt;!-- Donation Form   --&gt;
 &lt;form id=&quot;donationInputForm&quot;&gt;
     &lt;div class=&quot;donationForm&quot;&gt;
+        &lt;div id=&quot;js-processError&quot; class=&quot;p-3 mb-2 bg-danger text-white&quot; style=&quot;display:none;&quot;&gt;&lt;/div&gt;
         &lt;div class=&quot;donationFormInner&quot;&gt;
             &lt;div class=&quot;donateTable&quot;&gt;
                 &lt;div class=&quot;form-container&quot;&gt;
-
-                    &lt;!-- personal info--&gt;
-                    &lt;div class=&quot;donate-user donateBox&quot;&gt;
-                        &lt;h3&gt;Your Information&lt;/h3&gt;
-                        &lt;div class=&quot;donateUser&quot;&gt;
-                            &lt;div class=&quot;form-row form-name-entry&quot;&gt;
-                           [rest of string was truncated]&quot;;.
-</summary>
-</member>
-<member name="P:My.Resources.Resources.DonationFormHtml">
-<summary>
-  Looks up a localized string similar to &lt;!-- Donation Form   --&gt;
-&lt;form id=&quot;donationInputForm&quot; &gt;
-	&lt;div class=&quot;donationForm&quot;&gt;
-		&lt;div class=&quot;donationFormInner&quot;&gt;
-			&lt;div class=&quot;donateTable&quot;&gt;
-				&lt;div class=&quot;form-container&quot;&gt;
-
-					&lt;!-- personal info--&gt;
-					&lt;div class=&quot;donate-user donateBox&quot;&gt;
-						&lt;h3&gt;Your Information&lt;/h3&gt;
-						&lt;div class=&quot;donateUser&quot;&gt;
-							&lt;div class=&quot;form-row form-name-entry&quot;&gt;
-									&lt;div class=&quot;form-input fn&quot;&gt;
-										&lt;label&gt;First Name &lt;span class=&quot;req&quot;&gt;*&lt;/span&gt;&lt;/label&gt;
-										&lt;input name=&quot;DFFirstName&quot; requ [rest of string was truncated]&quot;;.
-</summary>
-</member>
-<member name="P:My.Resources.Resources.ThankYouFormHtml">
-<summary>
-  Looks up a localized string similar to &amp;&amp;&amp;&amp;&amp;theform*****
-       &lt;form id=&quot;donationConfirmation&quot; style=&quot;display:none;&quot; &gt;
-                &lt;div class=&quot;contentBox&quot;&gt;&lt;h1&gt;Donation Form (CONFIRMATION)&lt;/h1&gt;&lt;/div&gt;
-                
-                &lt;!-- donation form --&gt;
-                &lt;div class=&quot;donationForm&quot;&gt;
-                &lt;div class=&quot;donationFormInner&quot;&gt;
-                    &lt;h1&gt;Thank you!&lt;/h1&gt;
-                    &lt;p&gt;Thank you for your donation. A receipt/confirmation has been sent to your email. You may also print this page and keep it for you [rest of string was truncated]&quot;;.
+                    &lt;div class=&quot;row donate-user donateBox&quot;&gt;
+                        &lt;div class=&quot;col-lg-6  donateUser&quot;&gt;
+                            &lt;h3&gt;Your Information&lt;/h3&gt;
+                    [rest of string was truncated]&quot;;.
 </summary>
 </member>
 <member name="M:Contensive.Addons.aoDonations.DonationHandlerControllerAndView.processAndReturn(Contensive.BaseClasses.CPBaseClass,System.String@,Contensive.Addons.aoDonations.DonationRequestViewModel)">
@@ -86,6 +52,16 @@ aoDonations
  </summary>
  <param name="CP"></param>
  <returns></returns>
+</member>
+<member name="T:Contensive.Addons.aoDonations.DiagnosticClass">
+ <summary>
+ Diagnostic
+ </summary>
+</member>
+<member name="T:Contensive.Addons.aoDonations.OnInstallClass">
+ <summary>
+ This is the addon dropped on the page
+ </summary>
 </member>
 <member name="T:Contensive.Addons.aoDonations.DonationClass">
  <summary>

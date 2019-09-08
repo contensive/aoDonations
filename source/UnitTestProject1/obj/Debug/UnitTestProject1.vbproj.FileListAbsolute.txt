@@ -37,10 +37,6 @@ C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\UnitTestProject1\obj\Debug
 C:\Users\kmaAdmin\Documents\GitHub\aoDonations\source\UnitTestProject1\obj\Debug\UnitTestProject1.pdb
 C:\Users\kmaadmin\Documents\GitHub\aoDonations\source\UnitTestProject1\obj\Debug\UnitTestProject1.vbprojAssemblyReference.cache
 C:\Users\kmaadmin\Documents\GitHub\aoDonations\source\UnitTestProject1\obj\Debug\UnitTestProject1.vbproj.CoreCompileInputs.cache
-C:\Users\jay\Documents\Git\aoDonations\source\UnitTestProject1\obj\Debug\UnitTestProject1.vbprojAssemblyReference.cache
-C:\Users\jay\Documents\Git\aoDonations\source\UnitTestProject1\obj\Debug\Resources.resources
-C:\Users\jay\Documents\Git\aoDonations\source\UnitTestProject1\obj\Debug\UnitTestProject1.vbproj.GenerateResource.cache
-C:\Users\jay\Documents\Git\aoDonations\source\UnitTestProject1\obj\Debug\UnitTestProject1.vbproj.CoreCompileInputs.cache
 C:\Users\jay\Documents\Git\aoDonations\source\UnitTestProject1\bin\Debug\ClearScriptV8-32.dll
 C:\Users\jay\Documents\Git\aoDonations\source\UnitTestProject1\bin\Debug\ClearScriptV8-64.dll
 C:\Users\jay\Documents\Git\aoDonations\source\UnitTestProject1\bin\Debug\v8-libcpp-ia32.dll
@@ -103,6 +99,10 @@ C:\Users\jay\Documents\Git\aoDonations\source\UnitTestProject1\bin\Debug\NLog.xm
 C:\Users\jay\Documents\Git\aoDonations\source\UnitTestProject1\bin\Debug\NLog.AWS.Logger.pdb
 C:\Users\jay\Documents\Git\aoDonations\source\UnitTestProject1\bin\Debug\NLog.AWS.Logger.xml
 C:\Users\jay\Documents\Git\aoDonations\source\UnitTestProject1\bin\Debug\NUglify.xml
+C:\Users\jay\Documents\Git\aoDonations\source\UnitTestProject1\obj\Debug\UnitTestProject1.vbprojAssemblyReference.cache
+C:\Users\jay\Documents\Git\aoDonations\source\UnitTestProject1\obj\Debug\Resources.resources
+C:\Users\jay\Documents\Git\aoDonations\source\UnitTestProject1\obj\Debug\UnitTestProject1.vbproj.GenerateResource.cache
+C:\Users\jay\Documents\Git\aoDonations\source\UnitTestProject1\obj\Debug\UnitTestProject1.vbproj.CoreCompileInputs.cache
 C:\Users\jay\Documents\Git\aoDonations\source\UnitTestProject1\obj\Debug\UnitTestProject1.vbproj.CopyComplete
 C:\Users\jay\Documents\Git\aoDonations\source\UnitTestProject1\obj\Debug\UnitTestProject1.dll
 C:\Users\jay\Documents\Git\aoDonations\source\UnitTestProject1\obj\Debug\UnitTestProject1.xml

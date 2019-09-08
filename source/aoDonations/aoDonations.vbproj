@@ -85,6 +85,8 @@
     <Compile Include="Controllers\GenericController.vb" />
     <Compile Include="Constants.vb" />
     <Compile Include="Controllers\DonationHandlerControllerAndView.vb" />
+    <Compile Include="Views\DiagnosticClass.vb" />
+    <Compile Include="Views\OnInstallClass.vb" />
     <Compile Include="Views\DonationClass.vb" />
     <Compile Include="Views\DonationHandlerClass.vb" />
     <Compile Include="Models\DonationResponseViewModel.vb" />
@@ -129,8 +131,6 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="Resources\DonationForm.html" />
-    <Content Include="Resources\DonationFormHtml.txt" />
-    <Content Include="Resources\ThankYouFormHtml.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
