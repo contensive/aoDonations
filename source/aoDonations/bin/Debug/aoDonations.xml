@@ -63,6 +63,15 @@ aoDonations
  This is the addon dropped on the page
  </summary>
 </member>
+<member name="M:Contensive.Addons.aoDonations.OnInstallClass.verifyItem(Contensive.BaseClasses.CPBaseClass,System.String,System.String,System.Int32)">
+ <summary>
+ verify the item is created
+ </summary>
+ <param name="cp"></param>
+ <param name="itemGuid"></param>
+ <param name="itemName"></param>
+ <param name="periodMonths"></param>
+</member>
 <member name="T:Contensive.Addons.aoDonations.DonationClass">
  <summary>
  This is the addon dropped on the page

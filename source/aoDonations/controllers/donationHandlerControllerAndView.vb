@@ -8,12 +8,6 @@ Namespace Contensive.Addons.aoDonations
 
     Public Class DonationHandlerControllerAndView
 
-        Private Const itemGuidOnce1 As String = "{F12533E8-F736-40A7-94E3-BCBF874D11DE}"
-        Private Const itemGuidMonthly2 As String = "{D475BE89-1B7A-4AB1-B9E1-C8ED4768AE90}"
-        Private Const itemGuidQuarterly3 As String = "{B5A437F1-A6EB-4B82-9ED0-089EA230D06F}"
-        Private Const itemGuidAnnual4 As String = "{184FC137-64EB-4BD0-865F-97ECDA1B970E}"
-        Private Const reCaptchaDisplayGuid = "{E9E51C6E-9152-4284-A44F-D3ABC423AB90}"
-        Private Const reCaptchaProcessGuid = "{030AC5B0-F796-4EA4-B94C-986B1C29C16C}"
         '
         ''' <summary>
         ''' processes the donation form from the donationsDetails model. It returns an object with the return results
