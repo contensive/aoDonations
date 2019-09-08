@@ -6,7 +6,7 @@ Option Explicit On
 '
 Namespace Contensive.Addons.aoDonations
 
-    Public Class donationHandlerControllerAndView
+    Public Class DonationHandlerControllerAndView
 
         Private Const itemGuidOnce1 As String = "{F12533E8-F736-40A7-94E3-BCBF874D11DE}"
         Private Const itemGuidMonthly2 As String = "{D475BE89-1B7A-4AB1-B9E1-C8ED4768AE90}"
@@ -22,8 +22,8 @@ Namespace Contensive.Addons.aoDonations
         ''' <param name="errMsg"></param>
         ''' <param name="donationRequest"></param>
         ''' <returns></returns>
-        Public Shared Function processAndReturn(ByVal CP As BaseClasses.CPBaseClass, ByRef errMsg As String, donationRequest As donationRequestModel) As donationResponseModel
-            Dim response As New donationResponseModel
+        Public Shared Function processAndReturn(ByVal CP As BaseClasses.CPBaseClass, ByRef errMsg As String, donationRequest As DonationRequestViewModel) As DonationResponseViewModel
+            Dim response As New DonationResponseViewModel
             Try
                 Dim cs As BaseClasses.CPCSBaseClass = CP.CSNew()
                 Dim csA As BaseClasses.CPCSBaseClass = CP.CSNew()
@@ -40,14 +40,14 @@ Namespace Contensive.Addons.aoDonations
                 Dim recordLink As String = ""
                 Dim donationID As Integer = 0
                 Dim eCom As New aoAccountBilling.apiClass
-                Dim acctStatus As New aoAccountBilling.apiClass.accountStatusStructAPIVersion
+                Dim acctStatus As New aoAccountBilling.apiClass.AccountStatusStructAPIVersion
                 Dim donationAccountID As Integer = 0
                 Dim donationPersonId As Integer = 0
                 Dim newAccountName As String = ""
                 Dim locOrderID As Integer = 0
                 Dim locOrderDetailID As Integer
                 Dim locItemID As Integer = 0
-                Dim paymentInfo As Contensive.Addons.aoAccountBilling.apiClass.onDemandMethodStructApiVersion = Nothing
+                Dim paymentInfo As Contensive.Addons.aoAccountBilling.apiClass.OnDemandMethodStructApiVersion = Nothing
                 Dim rnErr As String = ""
                 Dim message As String = ""
                 Dim accountUserId As Integer = 0
@@ -79,7 +79,7 @@ Namespace Contensive.Addons.aoDonations
                     If True Then
                         Dim donationAmount As Double = CP.Utils.EncodeNumber(donationRequest.donationAmount)
                         If (donationAmount = 0) Then
-                            donationAmount = CP.Utils.EncodeNumber(donationRequest.donateAmountOther)
+                            donationAmount = CP.Utils.EncodeNumber(donationRequest.donationAmount)
                         End If
                         Dim donationAmountString As String = FormatCurrency(donationAmount)
                         response.ProcessedOk = True
@@ -187,7 +187,7 @@ Namespace Contensive.Addons.aoDonations
                                 '
                                 '   payment for order if no errors
                                 '
-                                Dim onDemandMethod As New Contensive.Addons.aoAccountBilling.apiClass.onDemandMethodStructApiVersion
+                                Dim onDemandMethod As New Contensive.Addons.aoAccountBilling.apiClass.OnDemandMethodStructApiVersion
                                 onDemandMethod.useAch = False
                                 onDemandMethod.CreditCardNumber = .DFcardNo
                                 onDemandMethod.CreditCardExpiration = (New Date(CP.Doc.GetInteger("DFcardYr"), CP.Doc.GetInteger("DFcardExp"), 1)).ToShortDateString
@@ -320,7 +320,7 @@ Namespace Contensive.Addons.aoDonations
         ''' </summary>
         ''' <param name="CP"></param>
         ''' <returns></returns>
-        Private Shared Function verifyUserAndAccount(ByVal CP As BaseClasses.CPBaseClass, donationDetails As donationRequestModel, ByRef returnDonationAccountID As Integer, ByRef returnDonationPersonId As Integer, ByRef returnErrMessage As String) As Boolean
+        Private Shared Function verifyUserAndAccount(ByVal CP As BaseClasses.CPBaseClass, donationDetails As DonationRequestViewModel, ByRef returnDonationAccountID As Integer, ByRef returnDonationPersonId As Integer, ByRef returnErrMessage As String) As Boolean
             Dim result As Boolean = True
             '
             Try
@@ -431,7 +431,7 @@ Namespace Contensive.Addons.aoDonations
                 Else
                     '
                     ' -- Account provided, verify it is ok
-                    Dim accountStatus As aoAccountBilling.apiClass.accountStatusStructAPIVersion = eCommerce.getAccountStatus(CP, returnErrMessage, returnDonationAccountID)
+                    Dim accountStatus As aoAccountBilling.apiClass.AccountStatusStructAPIVersion = eCommerce.getAccountStatus(CP, returnErrMessage, returnDonationAccountID)
                     If (String.IsNullOrEmpty(returnErrMessage)) Then
                         If (Not accountStatus.exists) Then
                             returnDonationAccountID = 0

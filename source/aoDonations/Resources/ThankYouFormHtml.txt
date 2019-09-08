@@ -1,0 +1,62 @@
+﻿&&&&&theform*****
+       <form id="donationConfirmation" style="display:none;" >
+                <div class="contentBox"><h1>Donation Form (CONFIRMATION)</h1></div>
+                
+                <!-- donation form -->
+                <div class="donationForm">
+                <div class="donationFormInner">
+                    <h1>Thank you!</h1>
+                    <p>Thank you for your donation. A receipt/confirmation has been sent to your email. You may also print this page and keep it for your records.</p>
+                    
+                  <!-- print receipt -->
+                    <div class="receiptBox">
+                    <div class="receiptBoxInner">
+                        <h2>Thank you for your donation!</h2>
+                        
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Date:</strong></td>
+                                    <td>December 4, 2015</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Donator:</strong></td>
+                                    <td>
+                                        Full Name<br />
+                                        Address<br />
+                                        City, State ZIP
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Donation Type:</strong></td>
+                                    <td>One-time</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Donation Amount:</strong></td>
+                                    <td>$100.00</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Payment Method:</strong></td>
+                                    <td>Credit Card</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Payment Info:</strong></td>
+                                    <td>
+                                        Cardholder Name<br />
+                                        XXXX-XXXX-XXXX-1234<br />
+                                        VISA<br />
+                                        Expiration: MM/YYYY
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                    </div>
+                    </div>
+                    <!-- end print receipt -->
+                    
+                </div>
+                </div>
+	</form>
+                
+           

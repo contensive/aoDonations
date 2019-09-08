@@ -1,9 +1,11 @@
 ﻿
 Option Strict On
 Option Explicit On
+
 Imports Contensive.Addons.aoDonations
+
 Namespace Contensive.Addons.aoDonations
-    Public Class donationHandlerClass
+    Public Class DonationHandlerClass
         Inherits BaseClasses.AddonBaseClass
         '
         '====================================================================================================
@@ -17,8 +19,8 @@ Namespace Contensive.Addons.aoDonations
             Dim resultJSON As String = ""
             Try
                 Dim errMsg As String = ""
-                Dim donationDetails = New donationRequestModel(CP)
-                Dim response As donationResponseModel
+                Dim donationDetails = New DonationRequestViewModel(CP)
+                Dim response As DonationResponseViewModel
                 Dim jsonSerializer As New System.Web.Script.Serialization.JavaScriptSerializer
                 '
                 ' -- track if the user is authenticated on entry. If not and their email matches an existing account, we will let them use the account then log then back out on exit
@@ -34,7 +36,7 @@ Namespace Contensive.Addons.aoDonations
                 '
                 ' process the form
                 ' 
-                response = donationHandlerControllerAndView.processAndReturn(CP, errMsg, donationDetails)
+                response = DonationHandlerControllerAndView.processAndReturn(CP, errMsg, donationDetails)
                 resultJSON = jsonSerializer.Serialize(response)
                 '
                 If (Not authenticatedOnEnter) And (CP.User.IsAuthenticated) Then

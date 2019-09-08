@@ -2,7 +2,6 @@ C:\Users\jay\Documents\Git\aoDonations\source\aoDonations\bin\Debug\aoDonations.
 C:\Users\jay\Documents\Git\aoDonations\source\aoDonations\bin\Debug\aoDonations.pdb
 C:\Users\jay\Documents\Git\aoDonations\source\aoDonations\bin\Debug\aoDonations.xml
 C:\Users\jay\Documents\Git\aoDonations\source\aoDonations\bin\Debug\accountBillingApi.dll
-C:\Users\jay\Documents\Git\aoDonations\source\aoDonations\obj\Debug\aoDonations.vbprojAssemblyReference.cache
 C:\Users\jay\Documents\Git\aoDonations\source\aoDonations\obj\Debug\Resources.resources
 C:\Users\jay\Documents\Git\aoDonations\source\aoDonations\obj\Debug\aoDonations.vbproj.GenerateResource.cache
 C:\Users\jay\Documents\Git\aoDonations\source\aoDonations\obj\Debug\aoDonations.vbproj.CoreCompileInputs.cache

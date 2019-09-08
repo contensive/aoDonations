@@ -1,0 +1,238 @@
+﻿<!-- Donation Form   -->
+<form id="donationInputForm">
+    <div class="donationForm">
+        <div id="js-processError" class="p-3 mb-2 bg-danger text-white" style="display:none;"></div>
+        <div class="donationFormInner">
+            <div class="donateTable">
+                <div class="form-container">
+                    <div class="row donate-user donateBox">
+                        <div class="col-lg-6  donateUser">
+                            <h3>Your Information</h3>
+                            <div class="row form-name-entry">
+                                <div class="col-12 form-group">
+                                    <label for="DFFirstName">First Name<span class="req">*</span></label>
+                                    <input type="text" name="DFFirstName" class="form-control" id="DFFirstName" placeholder="First Name" required>
+                                </div>
+                                <div class="col-12 form-group">
+                                    <label for="DFLastName">Last Name<span class="req">*</span></label>
+                                    <input type="text" name="DFLastName" class="form-control" id="DFLastName" placeholder="Last Name" required>
+                                </div>
+                                <div class="col-12 form-group">
+                                    <label for="DFPhone">Phone<span class="req">*</span></label>
+                                    <input type="text" name="DFPhone" class="form-control" id="DFPhone" placeholder="Phone" required>
+                                </div>
+                                <div class="col-12 form-group">
+                                    <label for="DFEmail">E-mail<span class="req">*</span></label>
+                                    <input type="text" name="DFEmail" class="form-control" id="DFEmail" placeholder="Email" required>
+                                </div>
+                                <div class="col-12 form-group">
+                                    <label for="DFAddress">Address<span class="req">*</span></label>
+                                    <input type="text" name="DFAddress" class="form-control" id="DFAddress" placeholder="Address" required>
+                                </div>
+                                <div class="col-12 form-group">
+                                    <div class="form-row">
+                                        <div class="col-4 form-group">
+                                            <label for="DFCity">City<span class="req">*</span></label>
+                                            <input type="text" name="DFCity" class="form-control" id="DFCity" placeholder="City" required>
+                                        </div>
+                                        <div class="col-4 form-group">
+                                            <label for="DFState">State<span class="req">*</span></label>
+                                            <input type="text" name="DFState" class="form-control" id="DFState" placeholder="State" required>
+                                        </div>
+                                        <div class="col-4 form-group">
+                                            <label for="DFZip">Zip<span class="req">*</span></label>
+                                            <input type="number" name="DFZip" class="form-control" id="DFZip" placeholder="Zip" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 donatePay">
+                            <h3>Donation Information</h3>
+                            <div class="row donationTypeRow">
+                                <div class="col-12 form-input-label">Donation Type:</div>
+                                <div class="col-12 form-pmt-inputs">
+                                    <ul class="donateUL">
+                                        <li>
+                                            <div class="toggleBtns">
+                                                <input id="js-donateOnce" name="DFType" class="toggle-radio" value="1" type="radio"> <label for="js-donateOnce" class="donBtn">Once</label>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="toggleBtns">
+                                                <input id="js-donateMonthly" name="DFType" class="toggle-radio" value="2" type="radio"> <label for="js-donateMonthly" class="donBtn">Monthly</label>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="toggleBtns">
+                                                <input id="js-donateQuarterly" name="DFType" class="toggle-radio" value="3" type="radio"> <label for="js-donateQuarterly" class="donBtn">Quarterly</label>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="toggleBtns">
+                                                <input id="js-donateAnnually" name="DFType" class="toggle-radio" value="4" type="radio"> <label for="js-donateAnnually" class="donBtn">Annually</label>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row donationTypeRow">
+                                <div class="col-12 form-input-label">Donation Amount:</div>
+                                <div class="col-12 form-pmt-inputs">
+                                    <ul class="amountsUL donateUL">
+                                        <li>
+                                            <div class="toggleBtns">
+                                                <input id="js-donAmt01" name="donateAmt" class="toggle-radio" type="radio"> <label for="js-donAmt01" class="donBtn">$5.00</label>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="toggleBtns">
+                                                <input id="js-donAmt02" name="donateAmt" class="toggle-radio" type="radio"> <label for="js-donAmt02" class="donBtn">$10.00</label>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="toggleBtns">
+                                                <input id="js-donAmt03" name="donateAmt" class="toggle-radio" type="radio"> <label for="js-donAmt03" class="donBtn">$15.00</label>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="toggleBtns">
+                                                <input id="js-donAmtOther" name="donateAmt" class="toggle-radio" type="radio"> <label for="js-donAmtOther" class="donBtn">Other</label>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- other amt -->
+                            </div>
+                            <div class="row">
+                                <div class="col-12 form-group">
+                                    <label for="donationAmount">Donation Amount</label>
+                                    <input type="number" name="donationAmount" class="form-control" id="donationAmount" placeholder="Donation Amount" required>
+                                </div>
+                            </div>
+                            <div class="row" id="js-payByCreditCardTR">
+                                <div class="col-12 form-input-label">
+                                    <!-- credit card form -->
+                                    <div class="creditCard">
+                                        <div class="row">
+                                            <div class="col-12 form-group">
+                                                <label for="js-cardName">Name on Credit Card</label>
+                                                <input type="text" name="DFcardName" class="form-control" id="js-cardName" placeholder="Name on Credit Card" required>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 form-group">
+                                                <label for="js-cardNo">Credit Card Number</label>
+                                                <input type="text" name="DFcardNo" class="form-control" id="js-cardNo" placeholder="Credit Card Number" required>
+                                            </div>
+                                        </div>
+                                        <div class="row-three form-row">
+                                            <div class="col-4 form-group form-pmt-inputs cardType">
+                                                <label for="js-cardType">Card Type</label>
+                                                <select class="form-control" name="DFcardType" id="js-cardType" placeholder="Select Credit Card Type">
+                                                    <option value="">Select</option>
+                                                    <option>American Express</option>
+                                                    <option>MasterCard</option>
+                                                    <option>Visa</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-2 form-group form-pmt-inputs cvv">
+                                                <label for="js-cardCVV">CVV</label>
+                                                <input class="form-control" id="js-cardCVV" type="number" name="DFcardCVV" required>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <label for="js-cardExpMo">Card Expiration</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="col-6 form-group form-pmt-inputs expDate">
+                                                        <select class="form-control" name="DFcardExp" id="js-cardExpMo" PlaceHolder="Month">
+                                                            <option value="">Month</option>
+                                                            <option value="1">January</option>
+                                                            <option value="2">February</option>
+                                                            <option value="3">March</option>
+                                                            <option value="4">April</option>
+                                                            <option value="5">May</option>
+                                                            <option value="6">June</option>
+                                                            <option value="7">July</option>
+                                                            <option value="8">August</option>
+                                                            <option value="9">September</option>
+                                                            <option value="10">October</option>
+                                                            <option value="11">November</option>
+                                                            <option value="12">December</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-6 form-group form-pmt-inputs expDate">
+                                                        <div class="inBlock">
+                                                            <select class="form-control" name="DFcardYr" id="js-cardExpYr" PlaceHolder="Year">
+                                                                <option value="">Year</option>
+                                                                <option>2019</option>
+                                                                <option>2020</option>
+                                                                <option>2021</option>
+                                                                <option>2022</option>
+                                                                <option>2023</option>
+                                                                <option>2024</option>
+                                                                <option>2025</option>
+                                                                <option>2026</option>
+                                                                <option>2027</option>
+                                                                <option>2028</option>
+                                                                <option>2029</option>
+                                                                <option>2030</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row beginLetter">
+                        <div class="col-12">
+                            <input class="btn btn-primary" id="subDonInput" value="Make Donation" type="submit" value="Validate!">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<!--  end Donation Form   -->
+<!--  Start Thank you form   -->
+<form id="js-donationConfirmation" style="display:none;">
+    <h3>Donation Form (CONFIRMATION)</h3>
+    <!-- donation form -->
+    <div class="donationForm">
+        <div class="donationFormInner">
+            <h1>Thank you!</h1>
+            <p>Thank you for your donation. A receipt/confirmation has been sent to your email. You may also print this page and keep it for your records.</p>
+            <div class="receiptBox">
+                <div class="receiptBoxInner">
+                    <h2>Thank you for your donation!</h2>
+                    <div><strong>Date: <span id="tyDate">December 4, 2015</span></strong></div>
+                    <div>
+                        <strong>Donator:</strong> <span id="tyDonater">
+                            Full Name<br>
+                            Address<br>
+                            City, State ZIP
+                        </span>
+                    </div>
+                    <div><strong>Donation Type: <span id="tyDonateType">One-time</span></strong></div>
+                    <div><strong>Donation Amount: <span id="tyAmount">$100.00</span></strong></div>
+                    <div><strong>Payment Method: <span id="tyPayMethod">Credit Card</span></strong></div>
+                    <div><strong>Payment Info: <span id="tyPaymentInfo">
+                        Cardholder Name<br>
+                        XXXX-XXXX-XXXX-1234<br>
+                        VISA
+                    </span></strong></div>
+                </div>
+            </div>
+            <!-- end print receipt -->
+
+        </div>
+    </div>
+</form>

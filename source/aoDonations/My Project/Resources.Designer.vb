@@ -59,5 +59,66 @@ Namespace My.Resources
                 resourceCulture = value
             End Set
         End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;!-- Donation Form   --&gt;
+        '''&lt;form id=&quot;donationInputForm&quot;&gt;
+        '''    &lt;div class=&quot;donationForm&quot;&gt;
+        '''        &lt;div class=&quot;donationFormInner&quot;&gt;
+        '''            &lt;div class=&quot;donateTable&quot;&gt;
+        '''                &lt;div class=&quot;form-container&quot;&gt;
+        '''
+        '''                    &lt;!-- personal info--&gt;
+        '''                    &lt;div class=&quot;donate-user donateBox&quot;&gt;
+        '''                        &lt;h3&gt;Your Information&lt;/h3&gt;
+        '''                        &lt;div class=&quot;donateUser&quot;&gt;
+        '''                            &lt;div class=&quot;form-row form-name-entry&quot;&gt;
+        '''                           [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property DonationForm() As String
+            Get
+                Return ResourceManager.GetString("DonationForm", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;!-- Donation Form   --&gt;
+        '''&lt;form id=&quot;donationInputForm&quot; &gt;
+        '''	&lt;div class=&quot;donationForm&quot;&gt;
+        '''		&lt;div class=&quot;donationFormInner&quot;&gt;
+        '''			&lt;div class=&quot;donateTable&quot;&gt;
+        '''				&lt;div class=&quot;form-container&quot;&gt;
+        '''
+        '''					&lt;!-- personal info--&gt;
+        '''					&lt;div class=&quot;donate-user donateBox&quot;&gt;
+        '''						&lt;h3&gt;Your Information&lt;/h3&gt;
+        '''						&lt;div class=&quot;donateUser&quot;&gt;
+        '''							&lt;div class=&quot;form-row form-name-entry&quot;&gt;
+        '''									&lt;div class=&quot;form-input fn&quot;&gt;
+        '''										&lt;label&gt;First Name &lt;span class=&quot;req&quot;&gt;*&lt;/span&gt;&lt;/label&gt;
+        '''										&lt;input name=&quot;DFFirstName&quot; requ [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property DonationFormHtml() As String
+            Get
+                Return ResourceManager.GetString("DonationFormHtml", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &amp;&amp;&amp;&amp;&amp;theform*****
+        '''       &lt;form id=&quot;donationConfirmation&quot; style=&quot;display:none;&quot; &gt;
+        '''                &lt;div class=&quot;contentBox&quot;&gt;&lt;h1&gt;Donation Form (CONFIRMATION)&lt;/h1&gt;&lt;/div&gt;
+        '''                
+        '''                &lt;!-- donation form --&gt;
+        '''                &lt;div class=&quot;donationForm&quot;&gt;
+        '''                &lt;div class=&quot;donationFormInner&quot;&gt;
+        '''                    &lt;h1&gt;Thank you!&lt;/h1&gt;
+        '''                    &lt;p&gt;Thank you for your donation. A receipt/confirmation has been sent to your email. You may also print this page and keep it for you [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property ThankYouFormHtml() As String
+            Get
+                Return ResourceManager.GetString("ThankYouFormHtml", resourceCulture)
+            End Get
+        End Property
     End Module
 End Namespace

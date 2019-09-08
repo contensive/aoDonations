@@ -4,7 +4,7 @@ Option Explicit On
 '
 Namespace Contensive.Addons.aoDonations
     '
-    Public Class donationRequestModel
+    Public Class DonationRequestViewModel
         Public DFFirstName As String
         Public DFMiddleName As String
         Public DFLastName As String
@@ -16,7 +16,6 @@ Namespace Contensive.Addons.aoDonations
         Public DFPhone As String
         Public DFEmail As String
         Public DFType As String
-        Public donateAmountOther As String
         Public donationAmount As String
         Public DFcardName As String
         Public DFcardNo As String
@@ -43,14 +42,7 @@ Namespace Contensive.Addons.aoDonations
             DFcardExp = cp.Doc.GetText("DFcardExp") & "/" & cp.Doc.GetText("DFcardYr")
             DFcardCVV = cp.Doc.GetText("DFCardCVV")
             DFPaymentType = cp.Doc.GetText("DFPaymentType")
-            donationAmount = cp.Doc.GetText("donateAmt")
-            donateAmountOther = cp.Doc.GetText("donateAmountOther")
-            '
-            'cp.Utils.AppendLog("debug.log", "donationREquestModel, DFFirstName=[" & DFFirstName & "]")
-            ' cp.Utils.AppendLog("debug.log", "donationREquestModel, donationAmount=[" & donationAmount & "],donateAmountOther=[" & donateAmountOther & "]")
+            donationAmount = cp.Doc.GetText("donationAmount")
         End Sub
-        '
-
-
     End Class
 End Namespace

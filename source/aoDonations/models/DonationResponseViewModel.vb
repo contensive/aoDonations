@@ -5,9 +5,7 @@ Option Explicit On
 Namespace Contensive.Addons.aoDonations
     '
     '
-    Public Class donationResponseModel
-        '
-        ' if processedOk is false, the errorMessage is a user message to be displayed on the UI
+    Public Class DonationResponseViewModel
         '
         Public ProcessedOk As Boolean = False
         Public errorMessage As String

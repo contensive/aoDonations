@@ -1,0 +1,302 @@
+﻿<!-- Donation Form   -->
+<form id="donationInputForm" >
+	<div class="donationForm">
+		<div class="donationFormInner">
+			<div class="donateTable">
+				<div class="form-container">
+
+					<!-- personal info-->
+					<div class="donate-user donateBox">
+						<h3>Your Information</h3>
+						<div class="donateUser">
+							<div class="form-row form-name-entry">
+									<div class="form-input fn">
+										<label>First Name <span class="req">*</span></label>
+										<input name="DFFirstName" required="" type="text" class="left">
+									</div>
+									<!-- <div class="form-input mi">
+										<label>M.I.</label>
+										<input name="DFMiddleName" type="text">
+									</div>-->
+									<div class="form-input ln">
+										<label>Last Name <span class="req">*</span></label>
+										<input name="DFLastName" required="" type="text">
+									</div>
+							</div>
+							<div class="form-row form-contact-entry">
+									<div class="form-input phone">
+										<label>Phone <span class="req">*</span></label>
+										<input name="DFPhone" required="" type="number">
+									</div>
+									<div class="form-input email">
+										<label>E-mail <span class="req">*</span></label>
+										<input name="DFEmail" required="" type="email">
+									</div>
+							</div>
+							<div class="form-row">
+								<div class="form-input address">
+										<label>Address <span class="req">*</span></label>
+										<input name="DFAddress" required="" type="text">
+								</div>
+							</div>
+							<div class="form-row form-csz-entry">
+								<div class="form-input city">
+									<label>City <span class="req">*</span></label>
+									<input name="DFCity" required="" type="text">
+								</div>
+								<div class="form-input state">
+									<label>State/Province <span class="req">*</span></label>
+									<input name="DFState" required="" type="text">
+								</div>
+								<div class="form-input zip">
+									<label>Zip Code/PostalCode<span class="req">*</span></label>
+									<input name="DFZip" required="" type="number">
+								</div>
+								<div class="form-input">
+									<label style="display:none;">Error List</label>
+									<input style="display:none;" id="js-errorList" name="errorList" type="text">
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- end personal info -->
+
+					<!-- payment info -->
+					<div class="donate-pmt donateBox">
+						<h3>Donation Information</h3>
+						<div id="ccPayform"></div>
+						<div id="checkForm"></div>
+						<div class="donatePay">
+								<div class="form-row">
+									<div class="form-input-label">Donation Type:</div>
+									<div class="form-pmt-inputs">
+										<ul class="donateUL">
+											<li>
+												<div class="toggleBtns">
+												<input id="js-donateOnce" name="DFType" class="toggle-radio" value="1" type="radio"> <label for="js-donateOnce" class="donBtn">Once</label>
+												</div>
+											</li>
+											<li>
+												<div class="toggleBtns">
+												<input id="js-donateMonthly" name="DFType" class="toggle-radio" value="2" type="radio"> <label for="js-donateMonthly" class="donBtn">Monthly</label>
+												</div>
+											</li>
+											<li>
+												<div class="toggleBtns">
+												<input id="js-donateQuarterly" name="DFType" class="toggle-radio" value="3" type="radio"> <label for="js-donateQuarterly" class="donBtn">Quarterly</label>
+												</div>
+											</li>
+											<li>
+												<div class="toggleBtns">
+												<input id="js-donateAnnually" name="DFType" class="toggle-radio" value="4" type="radio"> <label for="js-donateAnnually" class="donBtn">Annually</label>
+												</div>
+											</li>
+										</ul>
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-input-label">Donation Amount:</div>
+									<div class="form-pmt-inputs">
+										<ul class="amountsUL donateUL">
+											<li>
+												<div class="toggleBtns">
+												<input id="js-donAmt01" name="donateAmt" class="toggle-radio" type="radio"> <label for="js-donAmt01" class="donBtn">$5.00</label>
+												</div>
+											</li>
+											<li>
+												<div class="toggleBtns">
+												<input id="js-donAmt02" name="donateAmt" class="toggle-radio" type="radio"> <label for="js-donAmt02" class="donBtn">$10.00</label>
+												</div>
+											</li>
+											<li>
+												<div class="toggleBtns">
+												<input id="js-donAmt03" name="donateAmt" class="toggle-radio" type="radio"> <label for="js-donAmt03" class="donBtn">$15.00</label>
+												</div>
+											</li>
+											<li>
+												<div class="toggleBtns">
+												<input id="js-donAmtOther" name="donateAmt" class="toggle-radio" type="radio"> <label for="js-donAmtOther" class="donBtn">Other</label>
+												</div>
+											</li>
+										</ul>
+									</div>
+									<!-- other amt -->
+								</div>
+								<div class="form-row">
+									<div class="form-input-label">Other Amount:</div>
+									<div class="form-pmt-inputs"><input id="donationAmount" placeholder="$" type="number" name="donationAmount" required=""></div>
+								</div>
+								<!-- end other amt -->
+								<!--
+								<div class="form-row">
+									<div class="form-input-label">Payment Method:</div>
+									<div class="form-pmt-inputs">
+										<ul class="donateUL">
+											<li>
+												<div class="toggleBtns">
+												<input id="js-donPayCredit" name="DFPaymentType" class="toggle-radio" value="0" type="radio" required=""> <label for="js-donPayCredit" class="donBtn">Credit Card</label>
+												</div>
+											</li>
+										</ul>
+									</div>
+								</div>
+								-->
+								<!-- only display if credit card payment selected -->
+								<div class="form-row" id="js-payByCreditCardTR">
+									<div class="form-input-label"><strong>Pay by Credit Card:</strong>
+										<!-- credit card form -->
+										<div class="creditCard">
+												<div class="form-row">
+													<div class="form-pmt-inputs">
+														<label for="js-cardName">Name on Card</label>
+														<input name="DFcardName" id="js-cardName" type="text" required="">
+													</div>
+												</div>
+												<div class="form-row">
+													<div class="form-pmt-inputs">
+														<label for="js-cardNo">Card Number</label>
+														<input id="js-cardNo" type="number" name="DFcardNo" required="">
+													</div>
+												</div>
+												<div class="row-three form-row">
+													<div class="form-pmt-inputs cardType">
+														<label for="js-cardType">Card Type</label>
+														<select name="DFcardType" id="js-cardType" title="Please select something!">
+															<option value="">Select</option>
+															<option>American Express</option>
+															<option>MasterCard</option>
+															<option>Visa</option>
+														</select>
+													</div>
+													<div class="form-pmt-inputs cvv">
+														<label for="js-cardCVV">CVV</label>
+														<input id="js-cardCVV" class="" type="number" name="DFcardCVV" required="">
+													</div>
+													<div class="form-pmt-inputs expDate">
+														<div>
+															<label>Card Expiration</label>
+														</div>
+														<div class="inBlock">
+															<select name="DFcardExp" id="js-cardExpMo" title="Please select something!">
+																<option value="">Month</option>
+																<option value="1">January</option>
+																<option value="2">February</option>
+																<option value="3">March</option>
+																<option value="4">April</option>
+																<option value="5">May</option>
+																<option value="6">June</option>
+																<option value="7">July</option>
+																<option value="8">August</option>
+																<option value="9">September</option>
+																<option value="10">October</option>
+																<option value="11">November</option>
+																<option value="12">December</option>
+															</select>
+														</div>
+														<div class="inBlock">
+															<select name="DFcardYr" id="js-cardExpYr" title="Please select something!">
+																<option value="">Year</option>
+																<option>2016</option>
+																<option>2017</option>
+																<option>2018</option>
+																<option>2019</option>
+																<option>2020</option>
+																<option>2021</option>
+																<option>2022</option>
+																<option>2023</option>
+																<option>2024</option>
+																<option>2025</option>
+																<option>2026</option>
+																<option>2027</option>
+																<option>2028</option>
+																<option>2029</option>
+																<option>2030</option>
+															</select>
+														</div>
+													</div>
+												</div>
+												
+												</div>
+										</div>
+										<!-- end credit card form -->
+									</div>
+								</div>
+								<!-- only display if check payment method selected -->
+								<div class="form-row" id="js-payByCheckTR">
+									<div class="form-input-label"><strong>Pay by Check:</strong>
+										<!-- pay by check form -->
+										<!-- end pay by check form -->
+									</div>
+								</div>
+						</div>
+					</div>
+				</div>
+				<!-- end payment info -->
+			</div>
+		</div>
+		<div id="js-processError" style="padding:10px;display:none;text-align: center;color:red"></div>
+		<!-- donate button -->
+		<div class="beginLetter">
+				<input class="btn btn-primary" id="subDonInput" value="Make Donation" type="submit" value="Validate!">
+			</div>
+		<!-- end donate button -->
+	</div>
+</form>
+<!--  end Donation Form   -->
+
+<!--  Start Thank you form   -->
+<form id="js-donationConfirmation" style="display:none;" >
+  <div><h1>Donation Form (CONFIRMATION)</h1></div>
+  <!-- donation form -->
+  <div class="donationForm">
+	  <div class="donationFormInner">
+      <h1>Thank you!</h1>
+      <p>Thank you for your donation. A receipt/confirmation has been sent to your email. You may also print this page and keep it for your records.</p>
+
+	    <!-- print receipt -->
+      <div class="receiptBox">
+	      <div class="receiptBoxInner">
+	      <h2>Thank you for your donation!</h2>
+          <table>
+              <tbody>
+                  <tr>
+                      <td><strong>Date:</strong></td>
+                      <td id="tyDate">December 4, 2015</td>
+                  </tr>
+                  <tr>
+                      <td><strong>Donator:</strong></td>
+                      <td id="tyDonater">
+                          Full Name<br>
+                          Address<br>
+                          City, State ZIP
+                      </td>
+                  </tr>
+                  <tr>
+                      <td><strong>Donation Type:</strong></td>
+                      <td id="tyDonateType">One-time</td>
+                  </tr>
+                  <tr>
+                      <td><strong>Donation Amount:</strong></td>
+                      <td id="tyAmount">$100.00</td>
+                  </tr>
+                  <tr>
+                      <td><strong>Payment Method:</strong></td>
+                      <td id="tyPayMethod">Credit Card</td>
+                  </tr>
+                  <tr>
+                      <td><strong>Payment Info:</strong></td>
+                      <td id="tyPaymentInfo">
+                          Cardholder Name<br>
+                          XXXX-XXXX-XXXX-1234<br>
+                          VISA<br>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+	      </div>
+      </div>
+      <!-- end print receipt -->
+
+	  </div>
+  </div>
+</form>

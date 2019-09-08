@@ -1,3 +1,4 @@
+
 /*
 * from addon-styles
 */
@@ -1163,34 +1164,34 @@ tr.separateRow td { padding-bottom: 0em; text-align: center; vertical-align: mid
 
 /*** DONATION ***/
 span.req { color: #dc143c; }
-table.donateTable { width: 100%; }
-table.donateTable td { border: 1px solid #e0e0e0; vertical-align: top; width: 50%; }
-table.donateTable h3 { margin-bottom: 1em; text-align: center; }
-.donateBox { padding: 1em;}
+/* table.donateTable { width: 100%; }
+/* table.donateTable td { border: 1px solid #e0e0e0; vertical-align: top; width: 50%; }
+/* table.donateTable h3 { margin-bottom: 1em; text-align: center; }
+/* .donateBox { padding: 1em;} */
 /* user info */
-table.donateUser { border-spacing: 10px; width: 100%; }
-table.donateUser td { border: none; width: 33%; }
-table.donateUser label { cursor: pointer; display: block; }
-table.donateUser input,
-table.donateUser select { width: 100%; }
+/* table.donateUser { border-spacing: 10px; width: 100%; }
+/* table.donateUser td { border: none; width: 33%; }
+/* tab e.donateUser label { cursor: pointer; display: block; }
+/* table.donateUser input,
+/* table.donateUser select { width: 100%; }
 /* payment info */
-table.donatePay { border-spacing: 10px; width: 100%; }
-table.donatePay td { border: none; width: inherit; }
-table.donatePay label { cursor: pointer; }
+/* table.donatePay { border-spacing: 10px; width: 100%; }
+/* table.donatePay td { border: none; width: inherit; }
+/* table.donatePay label { cursor: pointer; } */
 ul.donateUL { list-style: none; margin: 0; padding: 0; }
 ul.donateUL ul { list-style: none; margin-left: 1.5em; margin-top: 0.25em; }
 ul.donateUL li { display: inline-block; vertical-align: middle; margin: 8px 8px 0 0; }
-table.creditCard { border-spacing: 0px 10px; width: 100%; }
-table.creditCard label { display: block; }
-table.creditCard input,
-table.creditCard select { width: 100%; }
+/* table.creditCard { border-spacing: 0px 10px; width: 100%; }
+/* table.creditCard label { display: block; }
+/* table.creditCard input,
+/* table.creditCard select { width: 100%; } */
 .halfsize { width: 70px !important; }
 .inBlock { display: inline-block; }
 .row-three td.halfsize { padding: 0em 0.5em; }
 .row-three td:last-child .inBlock { width: 49%; }
-table.donateCheck { border-spacing: 0px 10px; width: 50%; }
-table.donateCheck label { display: block; }
-table.donateCheck input { width: 100%; }
+/* table.donateCheck { border-spacing: 0px 10px; width: 50%; }
+/* table.donateCheck label { display: block; }
+/* table.donateCheck input { width: 100%; } *
 /* receipt */
 .receiptBox { border: 1px solid #cccccc; margin: 1em auto; }
 .receiptBoxInner { padding: 1em; }
@@ -1399,7 +1400,7 @@ table.donateCheck input { width: 100%; }
 }
 /*
 * from shared-styles
-*/
+*
 input {margin-bottom:0;}
 .donationForm {font-family: 'Raleway', sans-serif; font-size:16px;}
 .donationForm input, .donationForm select {padding:7px;
@@ -1411,7 +1412,6 @@ input {margin-bottom:0;}
     border-top: none;
     border-bottom: 1px solid #ddd;
     box-shadow: inset 0 1px 2px rgba(0,0,0,.39), 0 -1px 1px #fff, 0 1px 0 #fff;}
-/*.donationForm input {box-shadow: inset 0 0 9px #3e3d3d; background-color: #f7f7f7;}*/
 .donationForm input[type='submit'] {color: #fff; font-size:16px; background-color:#49c0f0;padding:10px 15px;box-shadow:none;border:0;background-image: linear-gradient(to bottom, #49c0f0, #2CAFE3);
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
@@ -1450,17 +1450,26 @@ input {margin-bottom:0;}
 .form-pmt-inputs {margin-bottom:15px;}
 
 /***** ERROR *****/
-.donationForm label.error {font-size:10px;color:#00a0d2;background:transparent;}
+/* .donationForm label.error {font-size:10px;color:#00a0d2;background:transparent;} */
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
 .donate-user, .donate-pmt {width:100%; display:block;}
 .donationForm input, .donationForm select {width:100%; max-width:100%;}
 .donateUser .form-row .form-input input {width:100%; max-width:100%;}
 .donatePay .creditCard input {width:100%; max-width:100%;}
 .form-container {display: block;}
-}
+}*/
 
-@media (max-width: 412px) {
+/* @media (max-width: 412px) {
   .creditCard .form-row .form-pmt-inputs.expDate {width:100%; display:block;}
   .creditCard .form-row .form-pmt-inputs.cvv {width:100%; display:block;}
+} */
+
+#DFContainer h3 {
+	border-bottom: 1px solid;
+    margin-bottom: 20px;
+}
+#DFContainer .donationTypeRow {
+    height: 68px;
+    margin-bottom: 1rem;
 }

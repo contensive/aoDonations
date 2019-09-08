@@ -82,13 +82,13 @@
     <Import Include="System.Diagnostics" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommonClass.vb" />
-    <Compile Include="constantsModule.vb" />
-    <Compile Include="controllers\donationHandlerControllerAndView.vb" />
-    <Compile Include="interfaces\addons\donationClass.vb" />
-    <Compile Include="interfaces\remotes\donationHandlerClass.vb" />
-    <Compile Include="models\donationResponseModel.vb" />
-    <Compile Include="models\donationRequestModel.vb" />
+    <Compile Include="Controllers\GenericController.vb" />
+    <Compile Include="Constants.vb" />
+    <Compile Include="Controllers\DonationHandlerControllerAndView.vb" />
+    <Compile Include="Views\DonationClass.vb" />
+    <Compile Include="Views\DonationHandlerClass.vb" />
+    <Compile Include="Models\DonationResponseViewModel.vb" />
+    <Compile Include="Models\DonationRequestViewModel.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -104,7 +104,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="views\donationFormView.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -127,8 +126,11 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="interfaces\events\" />
+    <Content Include="Resources\DonationForm.html" />
+    <Content Include="Resources\DonationFormHtml.txt" />
+    <Content Include="Resources\ThankYouFormHtml.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>

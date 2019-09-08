@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="windows-1252"?>
-<Collection name="Donations" guid="{a44634c2-d002-428e-818e-1531bf1ebfb0}" system="No" updatable="Yes" blockNavigatorNode="No" onInstallAddonGuid="">
+<Collection name="Donations" guid="{a44634c2-d002-428e-818e-1531bf1ebfb0}" system="No" updatable="No" blockNavigatorNode="No" onInstallAddonGuid="">
 	<HelpLink>http://support.contensive.com/</HelpLink>
 	<Help></Help>
-	<Addon name="Donation Form addon" guid="{E480941D-8696-4E5C-91EC-8E68977A2E9B}" type="Add-on">
+	<Addon name="Donation Form" guid="{E480941D-8696-4E5C-91EC-8E68977A2E9B}" type="Add-on">
 		<Copy></Copy>
 		<CopyText></CopyText>
 		<ActiveXProgramID></ActiveXProgramID>
@@ -12,10 +12,11 @@
 		<Filter>No</Filter>
 		<Help></Help>
 		<HelpLink></HelpLink>
-		<Icon Link="" width="0" height="0" sprites="0" />
+		<Icon Link="" width="50" height="50" sprites="0" />
 		<InIframe>No</InIframe>
 		<BlockEditTools>No</BlockEditTools>
 		<FormXML></FormXML>
+		<IncludeAddon name="jQuery BlockUI" guid="{F6087787-E01E-4E09-AC02-502D0387E048}"/>
 		<IsInline>No</IsInline>
 		<JavascriptInHead><![CDATA[jQuery(document).ready(function() {
     jQuery("#js-donPayCheck").click(function() {
@@ -44,52 +45,36 @@
         //jQuery("#donationAmount").prop("disabled", false);
     });
 	//
-	var form = $( "#donationInputForm" );
-	form.validate();
-	$("#subDonInput").click(function(e) {
-        jQuery("#js-processError").hide();
-		// alert( "Valid: " + form.valid() );
-		if(form.valid() == false) {
-			// alert('not valid');
-			// e.preventDefault(); 
-			jQuery.validator.setDefaults({
-				debug: true,
-				success: "valid"
-			});
-			$( "#donationInputForm" ).validate({
-				rules: {
-					DFFirstName: {
-						required: true
-					},
-					DFcardYr: {
-						required: true
-					},
-					DFcardType: {
-						required: true
-					},
-					DFcardExp: {
-						required: true
-					}
-				}
-			});
-		} else {
-			jQuery('.donationForm').block();
+	jQuery("#subDonInput").click(function(e) {
+		try {
 			e.preventDefault(); 
 			e.stopPropagation();
-			cj.remote({
-				'formId':'donationInputForm',
-				'method': 'DonationFormHandler',
-				'callback': donationCallback
-			});
+			jQuery("#js-processError").hide();		
+			var $FormList = $('#donationInputForm');
+			var $donateForm = $FormList[0];
+			// if(! $donateForm.checkValidity()) {
+			// 	//
+			// 	// If the form is invalid, submit it to display the native HTML5 error messages.
+			// 	$donateForm.submit();
+			// 	return;
+			// }
+			$.blockUI();
+			jQuery.ajax({
+				url: "/DonationFormHandler",
+				data: jQuery("#donationInputForm").serialize(),
+				success: function( response ) { donationCallback( response ) }
+			})
+		} catch( err ) {
+			alert("Error submitting form, [" + err + "]");
 		}
 	});
 }); 
-//*****************************************************
-//donationCallback
-//
-function donationCallback(response) {
-    //var json = (response);
-	jQuery('.donationForm').unblock();
+/*****************************************************
+* donationCallback
+*/
+function donationCallback( response ) {
+    window.scrollTo(0, 0);
+	$.unblockUI();
     var myObject = JSON.parse(response);
     if (myObject) {
         if (!myObject.ProcessedOk) {
@@ -157,13 +142,11 @@ function donationCallback(response) {
 		<OnBodyEnd>No</OnBodyEnd>
 		<RemoteMethod>No</RemoteMethod>
 		<Diagnostic>No</Diagnostic>
+		<Diagnostic>No</Diagnostic>
 		<ProcessRunOnce>No</ProcessRunOnce>
 		<ProcessInterval>0</ProcessInterval>
 		<MetaDescription></MetaDescription>
-		<OtherHeadTags><![CDATA[<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.js"></script>
-
-<link rel="stylesheet" href="https://jqueryvalidation.org/files/demo/site-demos.css">]]></OtherHeadTags>
+		<OtherHeadTags></OtherHeadTags>
 		<PageTitle></PageTitle>
 		<RemoteAssetLink></RemoteAssetLink>
 		<Styles><![CDATA[/*
@@ -1331,34 +1314,34 @@ tr.separateRow td { padding-bottom: 0em; text-align: center; vertical-align: mid
 
 /*** DONATION ***/
 span.req { color: #dc143c; }
-table.donateTable { width: 100%; }
-table.donateTable td { border: 1px solid #e0e0e0; vertical-align: top; width: 50%; }
-table.donateTable h3 { margin-bottom: 1em; text-align: center; }
-.donateBox { padding: 1em;}
+/* table.donateTable { width: 100%; }
+/* table.donateTable td { border: 1px solid #e0e0e0; vertical-align: top; width: 50%; }
+/* table.donateTable h3 { margin-bottom: 1em; text-align: center; }
+/* .donateBox { padding: 1em;} */
 /* user info */
-table.donateUser { border-spacing: 10px; width: 100%; }
-table.donateUser td { border: none; width: 33%; }
-table.donateUser label { cursor: pointer; display: block; }
-table.donateUser input,
-table.donateUser select { width: 100%; }
+/* table.donateUser { border-spacing: 10px; width: 100%; }
+/* table.donateUser td { border: none; width: 33%; }
+/* tab e.donateUser label { cursor: pointer; display: block; }
+/* table.donateUser input,
+/* table.donateUser select { width: 100%; }
 /* payment info */
-table.donatePay { border-spacing: 10px; width: 100%; }
-table.donatePay td { border: none; width: inherit; }
-table.donatePay label { cursor: pointer; }
+/* table.donatePay { border-spacing: 10px; width: 100%; }
+/* table.donatePay td { border: none; width: inherit; }
+/* table.donatePay label { cursor: pointer; } */
 ul.donateUL { list-style: none; margin: 0; padding: 0; }
 ul.donateUL ul { list-style: none; margin-left: 1.5em; margin-top: 0.25em; }
 ul.donateUL li { display: inline-block; vertical-align: middle; margin: 8px 8px 0 0; }
-table.creditCard { border-spacing: 0px 10px; width: 100%; }
-table.creditCard label { display: block; }
-table.creditCard input,
-table.creditCard select { width: 100%; }
+/* table.creditCard { border-spacing: 0px 10px; width: 100%; }
+/* table.creditCard label { display: block; }
+/* table.creditCard input,
+/* table.creditCard select { width: 100%; } */
 .halfsize { width: 70px !important; }
 .inBlock { display: inline-block; }
 .row-three td.halfsize { padding: 0em 0.5em; }
 .row-three td:last-child .inBlock { width: 49%; }
-table.donateCheck { border-spacing: 0px 10px; width: 50%; }
-table.donateCheck label { display: block; }
-table.donateCheck input { width: 100%; }
+/* table.donateCheck { border-spacing: 0px 10px; width: 50%; }
+/* table.donateCheck label { display: block; }
+/* table.donateCheck input { width: 100%; } *
 /* receipt */
 .receiptBox { border: 1px solid #cccccc; margin: 1em auto; }
 .receiptBoxInner { padding: 1em; }
@@ -1567,7 +1550,7 @@ table.donateCheck input { width: 100%; }
 }
 /*
 * from shared-styles
-*/
+*
 input {margin-bottom:0;}
 .donationForm {font-family: 'Raleway', sans-serif; font-size:16px;}
 .donationForm input, .donationForm select {padding:7px;
@@ -1579,7 +1562,6 @@ input {margin-bottom:0;}
     border-top: none;
     border-bottom: 1px solid #ddd;
     box-shadow: inset 0 1px 2px rgba(0,0,0,.39), 0 -1px 1px #fff, 0 1px 0 #fff;}
-/*.donationForm input {box-shadow: inset 0 0 9px #3e3d3d; background-color: #f7f7f7;}*/
 .donationForm input[type='submit'] {color: #fff; font-size:16px; background-color:#49c0f0;padding:10px 15px;box-shadow:none;border:0;background-image: linear-gradient(to bottom, #49c0f0, #2CAFE3);
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
@@ -1618,19 +1600,28 @@ input {margin-bottom:0;}
 .form-pmt-inputs {margin-bottom:15px;}
 
 /***** ERROR *****/
-.donationForm label.error {font-size:10px;color:#00a0d2;background:transparent;}
+/* .donationForm label.error {font-size:10px;color:#00a0d2;background:transparent;} */
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
 .donate-user, .donate-pmt {width:100%; display:block;}
 .donationForm input, .donationForm select {width:100%; max-width:100%;}
 .donateUser .form-row .form-input input {width:100%; max-width:100%;}
 .donatePay .creditCard input {width:100%; max-width:100%;}
 .form-container {display: block;}
-}
+}*/
 
-@media (max-width: 412px) {
+/* @media (max-width: 412px) {
   .creditCard .form-row .form-pmt-inputs.expDate {width:100%; display:block;}
   .creditCard .form-row .form-pmt-inputs.cvv {width:100%; display:block;}
+} */
+
+#DFContainer h3 {
+	border-bottom: 1px solid;
+    margin-bottom: 20px;
+}
+#DFContainer .donationTypeRow {
+    height: 68px;
+    margin-bottom: 1rem;
 }]]></Styles>
 		<styleslinkhref></styleslinkhref>
 		<Scripting Language="VBScript" EntryPoint="" Timeout="5000"/>
@@ -1645,7 +1636,7 @@ input {margin-bottom:0;}
 		<Filter>No</Filter>
 		<Help></Help>
 		<HelpLink></HelpLink>
-		<Icon Link="" width="0" height="0" sprites="0" />
+		<Icon Link="" width="50" height="50" sprites="0" />
 		<InIframe>No</InIframe>
 		<BlockEditTools>No</BlockEditTools>
 		<FormXML></FormXML>
@@ -1666,6 +1657,7 @@ input {margin-bottom:0;}
 		<OnBodyEnd>No</OnBodyEnd>
 		<RemoteMethod>Yes</RemoteMethod>
 		<Diagnostic>No</Diagnostic>
+		<Diagnostic>No</Diagnostic>
 		<ProcessRunOnce>No</ProcessRunOnce>
 		<ProcessInterval>0</ProcessInterval>
 		<MetaDescription></MetaDescription>
@@ -1678,8 +1670,8 @@ input {margin-bottom:0;}
 	</Addon>
 	<data>
 		<record content="layouts" guid="{5F7A9A40-C01D-4B30-8720-26BF4E81C9AA}" name="aoDonation Form Layout">
-			<field name="Active">True</field>
-			<field name="Layout"><![CDATA[<!-- Donation Form   -->
+			<field name="active">True</field>
+			<field name="layout"><![CDATA[<!-- Donation Form   -->
 <form id="donationInputForm" >
 	<div><h1>Donation Form</h1></div>
 	<div class="donationForm">
@@ -1983,12 +1975,12 @@ input {margin-bottom:0;}
   </div>
 </form>
 ]]></field>
-			<field name="SortOrder"></field>
-			<field name="StylesFilename"></field>
+			<field name="sortorder"></field>
+			<field name="stylesfilename"></field>
 		</record>
 		<record content="layouts" guid="{377D3038-85FF-43F7-A097-4C4ABCDF907E}" name="aoDonationThankYouForm">
-			<field name="Active">True</field>
-			<field name="Layout"><![CDATA[&&&&&theform*****
+			<field name="active">True</field>
+			<field name="layout"><![CDATA[&&&&&theform*****
        <form id="donationConfirmation" style="display:none;" >
                 <div class="contentBox"><h1>Donation Form (CONFIRMATION)</h1></div>
                 
@@ -2050,23 +2042,23 @@ input {margin-bottom:0;}
 	</form>
                 
            ]]></field>
-			<field name="SortOrder"></field>
-			<field name="StylesFilename"></field>
+			<field name="sortorder"></field>
+			<field name="stylesfilename"></field>
 		</record>
 	</data>
-	<CDef Name="Donations" Active="1" AdminOnly="0" AllowAdd="1" AllowCalendarEvents="0" AllowContentChildTool="0" AllowContentTracking="0" AllowDelete="1" AllowMetaContent="0" AllowTopicRules="0" AllowWorkflowAuthoring="0" AuthoringDataSourceName="Default" AuthoringTableName="donations" ContentDataSourceName="Default" ContentTableName="donations" DefaultSortMethod="By Name" DeveloperOnly="0" DropDownFieldList="Name" EditorGroupName="" Parent="" IconLink="" IconHeight="0" IconWidth="0" IconSprites="0" isbasecontent="0" guid="{685FFB09-5F88-495C-A895-2861AE00E8A3}" >
-		<Field Name="Name" active="True" AdminOnly="False" Authorable="True" Caption="Name" DeveloperOnly="False" EditSortPriority="110" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="0" RedirectID="0" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
+	<CDef Name="Donations" Active="1" AdminOnly="0" AllowAdd="1" AllowCalendarEvents="0" AllowContentChildTool="0" AllowContentTracking="0" AllowDelete="1" AllowMetaContent="" AllowTopicRules="0" AllowWorkflowAuthoring="0" AuthoringDataSourceName="Default" AuthoringTableName="donations" ContentDataSourceName="Default" ContentTableName="donations" DefaultSortMethod="By Name" DeveloperOnly="0" DropDownFieldList="Name" EditorGroupName="" Parent="" IconLink="" IconHeight="0" IconWidth="0" IconSprites="0" isbasecontent="0" guid="{685FFB09-5F88-495C-A895-2861AE00E8A3}" >
+		<Field Name="name" active="True" AdminOnly="False" Authorable="True" Caption="Name" DeveloperOnly="False" EditSortPriority="110" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="0" RedirectID="0" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
 			<HelpDefault><![CDATA[Name of the donation record - informational purposes only]]></HelpDefault>
 		</Field>
-		<Field Name="Active" active="True" AdminOnly="False" Authorable="True" Caption="Active" DeveloperOnly="False" EditSortPriority="200" FieldType="Boolean" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="0" RedirectID="0" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="1" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" ></Field>
-		<Field Name="SortOrder" active="True" AdminOnly="False" Authorable="False" Caption="Alpha Sort Order" DeveloperOnly="False" EditSortPriority="2000" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="0" RedirectID="0" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" ></Field>
-		<Field Name="firstName" active="True" AdminOnly="False" Authorable="True" Caption="First Name" DeveloperOnly="False" EditSortPriority="210" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
+		<Field Name="active" active="True" AdminOnly="False" Authorable="True" Caption="Active" DeveloperOnly="False" EditSortPriority="200" FieldType="Boolean" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="0" RedirectID="0" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="1" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" ></Field>
+		<Field Name="sortorder" active="True" AdminOnly="False" Authorable="False" Caption="Alpha Sort Order" DeveloperOnly="False" EditSortPriority="2000" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="0" RedirectID="0" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" ></Field>
+		<Field Name="firstname" active="True" AdminOnly="False" Authorable="True" Caption="First Name" DeveloperOnly="False" EditSortPriority="210" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
 			<HelpDefault><![CDATA[First name of the user given during the donation]]></HelpDefault>
 		</Field>
-		<Field Name="lastName" active="True" AdminOnly="False" Authorable="True" Caption="Last Name" DeveloperOnly="False" EditSortPriority="220" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
+		<Field Name="lastname" active="True" AdminOnly="False" Authorable="True" Caption="Last Name" DeveloperOnly="False" EditSortPriority="220" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
 			<HelpDefault><![CDATA[Last name of the user given during the donation]]></HelpDefault>
 		</Field>
-		<Field Name="middleName" active="True" AdminOnly="False" Authorable="False" Caption="Middle Name" DeveloperOnly="False" EditSortPriority="215" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
+		<Field Name="middlename" active="True" AdminOnly="False" Authorable="False" Caption="Middle Name" DeveloperOnly="False" EditSortPriority="215" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
 			<HelpDefault><![CDATA[Middle name of the user given during the donation]]></HelpDefault>
 		</Field>
 		<Field Name="address" active="True" AdminOnly="False" Authorable="True" Caption="Address" DeveloperOnly="False" EditSortPriority="230" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
@@ -2090,43 +2082,43 @@ input {margin-bottom:0;}
 		<Field Name="email" active="True" AdminOnly="False" Authorable="True" Caption="Email" DeveloperOnly="False" EditSortPriority="290" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
 			<HelpDefault><![CDATA[Email of the user given during the donation]]></HelpDefault>
 		</Field>
-		<Field Name="cardName" active="True" AdminOnly="False" Authorable="False" Caption="Card Name" DeveloperOnly="False" EditSortPriority="100" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
+		<Field Name="cardname" active="True" AdminOnly="False" Authorable="False" Caption="Card Name" DeveloperOnly="False" EditSortPriority="100" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
 			<HelpDefault><![CDATA[Name on card charged for the donation]]></HelpDefault>
 		</Field>
-		<Field Name="cardNumber" active="True" AdminOnly="False" Authorable="False" Caption="Card Number" DeveloperOnly="False" EditSortPriority="110" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
+		<Field Name="cardnumber" active="True" AdminOnly="False" Authorable="False" Caption="Card Number" DeveloperOnly="False" EditSortPriority="110" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
 			<HelpDefault><![CDATA[Account number charged for the donation]]></HelpDefault>
 		</Field>
-		<Field Name="cardExpiration" active="True" AdminOnly="False" Authorable="False" Caption="Card Expiration" DeveloperOnly="False" EditSortPriority="120" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
+		<Field Name="cardexpiration" active="True" AdminOnly="False" Authorable="False" Caption="Card Expiration" DeveloperOnly="False" EditSortPriority="120" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
 			<HelpDefault><![CDATA[Expiration of the card charged for the donation]]></HelpDefault>
 		</Field>
 		<Field Name="amount" active="True" AdminOnly="False" Authorable="True" Caption="Amount" DeveloperOnly="False" EditSortPriority="1100" FieldType="Currency" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
 			<HelpDefault><![CDATA[Amount charged for the donation]]></HelpDefault>
 		</Field>
-		<Field Name="cardBillingAddress" active="True" AdminOnly="False" Authorable="False" Caption="Card Billing Address" DeveloperOnly="False" EditSortPriority="130" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
+		<Field Name="cardbillingaddress" active="True" AdminOnly="False" Authorable="False" Caption="Card Billing Address" DeveloperOnly="False" EditSortPriority="130" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
 			<HelpDefault><![CDATA[Billing address of the card charged for the donation]]></HelpDefault>
 		</Field>
-		<Field Name="cardBillingZip" active="True" AdminOnly="False" Authorable="False" Caption="Card Billing Zip" DeveloperOnly="False" EditSortPriority="140" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
+		<Field Name="cardbillingzip" active="True" AdminOnly="False" Authorable="False" Caption="Card Billing Zip" DeveloperOnly="False" EditSortPriority="140" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
 			<HelpDefault><![CDATA[Billing zip of the card charged for the donation]]></HelpDefault>
 		</Field>
-		<Field Name="cardCode" active="True" AdminOnly="False" Authorable="False" Caption="Card Code" DeveloperOnly="False" EditSortPriority="150" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
+		<Field Name="cardcode" active="True" AdminOnly="False" Authorable="False" Caption="Card Code" DeveloperOnly="False" EditSortPriority="150" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
 			<HelpDefault><![CDATA[CVV Code (three digits on the back) of the card charged for the donation]]></HelpDefault>
 		</Field>
-		<Field Name="processorReference" active="True" AdminOnly="False" Authorable="True" Caption="Reference Number" DeveloperOnly="False" EditSortPriority="1110" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
+		<Field Name="processorreference" active="True" AdminOnly="False" Authorable="True" Caption="Reference Number" DeveloperOnly="False" EditSortPriority="1110" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
 			<HelpDefault><![CDATA[Reference number from the payment gateway for this transaction]]></HelpDefault>
 		</Field>
-		<Field Name="processorResponse" active="True" AdminOnly="False" Authorable="True" Caption="Processor Response" DeveloperOnly="False" EditSortPriority="1120" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
+		<Field Name="processorresponse" active="True" AdminOnly="False" Authorable="True" Caption="Processor Response" DeveloperOnly="False" EditSortPriority="1120" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
 			<HelpDefault><![CDATA[Response from the payment gateway for this transaction]]></HelpDefault>
 		</Field>
-		<Field Name="memberID" active="True" AdminOnly="False" Authorable="True" Caption="Member" DeveloperOnly="False" EditSortPriority="300" FieldType="Lookup" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="" Scramble="False" LookupList="" NotEditable="True" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="People" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
+		<Field Name="memberid" active="True" AdminOnly="False" Authorable="True" Caption="Member" DeveloperOnly="False" EditSortPriority="300" FieldType="Lookup" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="" Scramble="False" LookupList="" NotEditable="True" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="People" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
 			<HelpDefault><![CDATA[The member record associated the the user who donated]]></HelpDefault>
 		</Field>
-		<Field Name="visitID" active="True" AdminOnly="False" Authorable="True" Caption="Visit" DeveloperOnly="False" EditSortPriority="310" FieldType="Integer" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
+		<Field Name="visitid" active="True" AdminOnly="False" Authorable="True" Caption="Visit" DeveloperOnly="False" EditSortPriority="310" FieldType="Integer" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" >
 			<HelpDefault><![CDATA[Visit ID of the user during the donation - informational purposes only]]></HelpDefault>
 		</Field>
-		<Field Name="checkAccountName" active="True" AdminOnly="False" Authorable="False" Caption="Check Account Name" DeveloperOnly="False" EditSortPriority="175" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" ></Field>
-		<Field Name="checkAccountNumber" active="True" AdminOnly="False" Authorable="False" Caption="check Account Number" DeveloperOnly="False" EditSortPriority="180" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" ></Field>
-		<Field Name="checkAccountRoutingNumber" active="True" AdminOnly="False" Authorable="False" Caption="Check Account Routing Number" DeveloperOnly="False" EditSortPriority="190" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" ></Field>
-		<Field Name="accountId" active="True" AdminOnly="False" Authorable="True" Caption="Account" DeveloperOnly="False" EditSortPriority="1000" FieldType="Lookup" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="Accounts" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" ></Field>
+		<Field Name="checkaccountname" active="True" AdminOnly="False" Authorable="False" Caption="Check Account Name" DeveloperOnly="False" EditSortPriority="175" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" ></Field>
+		<Field Name="checkaccountnumber" active="True" AdminOnly="False" Authorable="False" Caption="check Account Number" DeveloperOnly="False" EditSortPriority="180" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" ></Field>
+		<Field Name="checkaccountroutingnumber" active="True" AdminOnly="False" Authorable="False" Caption="Check Account Routing Number" DeveloperOnly="False" EditSortPriority="190" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" ></Field>
+		<Field Name="accountid" active="True" AdminOnly="False" Authorable="True" Caption="Account" DeveloperOnly="False" EditSortPriority="1000" FieldType="Lookup" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroup="" EditTab="Payment Information" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="Accounts" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" ></Field>
 	</CDef>
 	<Resource name="aoDonations.dll" type="executable" path="" />
 	<Resource name="accountBillingApi.dll" type="executable" path="" />

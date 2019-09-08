@@ -41,7 +41,7 @@ Namespace Contensive.Addons.aoDonations
             cp.Doc.SetProperty("DFPaymentType", "20")
             '
             ' act
-            Dim donationDetails As New donationRequestModel(cp)
+            Dim donationDetails As New DonationRequestViewModel(cp)
             ''
             ''assert
             Assert.AreEqual("1", donationDetails.DFAddress)
@@ -76,10 +76,10 @@ Namespace Contensive.Addons.aoDonations
             '
             ' assign
             '
-            Dim donationDetails As donationRequestModel = getValidDonationDetails(cp)
+            Dim donationDetails As DonationRequestViewModel = getValidDonationDetails(cp)
             '
             ' act
-            Dim result As donationResponseModel = donationHandlerControllerAndView.processAndReturn(cp, errorMessage, donationDetails)
+            Dim result As DonationResponseViewModel = DonationHandlerControllerAndView.processAndReturn(cp, errorMessage, donationDetails)
             '
             ' assert
             Assert.AreEqual(True, result.ProcessedOk)
@@ -92,8 +92,8 @@ Namespace Contensive.Addons.aoDonations
         <TestMethod()> Public Sub donationSubmitInValidationTest()
             Dim cp As New Contensive.Processor.CPClass(testAppName)
             Dim errorMessage As String = ""
-            Dim donationDetails As donationRequestModel
-            Dim result As donationResponseModel
+            Dim donationDetails As DonationRequestViewModel
+            Dim result As DonationResponseViewModel
             '
             ' assign
             '
@@ -101,11 +101,11 @@ Namespace Contensive.Addons.aoDonations
             donationDetails.DFFirstName = ""
             '
             ' act
-            result = donationHandlerControllerAndView.processAndReturn(cp, errorMessage, donationDetails)
+            result = DonationHandlerControllerAndView.processAndReturn(cp, errorMessage, donationDetails)
             '
             ' assert
             Assert.AreEqual(False, result.ProcessedOk)
-            Assert.AreEqual(constantsModule.donationErrorFirstName, result.errorMessage)
+            Assert.AreEqual(Constants.donationErrorFirstName, result.errorMessage)
             '
             ' assign
             '
@@ -113,11 +113,11 @@ Namespace Contensive.Addons.aoDonations
             donationDetails.DFLastName = ""
             '
             ' act
-            result = donationHandlerControllerAndView.processAndReturn(cp, errorMessage, donationDetails)
+            result = DonationHandlerControllerAndView.processAndReturn(cp, errorMessage, donationDetails)
             '
             ' assert
             Assert.AreEqual(False, result.ProcessedOk)
-            Assert.AreEqual(constantsModule.donationErrorLastname, result.errorMessage)
+            Assert.AreEqual(Constants.donationErrorLastname, result.errorMessage)
             '
             ' assign
             '
@@ -125,11 +125,11 @@ Namespace Contensive.Addons.aoDonations
             donationDetails.DFPhone = ""
             '
             ' act
-            result = donationHandlerControllerAndView.processAndReturn(cp, errorMessage, donationDetails)
+            result = DonationHandlerControllerAndView.processAndReturn(cp, errorMessage, donationDetails)
             '
             ' assert
             Assert.AreEqual(False, result.ProcessedOk)
-            Assert.AreEqual(constantsModule.donationErrorPhone, result.errorMessage)
+            Assert.AreEqual(Constants.donationErrorPhone, result.errorMessage)
             '
             ' assign
             '
@@ -137,11 +137,11 @@ Namespace Contensive.Addons.aoDonations
             donationDetails.DFAddress = ""
             '
             ' act
-            result = donationHandlerControllerAndView.processAndReturn(cp, errorMessage, donationDetails)
+            result = DonationHandlerControllerAndView.processAndReturn(cp, errorMessage, donationDetails)
             '
             ' assert
             Assert.AreEqual(False, result.ProcessedOk)
-            Assert.AreEqual(constantsModule.donationErrorAddress, result.errorMessage)
+            Assert.AreEqual(Constants.donationErrorAddress, result.errorMessage)
             '
             ' assign
             '
@@ -149,11 +149,11 @@ Namespace Contensive.Addons.aoDonations
             donationDetails.DFEmail = ""
             '
             ' act
-            result = donationHandlerControllerAndView.processAndReturn(cp, errorMessage, donationDetails)
+            result = DonationHandlerControllerAndView.processAndReturn(cp, errorMessage, donationDetails)
             '
             ' assert
             Assert.AreEqual(False, result.ProcessedOk)
-            Assert.AreEqual(constantsModule.donationErrorEmail, result.errorMessage)
+            Assert.AreEqual(Constants.donationErrorEmail, result.errorMessage)
             '
             ' assign
             '
@@ -161,11 +161,11 @@ Namespace Contensive.Addons.aoDonations
             donationDetails.DFZip = ""
             '
             ' act
-            result = donationHandlerControllerAndView.processAndReturn(cp, errorMessage, donationDetails)
+            result = DonationHandlerControllerAndView.processAndReturn(cp, errorMessage, donationDetails)
             '
             ' assert
             Assert.AreEqual(False, result.ProcessedOk)
-            Assert.AreEqual(constantsModule.donationErrorZip, result.errorMessage)
+            Assert.AreEqual(Constants.donationErrorZip, result.errorMessage)
             '
             cp.Dispose()
         End Sub
@@ -185,8 +185,8 @@ Namespace Contensive.Addons.aoDonations
         ''' </summary>
         ''' <param name="cp"></param>
         ''' <returns></returns>
-        Private Function getValidDonationDetails(cp As CPBaseClass) As donationRequestModel
-            Dim donationDetails As New donationRequestModel(cp)
+        Private Function getValidDonationDetails(cp As CPBaseClass) As DonationRequestViewModel
+            Dim donationDetails As New DonationRequestViewModel(cp)
             donationDetails.DFFirstName = "test"
             donationDetails.DFLastName = "tester"
             donationDetails.DFName = donationDetails.DFFirstName & " " & donationDetails.DFLastName

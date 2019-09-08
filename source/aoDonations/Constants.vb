@@ -4,7 +4,7 @@ Option Explicit On
 
 Namespace Contensive.Addons.aoDonations
 
-    Public Module constantsModule
+    Public Module Constants
         Public Const donationErrorFirstName As String = "In order to continue, please complete the required First Name field."
         Public Const donationErrorLastname As String = "In order to continue, please complete the required Last Name field."
         Public Const donationErrorPhone As String = "In order to continue, please complete the required Phone field."
