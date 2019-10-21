@@ -9,3 +9,14 @@ C:\Users\jay\Documents\Git\aoDonations\source\aoDonations\obj\Debug\aoDonations.
 C:\Users\jay\Documents\Git\aoDonations\source\aoDonations\obj\Debug\aoDonations.dll
 C:\Users\jay\Documents\Git\aoDonations\source\aoDonations\obj\Debug\aoDonations.xml
 C:\Users\jay\Documents\Git\aoDonations\source\aoDonations\obj\Debug\aoDonations.pdb
+C:\Users\kmaadmin\Documents\GitHub\aoDonations\source\aoDonations\bin\Debug\aoDonations.dll
+C:\Users\kmaadmin\Documents\GitHub\aoDonations\source\aoDonations\bin\Debug\aoDonations.pdb
+C:\Users\kmaadmin\Documents\GitHub\aoDonations\source\aoDonations\bin\Debug\aoDonations.xml
+C:\Users\kmaadmin\Documents\GitHub\aoDonations\source\aoDonations\obj\Debug\aoDonations.vbprojAssemblyReference.cache
+C:\Users\kmaadmin\Documents\GitHub\aoDonations\source\aoDonations\obj\Debug\Resources.resources
+C:\Users\kmaadmin\Documents\GitHub\aoDonations\source\aoDonations\obj\Debug\aoDonations.vbproj.GenerateResource.cache
+C:\Users\kmaadmin\Documents\GitHub\aoDonations\source\aoDonations\obj\Debug\aoDonations.vbproj.CoreCompileInputs.cache
+C:\Users\kmaadmin\Documents\GitHub\aoDonations\source\aoDonations\obj\Debug\aoDonations.vbproj.CopyComplete
+C:\Users\kmaadmin\Documents\GitHub\aoDonations\source\aoDonations\obj\Debug\aoDonations.dll
+C:\Users\kmaadmin\Documents\GitHub\aoDonations\source\aoDonations\obj\Debug\aoDonations.xml
+C:\Users\kmaadmin\Documents\GitHub\aoDonations\source\aoDonations\obj\Debug\aoDonations.pdb

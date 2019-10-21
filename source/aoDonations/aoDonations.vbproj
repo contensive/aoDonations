@@ -65,7 +65,7 @@
       <HintPath>..\packages\Contensive.ecommerceApi.5.0.6\lib\net461\accountBillingApi.dll</HintPath>
     </Reference>
     <Reference Include="CPBase, Version=4.1.2.0, Culture=neutral, PublicKeyToken=10b3c53389b845fb, processorArchitecture=MSIL">
-      <HintPath>..\packages\Contensive.CPBaseClass.5.1.190907.5\lib\net461\CPBase.dll</HintPath>
+      <HintPath>..\packages\Contensive.CPBaseClass.5.1.191004.2\lib\net461\CPBase.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />

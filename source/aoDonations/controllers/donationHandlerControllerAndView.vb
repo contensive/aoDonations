@@ -59,7 +59,7 @@ Namespace Contensive.Addons.aoDonations
                 If (CP.Site.GetBoolean("Donations Add Recaptcha", False)) Then
                     CP.Doc.SetProperty("Challenge", CP.Doc.GetText("recaptcha_challenge_field"))
                     CP.Doc.SetProperty("Response", CP.Doc.GetText("recaptcha_response_field"))
-                    reCaptchaResponse = CStr(CP.Addon.Execute(reCaptchaProcessGuid))
+                    reCaptchaResponse = CStr(CP.Utils.ExecuteAddon(reCaptchaProcessGuid))
                 End If
                 If (Not String.IsNullOrEmpty(reCaptchaResponse)) Then
                     '
