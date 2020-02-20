@@ -19,7 +19,6 @@ Namespace Contensive.Addons.aoDonations
         Public Shared Function processAndReturn(ByVal CP As BaseClasses.CPBaseClass, ByRef errMsg As String, donationRequest As DonationRequestViewModel) As DonationResponseViewModel
             Dim response As New DonationResponseViewModel
             Try
-                Dim cs As BaseClasses.CPCSBaseClass = CP.CSNew()
                 Dim csA As BaseClasses.CPCSBaseClass = CP.CSNew()
                 Dim rS As String = ""   '   response stream
                 Dim resultDoc As New System.Xml.XmlDocument
@@ -128,18 +127,20 @@ Namespace Contensive.Addons.aoDonations
                                         '
                                         itemGuid = itemGuidOnce1
                                 End Select
-                                If cs.Open("items", "ccguid=" & CP.Db.EncodeSQLText(itemGuid)) Then
-                                    locItemID = cs.GetInteger("id")
-                                End If
-                                Call cs.Close()
-                                If locItemID = 0 Then
-                                    If cs.Insert("items") Then
-                                        cs.SetField("name", "Donation")
-                                        cs.SetField("ccguid", "{F12533E8-F736-40A7-94E3-BCBF874D11DE}")
+                                Using csItem As BaseClasses.CPCSBaseClass = CP.CSNew()
+                                    If csItem.Open("items", "ccguid=" & CP.Db.EncodeSQLText(itemGuid)) Then
+                                        locItemID = csItem.GetInteger("id")
                                     End If
-                                    locItemID = cs.GetInteger("id")
-                                    Call cs.Close()
-                                End If
+                                    Call csItem.Close()
+                                    If locItemID = 0 Then
+                                        If csItem.Insert("items") Then
+                                            csItem.SetField("name", "Donation")
+                                            csItem.SetField("ccguid", "{F12533E8-F736-40A7-94E3-BCBF874D11DE}")
+                                        End If
+                                        locItemID = csItem.GetInteger("id")
+                                        Call csItem.Close()
+                                    End If
+                                End Using
                                 '
                                 '
                                 CP.Utils.AppendLog("createAccount.log", "locAccountID: " & donationAccountID)
@@ -206,26 +207,28 @@ Namespace Contensive.Addons.aoDonations
                                     '
                                     '   insert Donation
                                     '
-                                    If cs.Insert("Donations") Then
-                                        donationID = cs.GetInteger("id")
-                                        cs.SetField("name", "Donation made " & Date.Today & " by " & .DFFirstName & " " & .DFLastName)
-                                        cs.SetField("firstName", .DFFirstName)
-                                        cs.SetField("middleName", .DFMiddleName)
-                                        cs.SetField("lastName", .DFLastName)
-                                        cs.SetField("address", .DFAddress)
-                                        cs.SetField("city", .DFCity)
-                                        cs.SetField("state", .DFState)
-                                        cs.SetField("zip", .DFZip)
-                                        cs.SetField("phone", .DFPhone)
-                                        cs.SetField("email", .DFEmail)
-                                        cs.SetField("amount", donationAmount.ToString())
-                                        cs.SetField("processorReference", "Order #" & locOrderID)
-                                        cs.SetField("processorResponse", "Processed OK")
-                                        cs.SetField("memberID", CP.User.Id.ToString)
-                                        cs.SetField("visitID", CP.Visit.Id.ToString)
-                                        cs.SetField("accountid", donationAccountID.ToString())
-                                    End If
-                                    cs.Close()
+                                    Using csDonation As BaseClasses.CPCSBaseClass = CP.CSNew()
+                                        If csDonation.Insert("Donations") Then
+                                            donationID = csDonation.GetInteger("id")
+                                            csDonation.SetField("name", "Donation made " & Date.Today & " by " & .DFFirstName & " " & .DFLastName)
+                                            csDonation.SetField("firstName", .DFFirstName)
+                                            csDonation.SetField("middleName", .DFMiddleName)
+                                            csDonation.SetField("lastName", .DFLastName)
+                                            csDonation.SetField("address", .DFAddress)
+                                            csDonation.SetField("city", .DFCity)
+                                            csDonation.SetField("state", .DFState)
+                                            csDonation.SetField("zip", .DFZip)
+                                            csDonation.SetField("phone", .DFPhone)
+                                            csDonation.SetField("email", .DFEmail)
+                                            csDonation.SetField("amount", donationAmount.ToString())
+                                            csDonation.SetField("processorReference", "Order #" & locOrderID)
+                                            csDonation.SetField("processorResponse", "Processed OK")
+                                            csDonation.SetField("memberID", CP.User.Id.ToString)
+                                            csDonation.SetField("visitID", CP.Visit.Id.ToString)
+                                            csDonation.SetField("accountid", donationAccountID.ToString())
+                                        End If
+                                        csDonation.Close()
+                                    End Using
                                     '
                                     ' populate thank you page
                                     '
@@ -258,28 +261,29 @@ Namespace Contensive.Addons.aoDonations
                                     copyPlus += copy
                                     copyPlus += CP.Html.p("<a target=""_blank"" href=""http://" & recordLink & """>Click here for details</a>")
                                     '
-                                    Dim csDon As BaseClasses.CPCSBaseClass = CP.CSNew()
-                                    Dim donUserId As Integer = 0
-                                    'Dim existUser As Boolean = False
-                                    '
-                                    If csDon.Open("people", "email = " & CP.Db.EncodeSQLText(.DFEmail)) Then
+                                    Using csDon As BaseClasses.CPCSBaseClass = CP.CSNew()
+                                        Dim donUserId As Integer = 0
+                                        'Dim existUser As Boolean = False
                                         '
-                                        ' he exists
-                                        '
-                                        donUserId = csDon.GetInteger("id")
-                                    Else
-                                        '
-                                        ' does not exist
-                                        '
+                                        If csDon.Open("people", "email = " & CP.Db.EncodeSQLText(.DFEmail)) Then
+                                            '
+                                            ' he exists
+                                            '
+                                            donUserId = csDon.GetInteger("id")
+                                        Else
+                                            '
+                                            ' does not exist
+                                            '
+                                            Call csDon.Close()
+                                            Call csDon.Insert("people")
+                                            Call csDon.SetField("Name", .DFFirstName & " " & .DFLastName)
+                                            Call csDon.SetField("email", .DFEmail)
+                                            donUserId = csDon.GetInteger("id")
+                                        End If
                                         Call csDon.Close()
-                                        Call csDon.Insert("people")
-                                        Call csDon.SetField("Name", .DFFirstName & " " & .DFLastName)
-                                        Call csDon.SetField("email", .DFEmail)
-                                        donUserId = csDon.GetInteger("id")
-                                    End If
-                                    Call csDon.Close()
-                                    '
-                                    CP.Email.sendSystem("Dontaion Form Auto Responder", copy, donUserId)
+                                        '
+                                        CP.Email.sendSystem("Dontaion Form Auto Responder", copy, donUserId)
+                                    End Using
                                     CP.Email.sendSystem("Donation Form Notification", copy)
                                 End If
                             End If

@@ -224,11 +224,15 @@
                     <div><strong>Donation Type: <span id="tyDonateType">One-time</span></strong></div>
                     <div><strong>Donation Amount: <span id="tyAmount">$100.00</span></strong></div>
                     <div><strong>Payment Method: <span id="tyPayMethod">Credit Card</span></strong></div>
-                    <div><strong>Payment Info: <span id="tyPaymentInfo">
-                        Cardholder Name<br>
-                        XXXX-XXXX-XXXX-1234<br>
-                        VISA
-                    </span></strong></div>
+                    <div>
+                        <strong>
+                            Payment Info: <span id="tyPaymentInfo">
+                                Cardholder Name<br>
+                                XXXX-XXXX-XXXX-1234<br>
+                                VISA
+                            </span>
+                        </strong>
+                    </div>
                 </div>
             </div>
             <!-- end print receipt -->
@@ -236,3 +240,8 @@
         </div>
     </div>
 </form>
+<script>
+    // -- rendered serverside in layout
+    var reCAPTCHA_site_key = "{{reCAPTCHA_site_key}}";
+</script>
+

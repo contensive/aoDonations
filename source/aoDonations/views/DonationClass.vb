@@ -16,7 +16,8 @@ Namespace Contensive.Addons.aoDonations
             Try
                 result = My.Resources.DonationForm
                 result = result.Replace("{{State Select}}", GenericController.getStateSelect(CP, "DFStateID"))
-                result = result.Replace("{{reCaptcha}}", CP.Utils.ExecuteAddon("reCAPTCHA Display").ToString())
+                result = result.Replace("{{reCaptcha}}", CP.Addon.Execute("reCAPTCHA Display").ToString())
+                result = result.Replace("{{reCAPTCHA_site_key}}", CP.Site.GetText("RECAPTCHA V3 SITE KEY"))
                 result += GenericController.getHelpWrapper(CP, "")
                 result = CP.Html.div(result, "", "", "DFContainer")
             Catch ex As Exception
