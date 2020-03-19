@@ -59,7 +59,7 @@ Namespace Contensive.Addons.aoDonations
                     verifyItem(CP, itemGuidAnnual4, "Dontation, Annually", 12)
                     ' 
                 End If
-                result = My.Resources.DonationForm
+                result = ""
             Catch ex As Exception
                 CP.Site.ErrorReport(ex)
             End Try
